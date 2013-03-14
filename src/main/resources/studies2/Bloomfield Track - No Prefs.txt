@@ -1,0 +1,129 @@
+#######################################################################################################																																														
+# Forq input file																																																
+#																																																
+# Any line starting with '#' is a comment line and will not be processed																																																
+# A line starting with ':' is like a bookmark to enable the Forq loader to know where it is in the file																																																
+# A line with only white space is ignored	
+# All columns are delimited with a tab character	
+
+# Forq will check that:
+#     all participants in Data appear in the participants section
+#     number of participants declared matches the number of participants listed 
+#																																														
+#######################################################################################################																																																
+
+:Title	Bloomfield Track No Prefs
+
+#-------------------------------------------------------------------------------------------------------																																															
+# Participant information
+#-------------------------------------------------------------------------------------------------------
+:Participants	12																																															
+:Variables	2				
+
+# For each participant there should be n columns after the id column where n is the value of Variables above.
+# It is recommended to use short participant identifiers (2 characters is small enough) so that labelling isn't too 
+# crowded on graphs and matrices.
+																			
+#Id	Type	Age
+																																															
+ADV	Type - Lay	Age - Young																																															
+ASW	Type - Stakeholder	Age - Young																																															
+BOA	Type - Lay	Age - Old																																															
+JAN	Type - Stakeholder	Age - Old																																															
+JUL	Type - Lay	Age - Young																																															
+KEI	Type - Lay	Age - Young																																															
+KOD	Type - Stakeholder	Age - Old																																															
+MAT	Type - Lay	Age - Old																																															
+PEA	Type - Lay	Age - Young																																															
+RAS	Type - Stakeholder	Age - Old																																																
+SNO	Type - Stakeholder	Age - Old																																															
+TAM	Type - Lay	Age - Young					
+
+	
+#-------------------------------------------------------------------------------------------------------																																															
+# Q sort data
+#-------------------------------------------------------------------------------------------------------	
+
+:Q Statements	42																																															
+:P Statements	0
+
+# Id is the participant id
+# The Stage column is a String value but that the ordering of stages (e.g for the IC animation) is performed on alphabetical order of the stage values
+# Q values are the responses (decimal values if desired) to the Q sort statements
+# P values are the responses (decimal values if desired) to the preference statements																																													
+
+#Id	Stage	Q1	Q2	Q3	Q4	Q5	Q6	Q7	Q8	Q9	Q10	Q11	Q12	Q13	Q14	Q15	Q16	Q17	Q18	Q19	Q20	Q21	Q22	Q23	Q24	Q25	Q26	Q27	Q28	Q29	Q30	Q31	Q32	Q33	Q34	Q35	Q36	Q37	Q38	Q39	Q40	Q41	Q42	P1	P2	P3	P4	P5
+
+ADV	First	-3	-2	-2	1	1	2	2	1	-3	4	-4	2	1	-4	-3	3	3	0	4	2	0	0	-1	3	-1	-4	0	-1	-2	-2	3	-3	4	-2	-1	0	1	1	-1	2	0	-1	5	4	3	2	1
+ADV	Third	-3	-2	-2	1	1	2	0	-1	-3	4	-3	2	0	-4	-2	2	2	-1	4	0	1	1	-1	3	-2	-4	-2	-4	-3	-1	2	0	4	0	-1	1	-1	1	0	3	3	3	5	4	3	1	2
+ASW	First	-4	2	-2	1	1	1	1	-2	0	-1	-3	1	-4	-4	2	2	2	3	3	0	0	1	-2	3	-3	-1	-3	-2	-1	-1	3	-1	4	4	0	-1	0	1	2	4	-3	0	4	3	1	2	5
+ASW	Third	-4	-1	-2	1	2	3	-1	-2	-4	2	0	0	-1	0	1	3	3	2	3	1	-1	1	-1	4	-4	-1	-3	0	-3	-2	2	2	4	1	-2	1	-3	0	-2	4	-3	0	5	4	3	1	2
+BOA	First	-1	-3	0	4	2	4	4	-1	-3	2	-2	1	0	-1	-1	1	2	1	1	0	1	0	-4	3	-4	-2	-3	-4	-3	-2	3	-2	3	0	0	0	2	-1	1	3	2	-1	5	3	1	2	4
+BOA	Third	-1	-2	1	1	-1	3	-4	-1	-3	4	0	1	-1	-2	2	2	3	1	2	1	0	-1	3	2	-3	1	-3	-2	-2	-1	3	4	2	0	0	0	-4	-3	0	4	4	-2	5	4	2	3	1
+JAN	First	3	1	1	2	-1	3	4	0	-2	-1	1	0	0	-3	1	2	3	2	4	0	2	0	-4	4	-4	-4	-2	-3	-2	0	-1	-2	-1	1	-2	-1	0	1	-3	3	-2	-1	1	4	3	2	5
+JAN	Third	0	0	1	1	1	4	0	-1	-4	-4	-2	1	-1	-3	-1	2	0	-2	4	2	2	-2	-1	3	-3	3	-3	-4	-1	-3	4	0	3	0	2	1	1	-2	-1	3	2	-2	5	4	3	2	1
+JUL	First	-4	0	-1	-2	2	2	0	-2	0	4	-3	3	-4	-3	-1	3	1	1	0	-1	-1	0	-1	3	-4	-3	-1	-3	1	0	3	1	4	4	1	-2	1	0	2	2	2	-2	2	1	4	4	5
+JUL	Third	-4	0	-1	2	-1	3	-4	1	-3	-4	-3	2	2	-3	1	3	4	2	1	0	-1	0	-2	2	-3	-2	0	0	-2	-2	4	1	-2	1	-1	0	3	4	-1	3	1	-1	5	3	1	2	4
+KEI	First	-1	1	-2	2	1	1	-2	-2	-1	3	0	3	1	-4	-4	3	0	0	-2	-2	-1	1	-3	2	-3	-1	-1	-4	-3	-3	1	2	0	4	2	0	2	4	0	3	4	-1	4	3	2	1	5
+KEI	Third	-2	2	-2	0	3	2	-3	2	-2	4	-1	1	0	-1	0	4	-2	-1	-4	-3	-1	1	2	1	-3	2	0	-3	-2	-1	1	4	3	1	-4	0	3	3	1	0	-1	-4	5	3	1	2	4
+KOD	First	1	0	-2	3	1	3	3	1	0	-2	-3	2	-2	-2	0	4	0	-1	3	1	1	2	-3	2	-4	-3	-1	-4	-1	-1	2	-2	4	0	1	-1	0	-1	-4	4	2	-3	2	5	1	4	3
+KOD	Third	-4	-2	-3	3	2	3	1	3	-3	2	-3	2	-2	-2	-2	4	0	-1	2	2	1	1	0	4	-3	-4	-1	-4	0	-2	3	0	4	1	1	0	-1	-1	1	-1	0	-1	4	5	2	3	1
+MAT	First	-3	-3	-1	4	1	3	2	0	-3	2	0	2	-1	-1	-2	3	3	1	4	2	1	1	-2	3	-1	-2	-1	-1	-4	-2	2	0	1	0	0	-4	-2	1	0	4	-3	-4	5	4	2	1	3
+MAT	Third	-1	0	-1	2	1	4	1	-2	-3	3	-3	2	-1	-2	-1	3	0	-1	4	2	2	1	1	3	0	-3	-2	-1	-4	-4	3	0	2	0	1	1	-2	-4	0	4	-2	-3	5	4	3	2	1
+PEA	First	-1	0	0	3	-2	1	1	0	-1	2	-2	0	-1	-3	1	1	0	2	4	0	2	0	-1	2	-4	-4	-3	-3	-2	-1	1	-4	3	3	-1	-2	4	3	-3	4	2	-2	4	3	2	1	5
+PEA	Third	-1	-2	-2	4	0	4	-1	-2	-1	4	-4	3	-2	-4	-3	3	3	-4	3	2	1	2	-1	2	-3	-3	-2	-1	-3	0	0	0	2	0	1	1	0	1	1	2	1	-1	5	4	3	2	1
+RAS	First	2	3	1	-1	3	0	0	0	-2	-1	-3	2	1	-3	2	2	4	1	4	0	1	0	-3	3	-2	-4	-4	-4	-3	-2	-2	-1	2	0	-2	-1	2	1	0	4	-1	1	4	3	1	2	5
+RAS	Third	-2	-2	-1	2	1	3	1	-3	-3	4	-3	2	0	-2	1	2	2	0	4	2	0	1	-2	3	-4	-4	-2	-1	-1	-1	3	-1	3	0	1	0	0	-3	-1	4	-4	1	5	4	3	2	1
+SNO	First	1	2	2	2	1	-2	-1	3	2	-3	-1	1	2	-2	-1	0	3	3	3	0	0	0	-1	4	-4	-2	-3	-3	-4	-1	0	1	4	0	-3	-2	1	-1	1	4	-4	-2	1	2	3	4	5
+SNO	Third	-3	-1	-2	4	3	1	-1	2	-3	0	-4	2	0	-4	0	3	2	1	2	0	0	3	-1	4	-3	-3	-2	-1	-4	-2	-1	1	3	1	-1	0	1	-2	2	4	-2	-1	5	4	3	1	2
+TAM	First	1	-2	-2	1	2	4	3	-3	-2	2	-2	2	0	-2	-1	3	1	-1	4	2	1	0	-4	4	-4	-1	-4	0	-1	0	-1	-3	3	1	-1	0	0	0	-3	2	-3	1	2	5	3	4	1
+TAM	Third	0	-3	-1	2	-1	-4	2	0	-3	4	-1	2	1	0	-4	2	2	-2	4	3	1	-1	0	3	-1	-3	-2	0	-2	-2	3	-1	4	1	0	1	1	-4	1	3	-3	-2	5	4	3	2	1
+
+#-------------------------------------------------------------------------------------------------------																																															
+# Statements
+#-------------------------------------------------------------------------------------------------------
+
+:Statements		
+																																														
+1	Laying bitumen on the Bloomfield Track would be beneficial for the environment. It may even help reduce fuel usage and the greenhouse effect.																																															
+2	I don't know if improving the Bloomfield Track would lead to a rapid acceleration of development in the area to the detriment of the environment.																																															
+3	In deciding on what to do with the Bloomfield Track I don't know whether it's more important to meet the needs of the community or the environment.																																															
+4	Whilst impacts on locals in the Bloomfield area are a concern, it is the broader community that should carry more weight when deciding what to do with the Bloomfield Track.																																															
+5	I don't know what the people of Bloomfield think about the Bloomfield Track.																																															
+6	The road is just the 'thin edge of the wedge'. Further improvement of the road will lead to more development in the area resulting in environmental damage. This may not happen for a long time, but it will happen.																																															
+7	Erosion from the Bloomfield Track is permanently damaging the coral reefs that fringe the beaches below. 																																															
+8	When it comes to the Bloomfield track, people living in Cairns are in no position to  judge what the interests of the local residents of Bloomfield are.																																															
+9	If the Bloomfield Track is sealed (bitumenized) there will not be a rapid increase in environmentally damaging development in the Daintree area in the future. It may even benefit the environment there.																																															
+10	No development should be permitted in World Heritage areas such as the Daintree.																																															
+11	I would be worse off if more of the Daintree rainforest is protected.																																															
+12	The Bloomfield Track issue is important for Queensland.																																															
+13	I'm not sure if the future of the Bloomfield Track should be determined by  locals, outsiders or both.																																															
+14	The  fate of the Bloomfield Track is of no concern to me.																																															
+15	Economic development  associated with the Bloomfield Track will provide more opportunities for future generations in North Queensland.																																															
+16	The future of the Bloomfield Track should be determined by everyone and not just by those who live in the Bloomfield area.																																															
+17	There must be some way in which everybody benefits from protecting the rainforest near the Bloomfield Track.																																															
+18	The Bloomfield Track is important because it allows quick access to remote areas of the North.																																															
+19	Conservation in the Daintree area is worthwhile at whatever cost.																																															
+20	Using cars on the Bloomfield Track is bad for the rainforest.																																															
+21	Any decision about the Bloomfield Track will greatly affect people like me.																																															
+22	I have no idea what the people in the Bloomfield area think about the Bloomfield Track.																																															
+23	Erosion from the Bloomfield Track does not cause siltation or damage to the fringing inshore reefs between Cape Tribulation and Cooktown																																															
+24	If we don't take steps to protect the Daintree Rainforest future generations will miss out on the opportunity to experience the area as we do now.																																															
+25	We don't need to worry too much about environmental damage in the Daintree region because future generations will be better able to deal with these problems than we are.																																															
+26	There is no reason to believe that the the Daintree Rainforest is under threat.																																															
+27	If future generations could have their say about the Bloomfield track, they would be less concerned about the environmental impacts than many people make out.																																															
+28	The protection of plants and animals in the Daintree is OK so long as it doesn't affect me.																																															
+29	Let's fix the problems in the Daintree just for now. The future will take care of itself.																																															
+30	The more that it is possible for the average North Queensland resident can access the Bloomfield Track the better																																															
+31	I don't like how development is creeping further and further North into the Daintree and beyond because of its effect on the environment.																																															
+32	The coral reefs along the foreshore below the Bloomfield Track are not badly affected by the road.																																															
+33	Native animals in the Daintree need protection because they have a right to life which cannot be traded against economic considerations.																																															
+34	The Wujal Wujal Community is better off now that the Bloomfield Track has been built.																																															
+35	The most important use of the Bloomfield Track is for tourism.																																															
+36	I'm concerned that I will be made worse off by any decision about the Bloomfield Track.																																															
+37	I think that both short and long term perspectives are needed in deciding what should be done with the Bloomfield Track, but I don't know which one is more important.																																															
+38	The Bloomfield Track may not have been the best idea, but I guess there is probably little point in closing it now that it has been built.																																															
+39	I don't really know who benefits most from the protection of Rainforest in the Daintree.																																															
+40	A long term perspective on the Bloomfield Track is essential.																																															
+41	When it comes to the Bloomfield Track, it's not important to worry about what the future will hold. We need to worry about now.																																															
+42	Everyone in Queensland is better off for having a road like the Bloomfield Track.																																															

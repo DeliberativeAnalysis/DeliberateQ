@@ -1,0 +1,93 @@
+########################################################################################################																																														
+# Forq input file																																																
+#																																																
+# Any line starting with '#' is a comment line and will not be processed																																																
+# A line starting with ':' is like a bookmark to enable the Forq loader to know where it is in the file																																																
+# A line with only white space is ignored	
+# All columns are delimited with a tab character																																															
+########################################################################################################																																																
+
+:Title	Lipset
+
+########################################################################################################																																															
+# Participant information
+########################################################################################################
+:Participants	9																																															
+:Variables	0				
+
+# For each participant there should be n columns after the id column where n is the value of Variables above.
+# It is recommended to use short participant identifiers (2 characters is small enough) so that labelling isn't too 
+# crowded on graphs and matrices.
+ 																			
+#Id	
+1
+2
+3
+4
+5
+6
+7
+8
+9
+	
+########################################################################################################																																															
+# Q sort data
+########################################################################################################	
+
+:Q Statements	33																																															
+:P Statements	0
+
+# Id is the participant id
+# The Stage column is a String value but that the ordering of stages (e.g for the IC animation) is performed on alphabetical order of the stage values
+# Q values are the responses (decimal values if desired) to the Q sort statements
+# P values are the responses (decimal values if desired) to the preference statements																																													
+
+#Id	Stage	Q1	Q2	Q3	Q4	Q5	Q6	Q7	Q8	Q9	Q10	Q11	Q12	Q13	Q14	Q15	Q16	Q17	Q18	Q19	Q20	Q21	Q22	Q23	Q24	Q25	Q26	Q27	Q28	Q29	Q30	Q31	Q32	Q33	Q34	Q35	Q36	Q37	Q38	Q39	Q40	Q41	Q42	P1	P2	P3	P4	P5
+1	Questionnaire	4	5	3	5	3	6	5	4	5	4	6	6	7	8	4	1	2	2	4	1	8	7	8	6	6	5	9	7	7	2	3	3	9
+2	Questionnaire	4	5	4	2	7	8	6	6	1	5	7	4	9	4	6	2	5	3	3	5	8	3	6	5	7	6	7	8	4	1	3	2	9
+3	Questionnaire	7	3	3	9	4	5	1	2	6	1	2	8	8	7	5	2	7	4	6	5	6	3	5	7	3	8	6	4	5	4	4	9	6
+4	Questionnaire	8	6	2	4	4	8	2	3	5	1	4	5	8	3	2	1	4	7	9	3	9	6	6	3	5	6	4	7	5	7	6	7	5
+5	Questionnaire	1	4	8	4	6	6	9	7	1	9	7	5	4	8	5	7	5	3	3	5	4	7	6	2	2	2	8	5	6	3	6	3	4
+6	Questionnaire	6	2	5	8	8	9	3	5	3	3	6	4	6	5	1	8	4	5	6	4	3	2	4	1	7	7	5	9	4	7	6	7	2
+7	Questionnaire	7	5	3	6	5	6	4	2	5	4	6	4	6	7	1	9	8	7	5	7	3	4	2	1	8	3	5	9	2	6	4	8	3
+8	Questionnaire	3	7	5	2	1	9	5	4	4	4	6	4	6	4	9	5	5	6	2	6	7	7	8	8	2	6	1	8	5	3	3	3	7
+9	Questionnaire	8	6	5	6	1	2	7	7	3	5	5	3	6	9	4	3	7	4	7	6	8	2	2	3	6	5	4	1	5	4	8	4	9
+	
+########################################################################################################																																															
+# Statements
+########################################################################################################
+
+:Statements	
+1	We accept improvements in the status and power of the lower classes without being morally offended.
+2	All men are expected to try to improve their position vis-a-vis others.
+3	Success in life by a previously deprived person is resented.
+4	Men can expect, and within limits receive, fair treatment according to their merits.
+5	Lower-class individuals and groups do not have revolutionary inclinations.
+6	Political goals and methods are relatively moderate in this country - and even conservative.
+7	We believe that those born to high place in this society should retain it, more or less automatically.
+8	We take the view that anyone with wealth deserves a place in high society if he wishes it.
+9	We try to eliminate the privileged classes in this country - socially and economically.
+10	We accept aristocratic-type titles and honours.
+11	The government has its secrets and this is generally accepted without much challenge or resentment.
+12	We place great emphasis on publicity in political matters: there should be no secrets.
+13	We are encouraged to think of ourselves as competing for success - on our own merits.
+14	You can tell the social status of a person the moment he opens his mouth - his manner of speech gives him away.
+15	We tend to take the law into our own hands, through mob action and the organiszation of vigilantes.
+16	We like to think of close ties to the Mother Country - as Britain still is for many.
+17	We prefer companionship and a helping hand as required, freely given.
+18	There is some disdain for acquiring wealth for its own sake.
+19	High value is placed on activities aimed at protecting and promoting the standin go f the "underdog" in this country.
+20	We like the idea of a welfare state: each of us looks after his own best interests this way.
+21	We value the "race for success".
+22	Corrupt means of achieving success are accepted: for example, we put up with boss-rule, and corruption in trade unions.
+23	It is an axiom that there is one law for the rich and another for the poor: the rich man can usually get his way in court.
+24	Lack of respect for the police, and law enforcement, is evident.
+25	Trust in the police has sunk deeply into out national character: basically we like and trust the police.
+26	The worth of a man is judged by what he is - not by whether he has gone to a private college, a state university, or neither.
+27	We have deep respect, when all is said and done, for the elite - the rich, the educated, the social elite.
+28	We are tolerant of popular opinion: we are essentially middle-of-the-roaders in politics. Extremes don't go down well with us.
+29	We still believe that the poor on earth will enjoy higher status in after-life.
+30	There is considerable respect for civil liberties and minority rights in this country.
+31	Virtue tends to be its own reward in this country, for one's self and one's children.
+32	We believe that the position of depressed classes must be raised, that they are morally as good as any others.
+33	Here, the emphasis is on "getting ahead".
