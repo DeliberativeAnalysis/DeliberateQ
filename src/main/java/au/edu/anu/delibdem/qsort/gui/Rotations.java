@@ -156,8 +156,6 @@ public class Rotations implements MatrixProvider, Serializable {
 					m2 = m2.multiplyColumn(col, -1);
 			}
 
-			System.out.println("m=\n" + m);
-			System.out.println("m2=\n" + m2);
 			m = m2;
 			m.setColumnLabels(loadings.getColumnLabels());
 			rotatedLoadings = m;
