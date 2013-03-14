@@ -11,7 +11,7 @@ import moten.david.util.math.gp.QuartimaxCriterion;
 
 import org.junit.Assert;
 
-public class Test {
+public class MiscellaneousTest {
 
 	private void assertMagnitudeLessThan(double d, double limit) {
 		if (Math.abs(d) > limit)

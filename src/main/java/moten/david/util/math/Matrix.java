@@ -2087,4 +2087,12 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 					m = m.removeRow(k);
 		return m;
 	}
+
+	public double[] getRow(Integer rowNum) {
+		double[] row = new double[columnCount()];
+		for (int col = 1; col <= columnCount(); col++) {
+			row[col - 1] = this.getValue(rowNum, col);
+		}
+		return row;
+	}
 }

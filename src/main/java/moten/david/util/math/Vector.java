@@ -1,10 +1,17 @@
 package moten.david.util.math;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import com.google.inject.internal.Lists;
 
 public class Vector extends Matrix {
 
+	private static final long serialVersionUID = -4275438891677241883L;
+
 	public Vector(int size) {
+		// a vector is a matrix with one or many rows and only one column
 		super(size, 1);
 	}
 
@@ -19,6 +26,13 @@ public class Vector extends Matrix {
 		this(values.length);
 		for (int i = 0; i < values.length; i++) {
 			setValue(i + 1, values[i]);
+		}
+	}
+
+	public Vector(List<Double> values) {
+		this(values.size());
+		for (int i = 0; i < values.size(); i++) {
+			setValue(i + 1, values.get(i));
 		}
 	}
 
@@ -426,5 +440,57 @@ public class Vector extends Matrix {
 		}
 		double x = (startX + endX) / 2;
 		return Math.PI / 180 * (initialRotation + x);
+	}
+
+	private static class ValueAndIndex {
+		int index;
+		double value;
+
+		ValueAndIndex(int index, double value) {
+			super();
+			this.index = index;
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return "[index=" + index + ", value=" + value + "]";
+		}
+	}
+
+	public List<Integer> getOrderedIndicesByAbsoluteValue(
+			final boolean ascending) {
+		List<ValueAndIndex> list = Lists.newArrayList();
+		for (int i = 1; i <= size(); i++) {
+			list.add(new ValueAndIndex(i, getValue(i)));
+		}
+		System.out.println(list);
+		Collections.sort(list, new Comparator<ValueAndIndex>() {
+			@Override
+			public int compare(ValueAndIndex o1, ValueAndIndex o2) {
+				int multiplier = ascending ? 1 : -1;
+				return multiplier
+						* ((Double) Math.abs(o1.value)).compareTo((Math
+								.abs(o2.value)));
+			}
+		});
+		System.out.println(list);
+		List<Integer> orderedRowNumbers = Lists.newArrayList();
+		for (ValueAndIndex v : list) {
+			orderedRowNumbers.add(v.index);
+		}
+		System.out.println(orderedRowNumbers);
+		return orderedRowNumbers;
+	}
+
+	public Matrix getLeftMultiplyingMatrixToOrderByAbsoluteValue(
+			boolean ascending) {
+		Matrix identity = Matrix.getIdentity(size());
+		Matrix m = Matrix.getIdentity(size());
+		List<Integer> rowNumbers = getOrderedIndicesByAbsoluteValue(ascending);
+		for (int i = 1; i <= size(); i++) {
+			m.setRow(i, identity.getRow(rowNumbers.get(i - 1)));
+		}
+		return m;
 	}
 }
