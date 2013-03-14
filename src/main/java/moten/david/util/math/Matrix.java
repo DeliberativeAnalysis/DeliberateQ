@@ -725,7 +725,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 							.removeColumn(i));
 				}
 			}
-			// no apply the max factors criterion if set
+			// now apply the max factors criterion if set
 			if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
 					PrincipalFactorCriterion.MAX_FACTORS)
 					&& r.getPrincipalEigenvalues().rowCount() > eigenvalueThreshold
