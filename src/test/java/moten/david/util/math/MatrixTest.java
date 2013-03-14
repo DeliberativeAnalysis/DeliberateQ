@@ -37,7 +37,7 @@ public class MatrixTest {
 	@Test
 	public void testCanGenerateOrderingMatrixFromVector() {
 		Vector v = new Vector(new double[] { 3, 1, 2 });
-		Matrix m = v.getLeftMultiplyingMatrixToOrderByAbsoluteValue(true);
+		Matrix m = v.getRowSwitchingMatrixToOrderByAbsoluteValue(true);
 		System.out.println(m);
 		assertEquals(0, m.getValue(1, 1), PRECISION);
 		assertEquals(1, m.getValue(1, 2), PRECISION);
