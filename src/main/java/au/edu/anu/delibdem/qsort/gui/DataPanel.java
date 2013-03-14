@@ -402,8 +402,7 @@ public class DataPanel extends JPanel {
 									Matrix rot = rotations.getRotatedLoadings();
 									Vector v = rot.transpose().times(rot)
 											.getDiagonal();
-									//order the eigenvalues in descending absolute value
-							
+
 									v.setRowLabels(rot.getColumnLabels());
 									return v;
 								}

@@ -458,13 +458,20 @@ public class Vector extends Matrix {
 		}
 	}
 
+	/**
+	 * Returns a list of the row numbers of the elements in ordered absolute
+	 * value. For example the vector (0.3,0.1,-0.2) returns (2,3,1) from this
+	 * method with ascending=true.
+	 * 
+	 * @param ascending
+	 * @return
+	 */
 	public List<Integer> getOrderedIndicesByAbsoluteValue(
 			final boolean ascending) {
 		List<ValueAndIndex> list = Lists.newArrayList();
 		for (int i = 1; i <= size(); i++) {
 			list.add(new ValueAndIndex(i, getValue(i)));
 		}
-		System.out.println(list);
 		Collections.sort(list, new Comparator<ValueAndIndex>() {
 			@Override
 			public int compare(ValueAndIndex o1, ValueAndIndex o2) {
@@ -474,15 +481,21 @@ public class Vector extends Matrix {
 								.abs(o2.value)));
 			}
 		});
-		System.out.println(list);
 		List<Integer> orderedRowNumbers = Lists.newArrayList();
 		for (ValueAndIndex v : list) {
 			orderedRowNumbers.add(v.index);
 		}
-		System.out.println(orderedRowNumbers);
 		return orderedRowNumbers;
 	}
 
+	/**
+	 * Returns the row switching elementary matrix (identity matrix with rows
+	 * switched) that orders <code>this</code> into ascending or descending
+	 * absolute value when the matrix is multiplied by <code>this</code>.
+	 * 
+	 * @param ascending
+	 * @return
+	 */
 	public Matrix getLeftMultiplyingMatrixToOrderByAbsoluteValue(
 			boolean ascending) {
 		Matrix identity = Matrix.getIdentity(size());
