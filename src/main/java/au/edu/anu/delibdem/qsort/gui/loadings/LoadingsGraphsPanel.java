@@ -134,7 +134,6 @@ public class LoadingsGraphsPanel extends JPanel {
 		Matrix rotatedLoadings = rotations.getRotatedLoadings();
 		for (int i = 1; i < rotatedLoadings.columnCount(); i++) {
 			for (int j = i + 1; j <= rotatedLoadings.columnCount(); j++) {
-
 				Matrix m = new Matrix(rotatedLoadings.rowCount(), 2);
 				m.setRowLabels(rotatedLoadings.getRowLabels());
 				m.setColumnVector(1, rotatedLoadings.getColumnVector(i));
@@ -153,7 +152,6 @@ public class LoadingsGraphsPanel extends JPanel {
 		for (ChangeListener c : changeListeners) {
 			c.stateChanged(new ChangeEvent(this));
 		}
-
 	}
 
 	private void updateSelection() {
