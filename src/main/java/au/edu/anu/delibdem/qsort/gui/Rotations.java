@@ -14,7 +14,6 @@ import moten.david.util.math.Matrix;
 import moten.david.util.math.MatrixProvider;
 import moten.david.util.math.MatrixRotation;
 import moten.david.util.math.Varimax.RotationMethod;
-import moten.david.util.math.Vector;
 
 public class Rotations implements MatrixProvider, Serializable {
 
@@ -139,24 +138,16 @@ public class Rotations implements MatrixProvider, Serializable {
 			// value. Note that the row switching matrix satisfies that
 			// multiplied by its transpose equals the identity matrix so this
 			// manipulation of the loadings matrix is valid.
-			Vector v = m.transpose().times(m).getDiagonal();
-			m = v.getRowSwitchingMatrixToOrderByAbsoluteValue(false)
-					.times(m.transpose()).transpose();
+
+			m = m.getColumnsReorderedByEigenvalue(false);
 
 			// now multiply columns by -1 when largest absolute value is
 			// negative. Note that the row/column negation matrix satisfies that
 			// multiplied by its transpose equals the identity matrix so this
 			// manipulation of the loadings matrix is valid.
-			Matrix m2 = m.copy();
-			for (int col = 1; col <= m.columnCount(); col++) {
-				Vector cv = m.getColumnVector(col);
-				int maxAbsoluteValueIndex = cv
-						.getOrderedIndicesByAbsoluteValue(false).get(0);
-				if (cv.getValue(maxAbsoluteValueIndex) < 0)
-					m2 = m2.multiplyColumn(col, -1);
-			}
 
-			m = m2;
+			m = m.normalizeSignOfColumnsSoMaxAbsoluteValueIsPositive();
+
 			m.setColumnLabels(loadings.getColumnLabels());
 			rotatedLoadings = m;
 			changed = false;

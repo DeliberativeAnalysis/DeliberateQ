@@ -796,7 +796,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 							.removeColumn(i));
 				}
 			}
-			// no apply the max factors criterion if set
+			// now apply the max factors criterion if set
 			if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
 					PrincipalFactorCriterion.MAX_FACTORS)
 					&& r.getPrincipalEigenvalues().rowCount() > eigenvalueThreshold
@@ -2094,5 +2094,23 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			row[col - 1] = this.getValue(rowNum, col);
 		}
 		return row;
+	}
+
+	public Matrix getColumnsReorderedByEigenvalue(boolean ascending) {
+		Vector v = transpose().times(this).getDiagonal();
+		return v.getRowSwitchingMatrixToOrderByAbsoluteValue(false)
+				.times(transpose()).transpose();
+	}
+
+	public Matrix normalizeSignOfColumnsSoMaxAbsoluteValueIsPositive() {
+		Matrix m = copy();
+		for (int col = 1; col <= columnCount(); col++) {
+			Vector cv = getColumnVector(col);
+			int maxAbsoluteValueIndex = cv.getOrderedIndicesByAbsoluteValue(
+					false).get(0);
+			if (cv.getValue(maxAbsoluteValueIndex) < 0)
+				m = m.multiplyColumn(col, -1);
+		}
+		return m;
 	}
 }
