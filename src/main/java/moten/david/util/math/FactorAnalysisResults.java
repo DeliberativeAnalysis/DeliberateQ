@@ -179,7 +179,7 @@ public class FactorAnalysisResults {
 		return eigenvalues;
 	}
 
-	public Matrix getEigenvaluesVector() {
+	public Vector getEigenvaluesVector() {
 		Vector matrix = eigenvalues.getDiagonal();
 		for (int i = 1; i <= matrix.rowCount(); i++) {
 			matrix.setRowLabel(i, eigenvalues.getRowLabel(i));

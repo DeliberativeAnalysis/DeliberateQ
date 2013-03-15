@@ -707,6 +707,9 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				.equals(FactorExtractionMethod.CENTROID_METHOD)) {
 			performCentroidMethod(eigenvalueThreshold, r);
 		}
+
+		normalizeLoadingSigns(r);
+
 		r.setRotatedLoadings(new RotatedLoadings());
 		RotationMethod[] methods;
 		if (rotationMethods == null) {
@@ -725,6 +728,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				r.getRotatedLoadings().put(rotationMethod, rotatedLoadings);
 			}
 		}
+
 		r.setRotationTimeMs(System.currentTimeMillis() - t);
 		r.setPercentVariance(r.getEigenvalues().getDiagonal());
 		r.setPercentVariance(r.getPercentVariance().apply(new Function() {
@@ -738,6 +742,20 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		r.getPercentVariance().setColumnLabel(1, "%Variance");
 		r.getPercentVariance().setRowLabelPattern("F<index>");
 		return r;
+	}
+
+	private void normalizeLoadingSigns(FactorAnalysisResults r) {
+		Matrix sn = r
+				.getLoadings()
+				.getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive();
+		r.setLoadings(r.getLoadings().times(sn));
+		r.setEigenvectors(r.getEigenvectors().times(sn));
+		Matrix snPrincipal = r
+				.getPrincipalLoadings()
+				.getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive();
+		r.setPrincipalLoadings(r.getPrincipalLoadings().times(snPrincipal));
+		r.setPrincipalEigenvectors(r.getPrincipalEigenvectors().times(
+				snPrincipal));
 	}
 
 	private void performCentroidMethod(EigenvalueThreshold eigenvalueThreshold,
@@ -859,8 +877,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		// clean up the presentation of the eigenvalues and vectors
 		r.setEigenvalues(r.getEigenvalues().reverseColumns().reverseRows());
 		r.setEigenvectors(r.getEigenvectors().reverseColumns());
-		r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-				.reverseColumns().reverseRows());
+		r.setPrincipalEigenvalues(r.getPrincipalEigenvalues().reverseColumns()
+				.reverseRows());
 		r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
 				.reverseColumns());
 	}
@@ -2113,8 +2131,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				.times(transpose()).transpose();
 	}
 
-	public Matrix normalizeSignOfColumnsSoMaxAbsoluteValueIsPositive() {
-		Matrix m = copy();
+	public Matrix getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive() {
+		Matrix m = Matrix.getIdentity(columnCount());
 		for (int col = 1; col <= columnCount(); col++) {
 			Vector cv = getColumnVector(col);
 			int maxAbsoluteValueIndex = cv.getOrderedIndicesByAbsoluteValue(
@@ -2123,5 +2141,10 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				m = m.multiplyColumn(col, -1);
 		}
 		return m;
+	}
+
+	public Matrix normalizeSignOfColumnsSoMaxAbsoluteValueIsPositive() {
+		return this
+				.times(getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive());
 	}
 }
