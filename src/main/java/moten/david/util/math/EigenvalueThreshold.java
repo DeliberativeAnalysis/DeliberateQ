@@ -2,44 +2,43 @@ package moten.david.util.math;
 
 public class EigenvalueThreshold {
 
-	private PrincipalFactorCriterion principalFactorCriterion;
-	private Double minEigenvalue;
-
-	public EigenvalueThreshold() {
-		// no argument constructor
+	public static EigenvalueThreshold createWithMaxFactors(int maxFactors) {
+		return new EigenvalueThreshold(maxFactors);
 	}
 
-	public EigenvalueThreshold(double minEigenvalue) {
+	public static EigenvalueThreshold createWithMinEigenvalue(
+			double minEigenvalue) {
+		return new EigenvalueThreshold(minEigenvalue);
+	}
+
+	private final PrincipalFactorCriterion principalFactorCriterion;
+	private final Double minEigenvalue;
+	private final Integer maxFactors;
+
+	private EigenvalueThreshold(double minEigenvalue) {
 
 		this.principalFactorCriterion = PrincipalFactorCriterion.MIN_EIGENVALUE;
 		this.minEigenvalue = minEigenvalue;
+		this.maxFactors = null;
+	}
+
+	private EigenvalueThreshold(int maxFactors) {
+
+		this.principalFactorCriterion = PrincipalFactorCriterion.MAX_FACTORS;
+		this.maxFactors = maxFactors;
+		this.minEigenvalue = null;
 	}
 
 	public Double getMinEigenvalue() {
 		return minEigenvalue;
 	}
 
-	public void setMinEigenvalue(Double minEigenvalue) {
-		this.minEigenvalue = minEigenvalue;
-	}
-
-	private Integer maxFactors;
-
 	public PrincipalFactorCriterion getPrincipalFactorCriterion() {
 		return principalFactorCriterion;
 	}
 
-	public void setPrincipalFactorCriterion(
-			PrincipalFactorCriterion principalFactorCriterion) {
-		this.principalFactorCriterion = principalFactorCriterion;
-	}
-
 	public Integer getMaxFactors() {
 		return maxFactors;
-	}
-
-	public void setMaxFactors(Integer maxFactors) {
-		this.maxFactors = maxFactors;
 	}
 
 	public static enum PrincipalFactorCriterion {

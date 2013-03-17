@@ -161,7 +161,7 @@ public class MatrixTestData {
 		Matrix m = getBrownTable26();
 		FactorAnalysisResults results = m.analyzeFactors(
 				FactorExtractionMethod.CENTROID_METHOD,
-				new EigenvalueThreshold(1.0), null);
+				EigenvalueThreshold.createWithMinEigenvalue(1.0), null);
 		Matrix loadings = results.getLoadings().subMatrixColumns(1, 7);
 		String[] labels = loadings.getColumnLabels();
 		loadings = loadings.rotateDegrees(1, 2, 31);
@@ -202,10 +202,10 @@ public class MatrixTestData {
 		}
 		FactorAnalysisResults results = m.analyzeFactors(
 				FactorExtractionMethod.PRINCIPAL_COMPONENTS_ANALYSIS,
-				new EigenvalueThreshold(1.0), null);
+				EigenvalueThreshold.createWithMinEigenvalue(1.0), null);
 		System.out.println(results);
 		results = m.analyzeFactors(FactorExtractionMethod.CENTROID_METHOD,
-				new EigenvalueThreshold(1.0), null);
+				EigenvalueThreshold.createWithMinEigenvalue(1.0), null);
 		System.out.println(results);
 	}
 
@@ -255,7 +255,7 @@ public class MatrixTestData {
 
 		FactorAnalysisResults results = m.analyzeFactors(
 				FactorExtractionMethod.PRINCIPAL_COMPONENTS_ANALYSIS,
-				new EigenvalueThreshold(0.2), null);
+				EigenvalueThreshold.createWithMinEigenvalue(0.2), null);
 		System.out.println(results);
 		// results = m.analyzeFactors(FactorExtractionMethod.CENTROID_METHOD,
 		// 1.0);

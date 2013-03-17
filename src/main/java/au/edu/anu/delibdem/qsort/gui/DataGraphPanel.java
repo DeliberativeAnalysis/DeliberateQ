@@ -6,11 +6,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,12 +23,10 @@ import javax.swing.event.ChangeListener;
 import moten.david.util.event.Event;
 import moten.david.util.event.EventManager;
 import moten.david.util.math.EigenvalueThreshold;
-import moten.david.util.math.FactorAnalysisException;
 import moten.david.util.math.FactorAnalysisResults;
 import moten.david.util.math.FactorExtractionMethod;
-import moten.david.util.math.Matrix;
-import moten.david.util.math.Varimax.RotationMethod;
 import moten.david.util.math.gui.GraphPanel;
+import au.edu.anu.delibdem.qsort.Analysis;
 import au.edu.anu.delibdem.qsort.Data;
 import au.edu.anu.delibdem.qsort.DataSelection;
 import au.edu.anu.delibdem.qsort.QSort;
@@ -92,10 +88,11 @@ public class DataGraphPanel extends JPanel {
 				for (AnalysisConfiguration analysis : analyses) {
 					Status.setStatus("Performing "
 							+ analysis.getExtractionMethod().toString() + "...");
-					FactorAnalysisResults r = getFactorAnalysisResults(data,
-							combination, analysis.isIntersubjective(),
-							analysis.getExtractionMethod(),
-							analysis.getEigenvalueThreshold());
+					FactorAnalysisResults r = Analysis
+							.getFactorAnalysisResults(data, combination,
+									analysis.isIntersubjective(),
+									analysis.getExtractionMethod(),
+									analysis.getEigenvalueThreshold());
 
 					if (r != null) {
 						r.setTitle(analysis.getTitle());
@@ -111,31 +108,6 @@ public class DataGraphPanel extends JPanel {
 			}
 		});
 		t.start();
-	}
-
-	private Matrix getMatrix(Data data, DataSelection combination,
-			boolean isIntersubjective) {
-		Matrix m = data.getRawData(combination, null, (isIntersubjective ? 1
-				: 2));
-		return m;
-	}
-
-	private FactorAnalysisResults getFactorAnalysisResults(Data data,
-			DataSelection dataSelection, boolean isIntersubjective,
-			FactorExtractionMethod method,
-			EigenvalueThreshold eigenvalueThreshold) {
-		Set<RotationMethod> rotationMethods = new HashSet<RotationMethod>();
-		rotationMethods.add(RotationMethod.VARIMAX);
-		try {
-			Matrix m = getMatrix(data, dataSelection, isIntersubjective);
-			if (m == null)
-				return null;
-
-			return m.analyzeFactors(method, eigenvalueThreshold,
-					rotationMethods);
-		} catch (FactorAnalysisException e) {
-			throw new Error(e);
-		}
 	}
 
 	public JPanel getGraphPanelStatic() {

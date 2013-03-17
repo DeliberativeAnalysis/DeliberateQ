@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import moten.david.util.math.EigenvalueThreshold;
-import moten.david.util.math.EigenvalueThreshold.PrincipalFactorCriterion;
 import moten.david.util.math.FactorExtractionMethod;
 
 public class AnalyzeOptionsPanel extends JPanel {
@@ -112,15 +111,12 @@ public class AnalyzeOptionsPanel extends JPanel {
 	}
 
 	public EigenvalueThreshold getEigenvalueThreshold() {
-		EigenvalueThreshold t = new EigenvalueThreshold();
-		if (maxFactors.isSelected()) {
-			t.setPrincipalFactorCriterion(PrincipalFactorCriterion.MAX_FACTORS);
-			t.setMaxFactors(Integer.parseInt(maxFactorsField.getText()));
-		} else {
-			t.setPrincipalFactorCriterion(PrincipalFactorCriterion.MIN_EIGENVALUE);
-			t.setMinEigenvalue(Double.parseDouble(minEigenvalueField.getText()));
-		}
-		return t;
+		if (maxFactors.isSelected())
+			return EigenvalueThreshold.createWithMaxFactors(Integer
+					.parseInt(maxFactorsField.getText()));
+		else
+			return EigenvalueThreshold.createWithMinEigenvalue(Double
+					.parseDouble(minEigenvalueField.getText()));
 	}
 
 	public FactorExtractionMethod getFactorExtractionMethod() {

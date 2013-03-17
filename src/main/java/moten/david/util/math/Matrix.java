@@ -580,7 +580,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		// c.setValue(10, 10, 0.82);
 
 		m.analyzeFactors(FactorExtractionMethod.PRINCIPAL_COMPONENTS_ANALYSIS,
-				new EigenvalueThreshold(0.5), null);
+				EigenvalueThreshold.createWithMinEigenvalue(0.5), null);
 
 		m = new Matrix(new double[][] { { 1, 2, 3 }, { 2, 3, 4 }, { 4, 7, 9 } });
 		Matrix m2 = new Matrix(new double[][] { { 1, 1.5, 4 }, { 3, 4, 5 },
@@ -686,7 +686,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		// Math
 		// .sqrt(rowCount()));
 		return analyzeCorrelationMatrixFactors(extractionMethod,
-				new EigenvalueThreshold(1.0), rotationMethods);
+				EigenvalueThreshold.createWithMinEigenvalue(1.0),
+				rotationMethods);
 	}
 
 	public FactorAnalysisResults analyzeCorrelationMatrixFactors(
@@ -2133,6 +2134,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 	public Matrix getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive() {
 		Matrix m = Matrix.getIdentity(columnCount());
+		String[] labels = this.getColumnLabels();
+		m.setColumnLabels(Arrays.copyOf(labels, labels.length));
 		for (int col = 1; col <= columnCount(); col++) {
 			Vector cv = getColumnVector(col);
 			int maxAbsoluteValueIndex = cv.getOrderedIndicesByAbsoluteValue(
@@ -2146,5 +2149,16 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	public Matrix normalizeSignOfColumnsSoMaxAbsoluteValueIsPositive() {
 		return this
 				.times(getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive());
+	}
+
+	public boolean columnEquals(int col, double precision, double... values) {
+		if (values.length != rowCount())
+			throw new RuntimeException(
+					"number of values does not match number of rows");
+		for (int row = 1; row <= rowCount(); row++) {
+			if (Math.abs(getValue(row, col) - values[row - 1]) > precision)
+				return false;
+		}
+		return true;
 	}
 }

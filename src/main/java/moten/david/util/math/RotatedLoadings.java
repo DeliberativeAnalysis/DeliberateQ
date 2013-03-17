@@ -24,7 +24,7 @@ public class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
 		StringOutputStream sos = new StringOutputStream();
 		PrintWriter out = new PrintWriter(sos);
 		SimpleHeirarchicalFormatter f = FactorAnalysisResults
-				.getTextFormatter(out);
+				.createTextFormatter(out);
 		format(null, f);
 		out.close();
 		return sos.toString();

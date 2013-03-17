@@ -43,7 +43,7 @@ public class FactorAnalysisResults {
 		this.title = title;
 	}
 
-	public static SimpleHeirarchicalFormatter getTextFormatter(
+	public static SimpleHeirarchicalFormatter createTextFormatter(
 			final PrintWriter out) {
 		return new SimpleHeirarchicalFormatter() {
 
@@ -92,7 +92,7 @@ public class FactorAnalysisResults {
 		return title;
 	}
 
-	public void process(Matrix data, SimpleHeirarchicalFormatter f) {
+	public void print(Matrix data, SimpleHeirarchicalFormatter f) {
 
 		f.header(extractionMethod.toString(), false);
 		f.blockStart();
@@ -200,7 +200,7 @@ public class FactorAnalysisResults {
 		return principalEigenvalues;
 	}
 
-	public Matrix getPrincipalEigenvaluesVector() {
+	public Vector getPrincipalEigenvaluesVector() {
 		Vector matrix = principalEigenvalues.getDiagonal();
 		for (int i = 1; i <= matrix.rowCount(); i++) {
 			matrix.setRowLabel(i, principalEigenvalues.getRowLabel(i));
