@@ -30,11 +30,13 @@ import moten.david.util.math.gui.GraphPanel;
 
 import org.apache.commons.math.stat.regression.SimpleRegression;
 
+import com.google.inject.internal.Lists;
+import com.google.inject.internal.Sets;
+
 public class Data implements Serializable {
 
 	private static Logger log = Logger.getLogger(Data.class.getName());
 
-	public static final String participantPrefix = "";
 	private static final long serialVersionUID = -8216642174736641063L;
 	private static final String TAB = "\t";
 
@@ -387,7 +389,14 @@ public class Data implements Serializable {
 	public DataComponents buildMatrix(List<QSort> list, Set<String> filter) {
 		if (list == null)
 			return null;
-		list = new ArrayList<QSort>(list);
+		list = Lists.newArrayList(list);
+
+		Set<String> stages = Sets.newHashSet();
+		for (QSort q : list) {
+			stages.add(q.getStage());
+		}
+
+		boolean singleStage = isSingleStage(list);
 
 		// remove from the list all QSort objects that are missing a qResult or
 		// a ranking value
@@ -421,7 +430,7 @@ public class Data implements Serializable {
 				.size());
 		for (int i = 0; i < list.size(); i++) {
 			QSort q = list.get(i);
-			qSorts.setRowLabel(i + 1, q.getParticipant().getId() + "");
+			qSorts.setRowLabel(i + 1, getParticipantLabel(singleStage, q));
 			for (int j = 0; j < q.getQResults().size(); j++) {
 				qSorts.setValue(i + 1, j + 1, q.getQResults().get(j));
 				qSorts.setColumnLabel(j + 1, "Q" + (j + 1));
@@ -433,7 +442,7 @@ public class Data implements Serializable {
 				.size());
 		for (int i = 0; i < list.size(); i++) {
 			QSort q = list.get(i);
-			rankings.setRowLabel(i + 1, q.getParticipant().getId() + "");
+			rankings.setRowLabel(i + 1, getParticipantLabel(singleStage, q));
 			for (int j = 0; j < q.getRankings().size(); j++) {
 				rankings.setValue(i + 1, j + 1, q.getRankings().get(j));
 				rankings.setColumnLabel(j + 1, "R" + (j + 1));
@@ -481,6 +490,15 @@ public class Data implements Serializable {
 		dataComponents.participants2 = participants2;
 		dataComponents.correlations = m;
 		return dataComponents;
+	}
+
+	private String getParticipantLabel(boolean singleStage, QSort q) {
+		String rowLabel;
+		if (singleStage)
+			rowLabel = q.getParticipant().getId();
+		else
+			rowLabel = q.getStage() + "-" + q.getParticipant().getId();
+		return rowLabel;
 	}
 
 	private static String combineLabels(String a, String b) {
@@ -662,6 +680,8 @@ public class Data implements Serializable {
 		if (numRows == 0)
 			return null;
 		Matrix m = new Matrix(numRows, subList.size());
+		boolean singleStage = isSingleStage(subList);
+
 		int col = 1;
 		for (QSort q : subList) {
 			int row = 1;
@@ -672,8 +692,7 @@ public class Data implements Serializable {
 				m.setValue(row, col, value);
 				row++;
 			}
-			m.setColumnLabel(col, participantPrefix
-					+ q.getParticipant().getId());
+			m.setColumnLabel(col, getParticipantLabel(singleStage, q));
 			col++;
 		}
 		if (dataSet == 1)
@@ -684,6 +703,13 @@ public class Data implements Serializable {
 		// m.writeToFile(new File("/matrix.txt"), false);
 		m = m.removeColumnsWithNoStandardDeviation();
 		return m;
+	}
+
+	private static boolean isSingleStage(List<QSort> list) {
+		Set<String> set = Sets.newHashSet();
+		for (QSort q : list)
+			set.add(q.getStage());
+		return set.size() == 1;
 	}
 
 	public Set<String> getFilter() {
