@@ -6,6 +6,7 @@ import java.util.List;
 
 public class MatrixRotation implements Serializable {
 
+	private static final long serialVersionUID = 2930912548858495735L;
 	private int column1;
 	private int column2;
 	private double angle;

@@ -269,16 +269,6 @@ public class Varimax {
 		return rotations;
 	}
 
-	private void printArray(double[][] data) {
-		for (int j = 0; j < data[0].length; j++) {
-			for (int i = 0; i < data.length; i++) {
-				System.out.print(data[i][j] + "\t");
-			}
-			System.out.println();
-		}
-		System.out.println();
-	}
-
 	public double[][] getData() {
 		return data;
 	}

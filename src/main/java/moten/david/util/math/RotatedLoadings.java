@@ -12,8 +12,6 @@ public class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
 
 	private static int counter = 0;
 
-	private boolean html;
-
 	private synchronized int nextCounter() {
 		counter++;
 		return counter;

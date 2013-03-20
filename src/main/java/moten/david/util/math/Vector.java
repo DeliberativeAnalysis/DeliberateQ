@@ -136,7 +136,6 @@ public class Vector extends Matrix {
 	}
 
 	public Vector standardize(double mean, double sd) {
-		double thisMean = getMean();
 		double thisSd = getStandardDeviation();
 		Vector result = getDeviation();
 		for (int i = 1; i <= size(); i++) {
@@ -496,8 +495,7 @@ public class Vector extends Matrix {
 	 * @param ascending
 	 * @return
 	 */
-	public Matrix getRowSwitchingMatrixToOrderByAbsoluteValue(
-			boolean ascending) {
+	public Matrix getRowSwitchingMatrixToOrderByAbsoluteValue(boolean ascending) {
 		Matrix identity = Matrix.getIdentity(size());
 		Matrix m = Matrix.getIdentity(size());
 		List<Integer> rowNumbers = getOrderedIndicesByAbsoluteValue(ascending);
