@@ -709,6 +709,9 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			performCentroidMethod(eigenvalueThreshold, r);
 		}
 
+		// TODO ensure eigenvalues are in descending order
+		// applyRowSwitcher(r);
+
 		normalizeLoadingSigns(r);
 
 		r.setRotatedLoadings(new RotatedLoadings());
@@ -745,18 +748,50 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return r;
 	}
 
+	/**
+	 * TODO
+	 * 
+	 * @param r
+	 */
+	private void applyRowSwitcher(FactorAnalysisResults r) {
+		{
+			Matrix columnSwitcher = r.getEigenvaluesVector()
+					.getRowSwitchingMatrixToOrderByAbsoluteValue(false)
+					.transpose();
+			r.setLoadings(r.getLoadings().times(columnSwitcher));
+			r.setEigenvectors(r.getEigenvectors().times(columnSwitcher));
+			r.setEigenvalues(r.getEigenvalues().times(
+					columnSwitcher.transpose()));
+		}
+		{
+			Matrix columnSwitcher = r.getPrincipalEigenvaluesVector()
+					.getRowSwitchingMatrixToOrderByAbsoluteValue(false)
+					.transpose();
+			r.setPrincipalLoadings(r.getPrincipalLoadings().times(
+					columnSwitcher));
+			r.setPrincipalEigenvectors(r.getPrincipalEigenvectors().times(
+					columnSwitcher));
+			r.setPrincipalEigenvalues(r.getPrincipalEigenvalues().times(
+					columnSwitcher.transpose()));
+		}
+	}
+
 	private void normalizeLoadingSigns(FactorAnalysisResults r) {
-		Matrix sn = r
-				.getLoadings()
-				.getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive();
-		r.setLoadings(r.getLoadings().times(sn));
-		r.setEigenvectors(r.getEigenvectors().times(sn));
-		Matrix snPrincipal = r
-				.getPrincipalLoadings()
-				.getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive();
-		r.setPrincipalLoadings(r.getPrincipalLoadings().times(snPrincipal));
-		r.setPrincipalEigenvectors(r.getPrincipalEigenvectors().times(
-				snPrincipal));
+		{
+			Matrix sn = r
+					.getLoadings()
+					.getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive();
+			r.setLoadings(r.getLoadings().times(sn));
+			r.setEigenvectors(r.getEigenvectors().times(sn));
+		}
+		{
+			Matrix snPrincipal = r
+					.getPrincipalLoadings()
+					.getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive();
+			r.setPrincipalLoadings(r.getPrincipalLoadings().times(snPrincipal));
+			r.setPrincipalEigenvectors(r.getPrincipalEigenvectors().times(
+					snPrincipal));
+		}
 	}
 
 	private void performCentroidMethod(EigenvalueThreshold eigenvalueThreshold,

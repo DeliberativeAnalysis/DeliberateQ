@@ -11,6 +11,7 @@ import moten.david.util.math.FactorExtractionMethod;
 import moten.david.util.math.Matrix;
 import moten.david.util.math.Vector;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class AnalysisTest {
@@ -18,7 +19,8 @@ public class AnalysisTest {
 	private static final double PRECISION = 0.0001;
 
 	@Test
-	public void testBloomfieldAnalysis() throws IOException {
+	public void testBloomfieldAnalysisFirstStagePrincipalComponentsAnalysis()
+			throws IOException {
 		Data data = new Data(
 				AnalysisTest.class
 						.getResourceAsStream("/studies2/Bloomfield Track.txt"));
@@ -82,5 +84,14 @@ public class AnalysisTest {
 				0.1363, -0.4678, 0.5962, 0.5294, -0.0043, 0.0310, -0.0018,
 				-0.3828, -0.4784, -0.1217));
 
+		Assert.assertEquals("ADV", pincipalLloadings.getRowLabel(1));
+		Assert.assertEquals("F1", pincipalLloadings.getColumnLabel(1));
+
+	}
+
+	@Test
+	public void testLipsetAnalysis() throws IOException {
+		Data data = new Data(
+				AnalysisTest.class.getResourceAsStream("/studies2/Lipset.txt"));
 	}
 }
