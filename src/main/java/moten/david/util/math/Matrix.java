@@ -583,8 +583,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				EigenvalueThreshold.createWithMinEigenvalue(0.5), null);
 
 		m = new Matrix(new double[][] { { 1, 2, 3 }, { 2, 3, 4 }, { 4, 7, 9 } });
-		Matrix m2 = new Matrix(new double[][] { { 1, 1.5, 4 }, { 3, 4, 5 },
-				{ 8, 4, 2 } });
+		new Matrix(new double[][] { { 1, 1.5, 4 }, { 3, 4, 5 }, { 8, 4, 2 } });
 		Vector v = m.getColumnVector(1);
 		Matrix m3 = v.addColumn(m.getColumnVector(2));
 		Matrix m4 = m3.rotateDegrees(1, 2, 25);
@@ -776,7 +775,15 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		}
 	}
 
-	private void normalizeLoadingSigns(FactorAnalysisResults r) {
+	/**
+	 * Updates {@link FactorAnalysisResults} so that the max absolute value
+	 * loadings are positive. The sign normalization matrix when multiplied by
+	 * its transpose is the identity matrix so this normalization of the
+	 * loadings is valid.
+	 * 
+	 * @param r
+	 */
+    private void normalizeLoadingSigns(FactorAnalysisResults r) {
 		{
 			Matrix sn = r
 					.getLoadings()
@@ -945,16 +952,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		rotator.setKaiserNormalisation(kaiserNormalized);
 		Varimax.setVerbose(false);
 		List<MatrixRotation> rotations = rotator.rotate();
-		// loadingsRotated = loadingsRotated.transpose()
-		// .transformToPositiveColumnTotals();
-		// VectorFunction vectorFunction = new VectorFunction() {
-		//
-		// public double f(Vector v) {
-		// return -v.getSquare().getSum();
-		// }
-		// };
-		// loadingsRotated = loadingsRotated.sortColumns(vectorFunction);
-		// loadingsRotated.setColumnLabelPattern("F<index>");
 		return rotations;
 	}
 
@@ -1004,18 +1001,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			setRowLabel(i, s);
 		}
 		return this;
-	}
-
-	private Matrix transformToPositiveColumnTotals() {
-		// if the sum of a column is negative multiply that column by -1
-		Matrix m = copy();
-		for (int i = 1; i <= columnCount(); i++) {
-			Vector v = getColumnVector(i);
-			if (v.getSum() < 0) {
-				m.setColumnVector(i, v.times(-1.0));
-			}
-		}
-		return m;
 	}
 
 	public boolean hasSameDimensions(Matrix m) {
@@ -1182,11 +1167,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			setValue(row, row, v.getValue(row));
 		}
 		return this;
-	}
-
-	private class PositiveManifold {
-		List<Integer> reflections = new ArrayList<Integer>();
-		Matrix matrix;
 	}
 
 	public static Matrix getIdentity(int size) {
