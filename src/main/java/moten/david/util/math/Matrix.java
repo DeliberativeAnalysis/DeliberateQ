@@ -745,6 +745,14 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return r;
 	}
 
+	/**
+	 * Updates {@link FactorAnalysisResults} so that the max absolute value
+	 * loadings are positive. The sign normalization matrix when multiplied by
+	 * its transpose is the identity matrix so this normalization of the
+	 * loadings is valid.
+	 * 
+	 * @param r
+	 */
 	private void normalizeLoadingSigns(FactorAnalysisResults r) {
 		Matrix sn = r
 				.getLoadings()
