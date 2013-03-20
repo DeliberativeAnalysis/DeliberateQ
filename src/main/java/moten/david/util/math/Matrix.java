@@ -918,16 +918,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		rotator.setKaiserNormalisation(kaiserNormalized);
 		Varimax.setVerbose(false);
 		List<MatrixRotation> rotations = rotator.rotate();
-		// loadingsRotated = loadingsRotated.transpose()
-		// .transformToPositiveColumnTotals();
-		// VectorFunction vectorFunction = new VectorFunction() {
-		//
-		// public double f(Vector v) {
-		// return -v.getSquare().getSum();
-		// }
-		// };
-		// loadingsRotated = loadingsRotated.sortColumns(vectorFunction);
-		// loadingsRotated.setColumnLabelPattern("F<index>");
 		return rotations;
 	}
 
