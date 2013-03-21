@@ -17,6 +17,7 @@ import org.junit.Test;
 public class AnalysisTest {
 
 	private static final double PRECISION = 0.0001;
+	private static final double LIPSET_PRECISION = 0.01;
 
 	@Test
 	public void testBloomfieldAnalysisFirstStagePrincipalComponentsAnalysis()
@@ -75,17 +76,17 @@ public class AnalysisTest {
 				-0.0016, -0.3352, -0.4190, -0.1065));
 
 		// check principal loadings
-		Matrix pincipalLloadings = r.getPrincipalLoadings();
-		assertTrue(pincipalLloadings.columnEquals(1, PRECISION, 0.7797, 0.7675,
+		Matrix principalLoadings = r.getPrincipalLoadings();
+		assertTrue(principalLoadings.columnEquals(1, PRECISION, 0.7797, 0.7675,
 				0.8405, 0.7588, 0.6578, 0.5538, 0.8122, 0.7634, 0.8203, 0.7565,
 				0.6122, 0.7781));
 
-		assertTrue(pincipalLloadings.columnEquals(2, PRECISION, 0.1676, 0.1079,
+		assertTrue(principalLoadings.columnEquals(2, PRECISION, 0.1676, 0.1079,
 				0.1363, -0.4678, 0.5962, 0.5294, -0.0043, 0.0310, -0.0018,
 				-0.3828, -0.4784, -0.1217));
 
-		Assert.assertEquals("ADV", pincipalLloadings.getRowLabel(1));
-		Assert.assertEquals("F1", pincipalLloadings.getColumnLabel(1));
+		Assert.assertEquals("ADV", principalLoadings.getRowLabel(1));
+		Assert.assertEquals("F1", principalLoadings.getColumnLabel(1));
 
 	}
 
@@ -93,5 +94,27 @@ public class AnalysisTest {
 	public void testLipsetAnalysis() throws IOException {
 		Data data = new Data(
 				AnalysisTest.class.getResourceAsStream("/studies2/Lipset.txt"));
+		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
+				new DataSelection(data.getFilter(), "Questionnaire"), true,
+				FactorExtractionMethod.CENTROID_METHOD,
+				EigenvalueThreshold.createWithMinEigenvalue(1.0));
+
+		assertTrue(r.getEigenvaluesVector().columnEquals(1, PRECISION, 1.6158,
+				1.4119, 0.8403, 0.5542, 0.3849, 0.2781, 0.1874, 0.1839, 0.0840));
+		assertTrue(r.getEigenvectors().columnEquals(1, PRECISION, -0.2292,
+				-0.3020, 0.2896, 0.2633, -0.4318, 0.3763, 0.4587, -0.4057,
+				0.0042));
+		assertTrue(r.getEigenvectors()
+				.columnEquals(9, PRECISION, 0.1862, 0.2926, 0.0037, 0.2897,
+						0.3807, 0.5688, 0.0107, -0.3388, 0.4610));
+		assertTrue(r.getLoadings().columnEquals(1, PRECISION, -0.2913, -0.3839,
+				0.3681, 0.3347, -0.5489, 0.4784, 0.5831, -0.5157, 0.0054));
+		assertTrue(r.getLoadings().columnEquals(9, PRECISION, 0.0540, 0.0848,
+				0.0011, 0.0840, 0.1103, 0.1648, 0.0031, -0.0982, 0.1336));
+		assertTrue(r.getPercentVariance()
+				.columnEquals(1, PRECISION, 17.9536, 15.6878, 9.3365, 6.1583,
+						4.2772, 3.0895, 2.0823, 2.0432, 0.9334));
+		assertEquals(1, r.getEigenvalueThreshold().getMinEigenvalue(),
+				PRECISION);
 	}
 }

@@ -428,6 +428,13 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return this;
 	}
 
+	public static Matrix createZeroMatrixWithDiagonal(Vector vector) {
+		Matrix matrix = new Matrix(vector.rowCount(), vector.rowCount());
+		for (int i = 1; i <= vector.rowCount(); i++)
+			matrix.setValue(i, i, vector.getValue(i));
+		return matrix;
+	}
+
 	// private String[] join(String[] a1, String[] a2) {
 	// if (a1 == null)
 	// return a2;
@@ -708,10 +715,10 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			performCentroidMethod(eigenvalueThreshold, r);
 		}
 
-		// TODO ensure eigenvalues are in descending order
-		// applyRowSwitcher(r);
-
 		normalizeLoadingSigns(r);
+
+		// TODO ensure eigenvalues are in descending order
+		makeEigenvaluesDescendInValue(r);
 
 		r.setRotatedLoadings(new RotatedLoadings());
 		RotationMethod[] methods;
@@ -752,26 +759,15 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	 * 
 	 * @param r
 	 */
-	private void applyRowSwitcher(FactorAnalysisResults r) {
+	private void makeEigenvaluesDescendInValue(FactorAnalysisResults r) {
 		{
-			Matrix columnSwitcher = r.getEigenvaluesVector()
-					.getRowSwitchingMatrixToOrderByAbsoluteValue(false)
-					.transpose();
-			r.setLoadings(r.getLoadings().times(columnSwitcher));
-			r.setEigenvectors(r.getEigenvectors().times(columnSwitcher));
-			r.setEigenvalues(r.getEigenvalues().times(
-					columnSwitcher.transpose()));
-		}
-		{
-			Matrix columnSwitcher = r.getPrincipalEigenvaluesVector()
-					.getRowSwitchingMatrixToOrderByAbsoluteValue(false)
-					.transpose();
-			r.setPrincipalLoadings(r.getPrincipalLoadings().times(
-					columnSwitcher));
-			r.setPrincipalEigenvectors(r.getPrincipalEigenvectors().times(
-					columnSwitcher));
-			r.setPrincipalEigenvalues(r.getPrincipalEigenvalues().times(
-					columnSwitcher.transpose()));
+			Matrix rowSwitcher = r.getEigenvaluesVector()
+					.getRowSwitchingMatrixToOrderByAbsoluteValue(false);
+			r.setEigenvalues(Matrix.createZeroMatrixWithDiagonal(rowSwitcher
+					.times(r.getEigenvaluesVector())));
+			r.setEigenvectors(r.getEigenvectors()
+					.times(rowSwitcher.transpose()));
+			r.setLoadings(r.getLoadings().times(rowSwitcher.transpose()));
 		}
 	}
 
@@ -783,7 +779,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	 * 
 	 * @param r
 	 */
-    private void normalizeLoadingSigns(FactorAnalysisResults r) {
+	private void normalizeLoadingSigns(FactorAnalysisResults r) {
 		{
 			Matrix sn = r
 					.getLoadings()
