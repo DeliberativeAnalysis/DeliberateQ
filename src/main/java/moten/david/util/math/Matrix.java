@@ -824,7 +824,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			Collections.sort(removeThese);
 			for (int i = removeThese.size() - 1; i >= 0; i--) {
 				Integer column = removeThese.get(i);
-				loadings = loadings.removeColumn(column);
 				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
 						.removeRow(column));
 				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
@@ -892,30 +891,15 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		r.setPrincipalEigenvalues(r.getEigenvalues().copy());
 		r.setPrincipalEigenvectors(r.getEigenvectors().copy());
 
-		Matrix eigenvalues = r.getEigenvalues().copy();
-		Matrix principalEigenvalues = r.getEigenvalues().copy();
-		Matrix principalEigenvectors = r.getEigenvectors().copy();
-
-		for (int i = eigenvalues.rowCount(); i >= 1; i--) {
-			if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
-					PrincipalFactorCriterion.MIN_EIGENVALUE)
-					&& eigenvalues.getValue(i, i) < eigenvalueThreshold
-							.getMinEigenvalue()) {
-				principalEigenvalues = principalEigenvalues.removeRow(i)
-						.removeColumn(i);
-			}
-		}
+		// min eigenvalue checks
+		Vector eigenvalues = r.getEigenvaluesVector().copyVector();
+		Matrix principalEigenvalues = removeRowsLessThanMinEigenvalue(
+				eigenvalueThreshold, eigenvalues, r.getEigenvalues());
 		r.setPrincipalEigenvalues(principalEigenvalues);
 
-		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
-				PrincipalFactorCriterion.MIN_EIGENVALUE))
-			for (int i = eigenvalues.rowCount(); i >= 1; i--) {
-				if (eigenvalues.getValue(i, i) < eigenvalueThreshold
-						.getMinEigenvalue()) {
-					principalEigenvectors = principalEigenvectors
-							.removeColumn(i);
-				}
-			}
+		Matrix principalEigenvectors = removeColumnsLessThanMinEigenvalue(
+				eigenvalueThreshold, eigenvalues, r.getEigenvectors());
+		r.setPrincipalEigenvectors(principalEigenvectors);
 
 		// now apply the max factors criterion if set
 		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
@@ -959,6 +943,36 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				.reverseRows());
 		r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
 				.reverseColumns());
+	}
+
+	private Matrix removeColumnsLessThanMinEigenvalue(
+			EigenvalueThreshold eigenvalueThreshold, Vector eigenvalues,
+			Matrix principalEigenvectors) {
+		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
+				PrincipalFactorCriterion.MIN_EIGENVALUE))
+			for (int i = eigenvalues.rowCount(); i >= 1; i--) {
+				if (eigenvalues.getValue(i, i) < eigenvalueThreshold
+						.getMinEigenvalue()) {
+					principalEigenvectors = principalEigenvectors
+							.removeColumn(i);
+				}
+			}
+		return principalEigenvectors;
+	}
+
+	private Matrix removeRowsLessThanMinEigenvalue(
+			EigenvalueThreshold eigenvalueThreshold, Vector eigenvalues,
+			Matrix principalEigenvalues) {
+		for (int i = eigenvalues.rowCount(); i >= 1; i--) {
+			if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
+					PrincipalFactorCriterion.MIN_EIGENVALUE)
+					&& eigenvalues.getValue(i) < eigenvalueThreshold
+							.getMinEigenvalue()) {
+				principalEigenvalues = principalEigenvalues.removeRow(i)
+						.removeColumn(i);
+			}
+		}
+		return principalEigenvalues;
 	}
 
 	public Matrix getKaiserNormalization(boolean inverse) {

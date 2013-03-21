@@ -85,6 +85,7 @@ public class AnalysisTest {
 				0.1363, -0.4678, 0.5962, 0.5294, -0.0043, 0.0310, -0.0018,
 				-0.3828, -0.4784, -0.1217));
 
+		// check principal loadings labels
 		Assert.assertEquals("ADV", principalLoadings.getRowLabel(1));
 		Assert.assertEquals("F1", principalLoadings.getColumnLabel(1));
 
@@ -99,18 +100,24 @@ public class AnalysisTest {
 				FactorExtractionMethod.CENTROID_METHOD,
 				EigenvalueThreshold.createWithMinEigenvalue(1.0));
 
+		// check eigenvalues
 		assertTrue(r.getEigenvaluesVector().columnEquals(1, PRECISION, 1.6158,
 				1.4119, 0.8403, 0.5542, 0.3849, 0.2781, 0.1874, 0.1839, 0.0840));
+
+		// check eigenvectors
 		assertTrue(r.getEigenvectors().columnEquals(1, PRECISION, -0.2292,
 				-0.3020, 0.2896, 0.2633, -0.4318, 0.3763, 0.4587, -0.4057,
 				0.0042));
 		assertTrue(r.getEigenvectors()
 				.columnEquals(9, PRECISION, 0.1862, 0.2926, 0.0037, 0.2897,
 						0.3807, 0.5688, 0.0107, -0.3388, 0.4610));
+		// check loadings
 		assertTrue(r.getLoadings().columnEquals(1, PRECISION, -0.2913, -0.3839,
 				0.3681, 0.3347, -0.5489, 0.4784, 0.5831, -0.5157, 0.0054));
 		assertTrue(r.getLoadings().columnEquals(9, PRECISION, 0.0540, 0.0848,
 				0.0011, 0.0840, 0.1103, 0.1648, 0.0031, -0.0982, 0.1336));
+
+		// check percent variance
 		assertTrue(r.getPercentVariance()
 				.columnEquals(1, PRECISION, 17.9536, 15.6878, 9.3365, 6.1583,
 						4.2772, 3.0895, 2.0823, 2.0432, 0.9334));

@@ -36,6 +36,15 @@ public class Vector extends Matrix {
 		}
 	}
 
+	public Vector(Vector vector) {
+		this(vector.rowCount(), vector.columnCount());
+		for (int i = 1; i <= rowCount(); i++) {
+			setValue(i, vector.getValue(i));
+		}
+		setRowLabels(vector.getRowLabels());
+		setColumnLabels(vector.getColumnLabels());
+	}
+
 	public double getValue(int i) {
 		return this.getValue(i, 1);
 	}
@@ -71,6 +80,10 @@ public class Vector extends Matrix {
 			result.setValue(i, getValue(i) - mean);
 		}
 		return result;
+	}
+
+	public Vector copyVector() {
+		return new Vector(this);
 	}
 
 	@Override
@@ -281,15 +294,6 @@ public class Vector extends Matrix {
 		double denom = (n * sumXX - sumX * sumX) * (n * sumYY - sumY * sumY);
 		double r2 = numerator / denom;
 		return new RegressionLine(a0, a1, r2);
-	}
-
-	public Vector(Vector vector) {
-		this(vector.rowCount(), vector.columnCount());
-		for (int i = 1; i <= rowCount(); i++) {
-			setValue(i, vector.getValue(i));
-		}
-		setRowLabels(vector.getRowLabels());
-		setColumnLabels(vector.getColumnLabels());
 	}
 
 	public Vector add(double d) {
