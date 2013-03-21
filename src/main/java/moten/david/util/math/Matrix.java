@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -35,6 +36,8 @@ import org.apache.commons.math.distribution.TDistributionImpl;
 
 import Jama.EigenvalueDecomposition;
 import Jama.SingularValueDecomposition;
+
+import com.google.inject.internal.Lists;
 
 /**
  * @author dave
@@ -808,45 +811,70 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		r.setPrincipalEigenvalues(results.eigenvalues);
 		r.setPrincipalEigenvectors(results.eigenvectors);
 		Matrix loadings = results.loadings;
-		for (int i = 1; i <= loadings.columnCount(); i++) {
+		{
+			List<Integer> removeThese = Lists.newArrayList();
+			for (int i = 1; i <= loadings.columnCount(); i++) {
+				if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
+						PrincipalFactorCriterion.MIN_EIGENVALUE)
+						&& loadings.getColumnVector(i).getSquare().getSum() < eigenvalueThreshold
+								.getMinEigenvalue()) {
+					removeThese.add(i);
+				}
+			}
+			Collections.sort(removeThese);
+			for (int i = removeThese.size() - 1; i >= 0; i--) {
+				Integer column = removeThese.get(i);
+				loadings = loadings.removeColumn(column);
+				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+						.removeRow(column));
+				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+						.removeColumn(column));
+				r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
+						.removeColumn(column));
+			}
+		}
+		{
+			// now apply the max factors criterion if set
 			if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
-					PrincipalFactorCriterion.MIN_EIGENVALUE)
-					&& loadings.getColumnVector(i).getSquare().getSum() < eigenvalueThreshold
-							.getMinEigenvalue()) {
-				loadings = loadings.removeColumn(i);
-				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeRow(i));
-				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeColumn(i));
-				r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
-						.removeColumn(i));
+					PrincipalFactorCriterion.MAX_FACTORS)
+					&& r.getPrincipalEigenvalues().rowCount() > eigenvalueThreshold
+							.getMaxFactors()) {
+				// for each extraneous row
+				int extraRows = r.getPrincipalEigenvalues().rowCount()
+						- eigenvalueThreshold.getMaxFactors();
+				List<Integer> removeThese = Lists.newArrayList();
+				for (int j = 1; j <= extraRows; j++) {
+					// remove the row and col from loadings,
+					// principalEigenvalues and principalEigenvectors if
+					// it contains the smallest eigenvalue
+					Point pos = r.getPrincipalEigenvalues().getDiagonal()
+							.getPositionOfMinValue();
+					removeThese.add(pos.x);
+				}
+				Collections.sort(removeThese);
+				for (int j = removeThese.size() - 1; j >= 0; j--) {
+					Integer row = removeThese.get(j);
+					r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+							.removeRow(row));
+					r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+							.removeColumn(row));
+					r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
+							.removeColumn(row));
+				}
 			}
 		}
-		// now apply the max factors criterion if set
-		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
-				PrincipalFactorCriterion.MAX_FACTORS)
-				&& r.getPrincipalEigenvalues().rowCount() > eigenvalueThreshold
-						.getMaxFactors()) {
-			// for each extraneous row
-			int extraRows = r.getPrincipalEigenvalues().rowCount()
-					- eigenvalueThreshold.getMaxFactors();
-			for (int j = 1; j <= extraRows; j++) {
-				// remove the row and col from loadings,
-				// principalEigenvalues and principalEigenvectors if
-				// it contains the smallest eigenvalue
-				Point pos = r.getPrincipalEigenvalues().getDiagonal()
-						.getPositionOfMinValue();
-				loadings = loadings.removeColumn(pos.x);
-				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeRow(pos.x));
-				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeColumn(pos.x));
-				r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
-						.removeColumn(pos.x));
-			}
-		}
-		r.setPrincipalLoadings(loadings);
+		r.setLoadings(r.getEigenvectors().times(
+				r.getEigenvalues().apply(SQUARE_ROOT)));
+		r.setPrincipalLoadings(r.getPrincipalEigenvectors().times(
+				r.getPrincipalEigenvalues().apply(SQUARE_ROOT)));
 	}
+
+	private static Function SQUARE_ROOT = new Function() {
+		@Override
+		public double f(int i, int j, double x) {
+			return Math.sqrt(x);
+		}
+	};
 
 	private void performPrincipalComponentsAnalysis(
 			EigenvalueThreshold eigenvalueThreshold,
@@ -863,17 +891,32 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		r.getEigenvectors().setColumnLabelPattern("F<reverse-index>");
 		r.setPrincipalEigenvalues(r.getEigenvalues().copy());
 		r.setPrincipalEigenvectors(r.getEigenvectors().copy());
-		for (int i = r.getEigenvalues().rowCount(); i >= 1; i--) {
+
+		Matrix eigenvalues = r.getEigenvalues().copy();
+		Matrix principalEigenvalues = r.getEigenvalues().copy();
+		Matrix principalEigenvectors = r.getEigenvectors().copy();
+
+		for (int i = eigenvalues.rowCount(); i >= 1; i--) {
 			if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
 					PrincipalFactorCriterion.MIN_EIGENVALUE)
-					&& r.getEigenvalues().getValue(i, i) < eigenvalueThreshold
+					&& eigenvalues.getValue(i, i) < eigenvalueThreshold
 							.getMinEigenvalue()) {
-				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeRow(i).removeColumn(i));
-				r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
-						.removeColumn(i));
+				principalEigenvalues = principalEigenvalues.removeRow(i)
+						.removeColumn(i);
 			}
 		}
+		r.setPrincipalEigenvalues(principalEigenvalues);
+
+		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
+				PrincipalFactorCriterion.MIN_EIGENVALUE))
+			for (int i = eigenvalues.rowCount(); i >= 1; i--) {
+				if (eigenvalues.getValue(i, i) < eigenvalueThreshold
+						.getMinEigenvalue()) {
+					principalEigenvectors = principalEigenvectors
+							.removeColumn(i);
+				}
+			}
+
 		// now apply the max factors criterion if set
 		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
 				PrincipalFactorCriterion.MAX_FACTORS)
@@ -882,35 +925,31 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			// for each extraneous row
 			int extraRows = r.getPrincipalEigenvalues().rowCount()
 					- eigenvalueThreshold.getMaxFactors();
+			List<Integer> removeThese = Lists.newArrayList();
 			for (int j = 1; j <= extraRows; j++) {
 				// remove the row and col from loadings,
 				// principalEigenvalues and principalEigenvectors if
 				// it contains the smallest eigenvalue
 				Point pos = r.getPrincipalEigenvalues().getDiagonal()
 						.getPositionOfMinValue();
+				removeThese.add(pos.x);
+			}
+			Collections.sort(removeThese);
+			for (int j = removeThese.size() - 1; j >= 0; j--) {
+				Integer row = removeThese.get(j);
 				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeRow(pos.x));
+						.removeRow(row));
 				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeColumn(pos.x));
+						.removeColumn(row));
 				r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
-						.removeColumn(pos.x));
+						.removeColumn(row));
 			}
 		}
 
 		r.setLoadings(r.getEigenvectors().times(
-				r.getEigenvalues().apply(new Function() {
-					@Override
-					public double f(int i, int j, double x) {
-						return Math.sqrt(x);
-					}
-				})));
+				r.getEigenvalues().apply(SQUARE_ROOT)));
 		r.setPrincipalLoadings(r.getPrincipalEigenvectors().times(
-				r.getPrincipalEigenvalues().apply(new Function() {
-					@Override
-					public double f(int i, int j, double x) {
-						return Math.sqrt(x);
-					}
-				})));
+				r.getPrincipalEigenvalues().apply(SQUARE_ROOT)));
 		r.setLoadings(r.getLoadings().reverseColumns());
 		r.setPrincipalLoadings(r.getPrincipalLoadings().reverseColumns());
 		// clean up the presentation of the eigenvalues and vectors
@@ -1304,11 +1343,11 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	}
 
 	public Point getPositionOfMinValue() {
-		Point p = new Point(1, 1);
-		double min = getValue(1, 1);
+		Point p = null;
+		Double min = null;
 		for (int i = 1; i <= rowCount(); i++) {
 			for (int j = 1; j <= columnCount(); j++) {
-				if (getValue(i, j) < min) {
+				if (min == null || getValue(i, j) < min) {
 					p = new Point(i, j);
 					min = getValue(i, j);
 				}
