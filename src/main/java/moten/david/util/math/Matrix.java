@@ -544,13 +544,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return result;
 	}
 
-	private void enumerateColumnLabels() {
-		columnLabels = new String[columnCount()];
-		for (int i = 0; i < columnLabels.length; i++) {
-			columnLabels[i] = (i + 1) + "";
-		}
-	}
-
 	public static void main(String[] args) throws FactorAnalysisException,
 			MathException {
 		Matrix m = new Matrix(14, 10);
