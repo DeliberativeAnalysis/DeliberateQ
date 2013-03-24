@@ -431,7 +431,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return this;
 	}
 
-	public static Matrix createZeroMatrixWithDiagonal(Vector vector) {
+	public static Matrix createDiagonalMatrix(Vector vector) {
 		Matrix matrix = new Matrix(vector.rowCount(), vector.rowCount());
 		for (int i = 1; i <= vector.rowCount(); i++)
 			matrix.setValue(i, i, vector.getValue(i));
@@ -714,6 +714,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		normalizeLoadingSigns(r);
 
 		// TODO ensure eigenvalues are in descending order
+		// should be done before principal eigen* are calculated
 		makeEigenvaluesDescendInValue(r);
 
 		r.setRotatedLoadings(new RotatedLoadings());
@@ -736,13 +737,11 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		}
 
 		r.setRotationTimeMs(System.currentTimeMillis() - t);
-		r.setPercentVariance(r.getEigenvalues().getDiagonal());
-		r.setPercentVariance(r.getPercentVariance().apply(new Function() {
-
+		final Vector temp = r.getEigenvalues().getDiagonal();
+		r.setPercentVariance(temp.apply(new Function() {
 			@Override
 			public double f(int row, int col, double x) {
-				return 100 * r.getPercentVariance().getValue(row)
-						/ r.getPercentVariance().size();
+				return 100 * temp.getValue(row) / temp.size();
 			}
 		}).getColumnVector(1));
 		r.getPercentVariance().setColumnLabel(1, "%Variance");
@@ -759,10 +758,13 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		{
 			Matrix rowSwitcher = r.getEigenvaluesVector()
 					.getRowSwitchingMatrixToOrderByAbsoluteValue(false);
-			r.setEigenvalues(Matrix.createZeroMatrixWithDiagonal(rowSwitcher
-					.times(r.getEigenvaluesVector())));
+			// switch rows on eigenvalue vector
+			r.setEigenvalues(Matrix.createDiagonalMatrix(rowSwitcher.times(r
+					.getEigenvaluesVector())));
+			// switch columsn on eigenvectors matrix
 			r.setEigenvectors(r.getEigenvectors()
 					.times(rowSwitcher.transpose()));
+			// switch columns on loadings
 			r.setLoadings(r.getLoadings().times(rowSwitcher.transpose()));
 		}
 	}
@@ -804,6 +806,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		r.setPrincipalEigenvalues(results.eigenvalues);
 		r.setPrincipalEigenvectors(results.eigenvectors);
 		Matrix loadings = results.loadings;
+		makeEigenvaluesDescendInValue(r);
 		{
 			List<Integer> removeThese = Lists.newArrayList();
 			for (int i = 1; i <= loadings.columnCount(); i++) {
