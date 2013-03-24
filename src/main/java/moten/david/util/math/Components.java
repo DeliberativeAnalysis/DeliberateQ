@@ -1,12 +1,9 @@
 package moten.david.util.math;
 
-import java.awt.Point;
 import java.util.Collections;
 import java.util.List;
 
 import moten.david.util.math.EigenvalueThreshold.PrincipalFactorCriterion;
-
-import com.google.inject.internal.Lists;
 
 public class Components {
 
@@ -35,13 +32,13 @@ public class Components {
 	}
 
 	public Components getPrincipalComponents(
-			EigenvalueThreshold eigenvalueThreshold) {
+			EigenvalueThreshold threshold) {
 
 		// apply min eigenvalue criterion if set
-		Components c = removeEntriesLessThanMinEigenvalue(eigenvalueThreshold);
+		Components c = removeEntriesLessThanMinEigenvalue(threshold);
 
 		// apply max factors criterion if set
-		c = removeEntriesAccordingToMaxFactors(c, eigenvalueThreshold);
+		c = removeEntriesAccordingToMaxFactors(c, threshold);
 
 		// get positive manifold
 		c = c.normalizeLoadingSigns();
@@ -51,48 +48,55 @@ public class Components {
 	}
 
 	public Components removeEntriesAccordingToMaxFactors(Components c,
-			EigenvalueThreshold eigenvalueThreshold) {
+			EigenvalueThreshold threshold) {
 
-		Matrix eValues = c.getEigenvalues();
-		Matrix eVectors = c.getEigenvectors();
-		// now apply the max factors criterion if set
-		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
+		if (threshold.getPrincipalFactorCriterion().equals(
 				PrincipalFactorCriterion.MAX_FACTORS)
-				&& c.getEigenvalues().rowCount() > eigenvalueThreshold
+				&& c.getEigenvalues().rowCount() > threshold
 						.getMaxFactors()) {
-			Vector eigenvaluesVector = c.getEigenvaluesVector();
-			// for each extraneous row
-			int extraRows = eigenvaluesVector.rowCount()
-					- eigenvalueThreshold.getMaxFactors();
-			List<Integer> removeThese = Lists.newArrayList();
-			for (int j = 1; j <= extraRows; j++) {
-				// remove the row and col from loadings,
-				// principalEigenvalues and principalEigenvectors if
-				// it contains the smallest eigenvalue
-				Point pos = eigenvaluesVector.getPositionOfMinValue();
-				removeThese.add(pos.x);
-			}
+
+			final Vector eigenvaluesVector = c.getEigenvaluesVector();
+			Matrix eValues = c.getEigenvalues();
+			Matrix eVectors = c.getEigenvectors();
+
+			// count the values to delete
+			int numToDelete = eigenvaluesVector.rowCount()
+					- threshold.getMaxFactors();
+
+			List<Integer> ordered = eigenvaluesVector
+					.getOrderedIndicesByAbsoluteValue(true);
+
+			List<Integer> removeThese = ordered.subList(0, numToDelete);
+
+			// now sort the indices to remove because we must remove
+			// rows/columns from the bottom/right first
 			Collections.sort(removeThese);
+
+			// remove the rows/columns from the bottom/right first
 			for (int j = removeThese.size() - 1; j >= 0; j--) {
 				Integer row = removeThese.get(j);
 				eValues = eValues.removeRow(row).removeColumn(row);
 				eVectors = eVectors.removeColumn(row);
 			}
-		}
-		return new Components(eVectors, eValues);
+			return new Components(eVectors, eValues);
+		} else
+			return this;
 	}
 
 	public Components makeEigenvaluesDescendInValue(
-			EigenvalueThreshold eigenvalueThreshold) {
-		Matrix rowSwitcher = getEigenvaluesVector()
+			EigenvalueThreshold threshold) {
+
+		// calculate row switcher for ordering of eigenvalues vector
+		Vector eigenvaluesVector = getEigenvaluesVector();
+		Matrix rowSwitcher = eigenvaluesVector
 				.getRowSwitchingMatrixToOrderByAbsoluteValue(false);
 		// switch rows on eigenvalue vector
-		Matrix eigenvalues = Matrix.createDiagonalMatrix(rowSwitcher
-				.times(getEigenvaluesVector()));
+		Matrix eValues = Matrix.createDiagonalMatrix(rowSwitcher
+				.times(eigenvaluesVector));
 
 		// switch columns on eigenvectors matrix
-		Matrix eigenvectors = getEigenvectors().times(rowSwitcher.transpose());
-		return new Components(eigenvectors, eigenvalues);
+		Matrix eVectors = getEigenvectors().times(rowSwitcher.transpose());
+		return new Components(eVectors, eValues);
 	}
 
 	// TODO rename to makePositiveManifold?
