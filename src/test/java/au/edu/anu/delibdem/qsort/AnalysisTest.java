@@ -123,5 +123,18 @@ public class AnalysisTest {
 						4.2772, 3.0895, 2.0823, 2.0432, 0.9334));
 		assertEquals(1, r.getEigenvalueThreshold().getMinEigenvalue(),
 				PRECISION);
+
+		// check principal eigenvalues
+		assertTrue(r.getPrincipalEigenvaluesVector().columnEquals(1, PRECISION,
+				1.6158, 1.4119));
+
+		// check principal eigenvectors
+		assertEquals(2, r.getPrincipalEigenvectors().columnCount());
+		assertTrue(r.getPrincipalEigenvectors().columnEquals(1, PRECISION,
+				-0.2292, -0.3020, 0.2896, 0.2633, -0.4318, 0.3763, 0.4587,
+				-0.4057, 0.0042));
+		assertTrue(r.getPrincipalEigenvectors().columnEquals(2, PRECISION,
+				-0.4626, -0.2174, -0.4485, -0.4109, 0.4637, 0.2174, 0.2330,
+				-0.2116, -0.0861));
 	}
 }
