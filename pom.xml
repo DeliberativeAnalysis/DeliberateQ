@@ -121,8 +121,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<verbose>true</verbose>
-					<fork>false</fork>
 					<source>${compiler.source.version}</source>
 					<target>${compiler.source.version}</target>
 				</configuration>
