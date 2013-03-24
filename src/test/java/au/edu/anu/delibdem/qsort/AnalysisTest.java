@@ -114,6 +114,8 @@ public class AnalysisTest {
 		// check loadings
 		assertTrue(r.getLoadings().columnEquals(1, PRECISION, -0.2913, -0.3839,
 				0.3681, 0.3347, -0.5489, 0.4784, 0.5831, -0.5157, 0.0054));
+		assertTrue(r.getLoadings().columnEquals(2, PRECISION, -0.5497, -0.2583,
+				-0.5329, -0.4882, 0.5510, 0.2583, 0.2768, -0.2515, -0.1023));
 		assertTrue(r.getLoadings().columnEquals(9, PRECISION, 0.0540, 0.0848,
 				0.0011, 0.0840, 0.1103, 0.1648, 0.0031, -0.0982, 0.1336));
 
@@ -136,5 +138,15 @@ public class AnalysisTest {
 		assertTrue(r.getPrincipalEigenvectors().columnEquals(2, PRECISION,
 				-0.4626, -0.2174, -0.4485, -0.4109, 0.4637, 0.2174, 0.2330,
 				-0.2116, -0.0861));
+
+		// check principal loadings
+		assertEquals(2, r.getPrincipalLoadings().columnCount());
+		assertTrue(r.getPrincipalLoadings().columnEquals(1, PRECISION, -0.2913,
+				-0.3839, 0.3681, 0.3347, -0.5489, 0.4784, 0.5831, -0.5157,
+				0.0054));
+		assertTrue(r.getPrincipalLoadings().columnEquals(2, PRECISION, -0.5497,
+				-0.2583, -0.5329, -0.4882, 0.5510, 0.2583, 0.2768, -0.2515,
+				-0.1023));
+
 	}
 }
