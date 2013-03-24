@@ -889,11 +889,11 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 		// min eigenvalue checks
 		Vector eigenvalues = r.getEigenvaluesVector().copyVector();
-		Matrix principalEigenvalues = removeRowsLessThanMinEigenvalue(
+		Matrix principalEigenvalues = removeEigenvalueRowsLessThanMinEigenvalue(
 				eigenvalueThreshold, eigenvalues, r.getEigenvalues());
 		r.setPrincipalEigenvalues(principalEigenvalues);
 
-		Matrix principalEigenvectors = removeColumnsLessThanMinEigenvalue(
+		Matrix principalEigenvectors = removeEigenvectorColumnsLessThanMinEigenvalue(
 				eigenvalueThreshold, eigenvalues, r.getEigenvectors());
 		r.setPrincipalEigenvectors(principalEigenvectors);
 
@@ -941,7 +941,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				.reverseColumns());
 	}
 
-	private Matrix removeColumnsLessThanMinEigenvalue(
+	public Matrix removeEigenvectorColumnsLessThanMinEigenvalue(
 			EigenvalueThreshold eigenvalueThreshold, Vector eigenvalues,
 			Matrix principalEigenvectors) {
 		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
@@ -956,7 +956,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return principalEigenvectors;
 	}
 
-	private Matrix removeRowsLessThanMinEigenvalue(
+	private Matrix removeEigenvalueRowsLessThanMinEigenvalue(
 			EigenvalueThreshold eigenvalueThreshold, Vector eigenvalues,
 			Matrix principalEigenvalues) {
 		for (int i = eigenvalues.rowCount(); i >= 1; i--) {
