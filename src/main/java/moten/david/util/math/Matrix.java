@@ -864,7 +864,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				r.getPrincipalEigenvalues().apply(SQUARE_ROOT)));
 	}
 
-	private static Function SQUARE_ROOT = new Function() {
+	public static Function SQUARE_ROOT = new Function() {
 		@Override
 		public double f(int i, int j, double x) {
 			return Math.sqrt(x);
