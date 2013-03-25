@@ -33,14 +33,27 @@ public class Components {
 
 	public Components getPrincipalComponents(EigenvalueThreshold threshold) {
 
+		System.out.println("getting pc, initial = ");
+		System.out.println(this);
+
+		Components c = makeEigenvaluesDescendInValue();
+		System.out.println("order eigenvalues desc=");
+		System.out.println(this);
+
 		// apply min eigenvalue criterion if set
-		Components c = removeEntriesLessThanMinEigenvalue(threshold);
+		c = c.removeEntriesLessThanMinEigenvalue(threshold);
+		System.out.println("removed les than min eigenvalue=");
+		System.out.println(this);
 
 		// apply max factors criterion if set
 		c = removeEntriesMoreThanMaxFactors(c, threshold);
+		System.out.println("removed more than max factors=");
+		System.out.println(this);
 
 		// get positive manifold
 		c = c.normalizeLoadingSigns();
+		System.out.println("normalized manifold=");
+		System.out.println(this);
 
 		// return result
 		return c;
@@ -86,8 +99,7 @@ public class Components {
 			return this;
 	}
 
-	public Components makeEigenvaluesDescendInValue(
-			EigenvalueThreshold threshold) {
+	public Components makeEigenvaluesDescendInValue() {
 
 		// calculate row switcher for ordering of eigenvalues vector
 		Vector eigenvaluesVector = getEigenvaluesVector();

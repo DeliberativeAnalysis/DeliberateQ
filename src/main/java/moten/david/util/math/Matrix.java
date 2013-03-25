@@ -954,7 +954,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			eigenvectors.setRowLabels(this.columnLabels);
 			eigenvectors.setColumnLabelPattern("F<index>");
 
-			Components c = new Components(eigenvalues, eigenvectors);
+			Components c = new Components(eigenvectors, eigenvalues);
 			Components pc = c.getPrincipalComponents(eigenvalueThreshold);
 			pc.getEigenvectors().setColumnLabelPattern("F<index>");
 
