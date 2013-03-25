@@ -93,6 +93,7 @@ public class Components {
 		Vector eigenvaluesVector = getEigenvaluesVector();
 		Matrix rowSwitcher = eigenvaluesVector
 				.getRowSwitchingMatrixToOrderByAbsoluteValue(false);
+
 		// switch rows on eigenvalue vector
 		Matrix eValues = Matrix.createDiagonalMatrix(rowSwitcher
 				.times(eigenvaluesVector));
