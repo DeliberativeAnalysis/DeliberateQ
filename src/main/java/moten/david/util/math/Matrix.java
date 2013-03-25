@@ -692,7 +692,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				rotationMethods);
 	}
 
-	private static boolean legacy = true;
+	private static boolean legacy = false;
 
 	public FactorAnalysisResults analyzeCorrelationMatrixFactors(
 			FactorExtractionMethod extractionMethod,

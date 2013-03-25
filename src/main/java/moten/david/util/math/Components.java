@@ -129,4 +129,15 @@ public class Components {
 		return new Components(eVectors, eValues);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Components [eigenvectors=\n");
+		builder.append(eigenvectors);
+		builder.append(", eigenvalues=\n");
+		builder.append(eigenvalues);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }
