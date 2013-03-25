@@ -33,6 +33,7 @@ public class AnalysisTest {
 
 		// check eigenvalues
 		Vector eigenvalues = r.getEigenvaluesVector();
+		System.out.println(eigenvalues);
 		assertTrue(eigenvalues.columnEquals(1, PRECISION, 6.6864, 1.3041,
 				0.9285, 0.6598, 0.5559, 0.4329, 0.3922, 0.3302, 0.2578, 0.1903,
 				0.1614, 0.1003));

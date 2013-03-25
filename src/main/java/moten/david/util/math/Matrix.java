@@ -692,6 +692,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				rotationMethods);
 	}
 
+	private static boolean legacy = true;
+
 	public FactorAnalysisResults analyzeCorrelationMatrixFactors(
 			FactorExtractionMethod extractionMethod,
 			EigenvalueThreshold eigenvalueThreshold,
@@ -711,11 +713,13 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			performCentroidMethod(eigenvalueThreshold, r);
 		}
 
-		normalizeLoadingSigns(r);
+		if (legacy) {
+			normalizeLoadingSigns(r);
 
-		// TODO ensure eigenvalues are in descending order
-		// should be done before principal eigen* are calculated
-		makeEigenvaluesDescendInValue(r);
+			// TODO ensure eigenvalues are in descending order
+			// should be done before principal eigen* are calculated
+			makeEigenvaluesDescendInValue(r);
+		}
 
 		r.setRotatedLoadings(new RotatedLoadings());
 		RotationMethod[] methods;
@@ -874,71 +878,95 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	private void performPrincipalComponentsAnalysis(
 			EigenvalueThreshold eigenvalueThreshold,
 			final FactorAnalysisResults r) {
-		long t = System.currentTimeMillis();
-		EigenvalueDecomposition e = toJamaMatrix().eig();
-		r.setExtractionTimeMs(System.currentTimeMillis() - t);
-		r.setEigenvalues(new Matrix(e.getD()));
-		r.getEigenvalues().setRowLabels(this.columnLabels);
-		r.getEigenvalues().setColumnLabelPattern("F<reverse-index>");
-		r.getEigenvalues().setRowLabelPattern("F<reverse-index>");
-		r.setEigenvectors(new Matrix(e.getV()));
-		r.getEigenvectors().setRowLabels(this.columnLabels);
-		r.getEigenvectors().setColumnLabelPattern("F<reverse-index>");
-		r.setPrincipalEigenvalues(r.getEigenvalues().copy());
-		r.setPrincipalEigenvectors(r.getEigenvectors().copy());
+		if (legacy) {
+			long t = System.currentTimeMillis();
+			EigenvalueDecomposition e = toJamaMatrix().eig();
+			r.setExtractionTimeMs(System.currentTimeMillis() - t);
+			r.setEigenvalues(new Matrix(e.getD()));
+			r.getEigenvalues().setRowLabels(this.columnLabels);
+			r.getEigenvalues().setColumnLabelPattern("F<reverse-index>");
+			r.getEigenvalues().setRowLabelPattern("F<reverse-index>");
+			r.setEigenvectors(new Matrix(e.getV()));
+			r.getEigenvectors().setRowLabels(this.columnLabels);
+			r.getEigenvectors().setColumnLabelPattern("F<reverse-index>");
+			r.setPrincipalEigenvalues(r.getEigenvalues().copy());
+			r.setPrincipalEigenvectors(r.getEigenvectors().copy());
 
-		// min eigenvalue checks
-		Vector eigenvalues = r.getEigenvaluesVector().copyVector();
-		Matrix principalEigenvalues = removeEigenvalueRowsLessThanMinEigenvalue(
-				eigenvalueThreshold, eigenvalues, r.getEigenvalues());
-		r.setPrincipalEigenvalues(principalEigenvalues);
+			// min eigenvalue checks
+			Vector eigenvalues = r.getEigenvaluesVector().copyVector();
+			Matrix principalEigenvalues = removeEigenvalueRowsLessThanMinEigenvalue(
+					eigenvalueThreshold, eigenvalues, r.getEigenvalues());
+			r.setPrincipalEigenvalues(principalEigenvalues);
 
-		Matrix principalEigenvectors = removeEigenvectorColumnsLessThanMinEigenvalue(
-				eigenvalueThreshold, eigenvalues, r.getEigenvectors());
-		r.setPrincipalEigenvectors(principalEigenvectors);
+			Matrix principalEigenvectors = removeEigenvectorColumnsLessThanMinEigenvalue(
+					eigenvalueThreshold, eigenvalues, r.getEigenvectors());
+			r.setPrincipalEigenvectors(principalEigenvectors);
 
-		// now apply the max factors criterion if set
-		if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
-				PrincipalFactorCriterion.MAX_FACTORS)
-				&& r.getPrincipalEigenvalues().rowCount() > eigenvalueThreshold
-						.getMaxFactors()) {
-			// for each extraneous row
-			int extraRows = r.getPrincipalEigenvalues().rowCount()
-					- eigenvalueThreshold.getMaxFactors();
-			List<Integer> removeThese = Lists.newArrayList();
-			for (int j = 1; j <= extraRows; j++) {
-				// remove the row and col from loadings,
-				// principalEigenvalues and principalEigenvectors if
-				// it contains the smallest eigenvalue
-				Point pos = r.getPrincipalEigenvalues().getDiagonal()
-						.getPositionOfMinValue();
-				removeThese.add(pos.x);
+			// now apply the max factors criterion if set
+			if (eigenvalueThreshold.getPrincipalFactorCriterion().equals(
+					PrincipalFactorCriterion.MAX_FACTORS)
+					&& r.getPrincipalEigenvalues().rowCount() > eigenvalueThreshold
+							.getMaxFactors()) {
+				// for each extraneous row
+				int extraRows = r.getPrincipalEigenvalues().rowCount()
+						- eigenvalueThreshold.getMaxFactors();
+				List<Integer> removeThese = Lists.newArrayList();
+				for (int j = 1; j <= extraRows; j++) {
+					// remove the row and col from loadings,
+					// principalEigenvalues and principalEigenvectors if
+					// it contains the smallest eigenvalue
+					Point pos = r.getPrincipalEigenvalues().getDiagonal()
+							.getPositionOfMinValue();
+					removeThese.add(pos.x);
+				}
+				Collections.sort(removeThese);
+				for (int j = removeThese.size() - 1; j >= 0; j--) {
+					Integer row = removeThese.get(j);
+					r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+							.removeRow(row));
+					r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+							.removeColumn(row));
+					r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
+							.removeColumn(row));
+				}
 			}
-			Collections.sort(removeThese);
-			for (int j = removeThese.size() - 1; j >= 0; j--) {
-				Integer row = removeThese.get(j);
-				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeRow(row));
-				r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-						.removeColumn(row));
-				r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
-						.removeColumn(row));
-			}
+
+			r.setLoadings(r.getEigenvectors().times(
+					r.getEigenvalues().apply(SQUARE_ROOT)));
+			r.setPrincipalLoadings(r.getPrincipalEigenvectors().times(
+					r.getPrincipalEigenvalues().apply(SQUARE_ROOT)));
+			r.setLoadings(r.getLoadings().reverseColumns());
+			r.setPrincipalLoadings(r.getPrincipalLoadings().reverseColumns());
+			// clean up the presentation of the eigenvalues and vectors
+			r.setEigenvalues(r.getEigenvalues().reverseColumns().reverseRows());
+			r.setEigenvectors(r.getEigenvectors().reverseColumns());
+			r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+					.reverseColumns().reverseRows());
+			r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
+					.reverseColumns());
+		} else {
+			long t = System.currentTimeMillis();
+			EigenvalueDecomposition e = toJamaMatrix().eig();
+			Matrix eigenvalues = new Matrix(e.getD());
+			eigenvalues.setRowLabels(this.columnLabels);
+			eigenvalues.setColumnLabelPattern("F<index>");
+			Matrix eigenvectors = new Matrix(e.getV());
+			eigenvectors.setRowLabels(this.columnLabels);
+			eigenvectors.setColumnLabelPattern("F<index>");
+
+			Components c = new Components(eigenvalues, eigenvectors);
+			Components pc = c.getPrincipalComponents(eigenvalueThreshold);
+			pc.getEigenvectors().setColumnLabelPattern("F<index>");
+
+			r.setExtractionTimeMs(System.currentTimeMillis() - t);
+
+			r.setEigenvalues(c.getEigenvalues());
+			r.setEigenvectors(c.getEigenvectors());
+			r.setLoadings(c.getLoadings());
+			r.setPrincipalEigenvalues(pc.getEigenvalues());
+			r.setPrincipalEigenvectors(pc.getEigenvectors());
+			r.setPrincipalLoadings(pc.getLoadings());
 		}
-
-		r.setLoadings(r.getEigenvectors().times(
-				r.getEigenvalues().apply(SQUARE_ROOT)));
-		r.setPrincipalLoadings(r.getPrincipalEigenvectors().times(
-				r.getPrincipalEigenvalues().apply(SQUARE_ROOT)));
-		r.setLoadings(r.getLoadings().reverseColumns());
-		r.setPrincipalLoadings(r.getPrincipalLoadings().reverseColumns());
-		// clean up the presentation of the eigenvalues and vectors
-		r.setEigenvalues(r.getEigenvalues().reverseColumns().reverseRows());
-		r.setEigenvectors(r.getEigenvectors().reverseColumns());
-		r.setPrincipalEigenvalues(r.getPrincipalEigenvalues().reverseColumns()
-				.reverseRows());
-		r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
-				.reverseColumns());
 	}
 
 	public Matrix removeEigenvectorColumnsLessThanMinEigenvalue(
