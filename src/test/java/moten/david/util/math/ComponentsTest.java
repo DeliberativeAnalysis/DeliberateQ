@@ -50,8 +50,10 @@ public class ComponentsTest {
 	}
 
 	@Test
-	public void testNormalizeLoadingSigns() {
-		// TODO
+	public void testNormalizeLoadingSignsWhenSignsDontNeedChanging() {
+		Components c = createComponents().normalizeLoadingSigns();
+		assertTrue(c.getLoadings().columnEquals(1, PRECISION, 3, 3));
+		assertTrue(c.getLoadings().columnEquals(2, PRECISION, 4, -4));
 	}
 
 	@Test
