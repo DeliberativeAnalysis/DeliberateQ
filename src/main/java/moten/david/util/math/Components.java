@@ -59,7 +59,7 @@ public class Components {
 		return c;
 	}
 
-	public Components removeEntriesMoreThanMaxFactors(Components c,
+	Components removeEntriesMoreThanMaxFactors(Components c,
 			EigenvalueThreshold threshold) {
 
 		if (threshold.getPrincipalFactorCriterion().equals(
@@ -99,7 +99,7 @@ public class Components {
 			return this;
 	}
 
-	public Components makeEigenvaluesDescendInValue() {
+	Components makeEigenvaluesDescendInValue() {
 
 		// calculate row switcher for ordering of eigenvalues vector
 		Vector eigenvaluesVector = getEigenvaluesVector();
@@ -116,14 +116,14 @@ public class Components {
 	}
 
 	// TODO rename to makePositiveManifold?
-	public Components normalizeLoadingSigns() {
+	Components normalizeLoadingSigns() {
 		Matrix sn = getLoadings()
 				.getSignNormalizationElementaryMatrixSoMaxAbsoluteValueByColumnIsPositive();
 		Matrix modifiedEigenvectors = eigenvectors.times(sn);
 		return new Components(modifiedEigenvectors, eigenvalues);
 	}
 
-	private Components removeEntriesLessThanMinEigenvalue(
+	Components removeEntriesLessThanMinEigenvalue(
 			EigenvalueThreshold eigenvalueThreshold) {
 
 		Matrix eValues = getEigenvalues();
