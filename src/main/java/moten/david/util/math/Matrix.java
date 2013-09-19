@@ -759,9 +759,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	 * @param r
 	 */
 	private void makeEigenvaluesDescendInValue(FactorAnalysisResults r) {
-		System.out
-				.println("\n\nBEFORE making eigenvalues descend in value\n----------------------------------\n\n"
-						+ r);
 		{
 			Matrix rowSwitcher = r.getEigenvaluesVector()
 					.getRowSwitchingMatrixToOrderByAbsoluteValue(false);
@@ -774,9 +771,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			// switch columns on loadings
 			r.setLoadings(r.getLoadings().times(rowSwitcher.transpose()));
 		}
-		System.out
-				.println("\n\nAFTER making eigenvalues descend in value\n----------------------------------\n\n"
-						+ r);
 	}
 
 	/**
@@ -874,9 +868,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 					}
 				}
 			}
-			System.out
-					.println("\n\nAFTER applying max factors\n----------------------------------\n\n"
-							+ r);
 		}
 		r.setLoadings(r.getEigenvectors().times(
 				r.getEigenvalues().apply(SQUARE_ROOT)));
