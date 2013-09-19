@@ -765,7 +765,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			// switch rows on eigenvalue vector
 			r.setEigenvalues(Matrix.createDiagonalMatrix(rowSwitcher.times(r
 					.getEigenvaluesVector())));
-			// switch columsn on eigenvectors matrix
+			// switch columns on eigenvectors matrix
 			r.setEigenvectors(r.getEigenvectors()
 					.times(rowSwitcher.transpose()));
 			// switch columns on loadings
