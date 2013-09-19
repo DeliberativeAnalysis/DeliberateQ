@@ -84,6 +84,10 @@ public class FactorAnalysisResults {
 
 	@Override
 	public String toString() {
+		return title;
+	}
+
+	public String toStringVerbose() {
 		return "FactorAnalysisResults [\nextractionMethod="
 				+ extractionMethod
 				+ "\n, initial=\n"
@@ -107,6 +111,7 @@ public class FactorAnalysisResults {
 				+ rotatedLoadings + ",\n extractionTimeMs=" + extractionTimeMs
 				+ ",\n rotationTimeMs=" + rotationTimeMs + ",\n title=" + title
 				+ "]";
+
 	}
 
 	private void print(Matrix data, SimpleHeirarchicalFormatter f) {
