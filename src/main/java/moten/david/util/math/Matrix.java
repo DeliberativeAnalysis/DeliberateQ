@@ -759,6 +759,9 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	 * @param r
 	 */
 	private void makeEigenvaluesDescendInValue(FactorAnalysisResults r) {
+		System.out
+				.println("\n\nBEFORE making eigenvalues descend in value\n----------------------------------\n\n"
+						+ r);
 		{
 			Matrix rowSwitcher = r.getEigenvaluesVector()
 					.getRowSwitchingMatrixToOrderByAbsoluteValue(false);
@@ -771,6 +774,9 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			// switch columns on loadings
 			r.setLoadings(r.getLoadings().times(rowSwitcher.transpose()));
 		}
+		System.out
+				.println("\n\nAFTER making eigenvalues descend in value\n----------------------------------\n\n"
+						+ r);
 	}
 
 	/**
@@ -802,15 +808,19 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	private void performCentroidMethod(EigenvalueThreshold eigenvalueThreshold,
 			final FactorAnalysisResults r) {
 		long t = System.currentTimeMillis();
-		CentroidResults results = analyzeCorrelationMatrixFactorsCentroidMethod();
-		r.setExtractionTimeMs(System.currentTimeMillis() - t);
-		r.setLoadings(results.loadings);
-		r.setEigenvalues(results.eigenvalues);
-		r.setEigenvectors(results.eigenvectors);
-		r.setPrincipalEigenvalues(results.eigenvalues);
-		r.setPrincipalEigenvectors(results.eigenvectors);
-		Matrix loadings = results.loadings;
+		{
+			CentroidResults results = analyzeCorrelationMatrixFactorsCentroidMethod();
+			r.setExtractionTimeMs(System.currentTimeMillis() - t);
+			r.setLoadings(results.loadings);
+			r.setEigenvalues(results.eigenvalues);
+			r.setEigenvectors(results.eigenvectors);
+		}
 		makeEigenvaluesDescendInValue(r);
+		// set the default values of the principal eigenvectors and eigenvalues
+		r.setPrincipalEigenvectors(r.getEigenvectors().copy());
+		r.setPrincipalEigenvalues(r.getEigenvalues().copy());
+
+		Matrix loadings = r.getLoadings();
 		{
 			List<Integer> removeThese = Lists.newArrayList();
 			for (int i = 1; i <= loadings.columnCount(); i++) {
@@ -838,29 +848,35 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 					PrincipalFactorCriterion.MAX_FACTORS)
 					&& r.getPrincipalEigenvalues().rowCount() > eigenvalueThreshold
 							.getMaxFactors()) {
-				// for each extraneous row
-				int extraRows = r.getPrincipalEigenvalues().rowCount()
-						- eigenvalueThreshold.getMaxFactors();
-				List<Integer> removeThese = Lists.newArrayList();
-				for (int j = 1; j <= extraRows; j++) {
-					// remove the row and col from loadings,
-					// principalEigenvalues and principalEigenvectors if
-					// it contains the smallest eigenvalue
-					Point pos = r.getPrincipalEigenvalues().getDiagonal()
-							.getPositionOfMinValue();
-					removeThese.add(pos.x);
-				}
-				Collections.sort(removeThese);
-				for (int j = removeThese.size() - 1; j >= 0; j--) {
-					Integer row = removeThese.get(j);
-					r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-							.removeRow(row));
-					r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
-							.removeColumn(row));
-					r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
-							.removeColumn(row));
+				boolean oldMethod = true;
+				if (oldMethod) {
+					// for each extraneous row
+					int extraRows = r.getPrincipalEigenvalues().rowCount()
+							- eigenvalueThreshold.getMaxFactors();
+					List<Integer> removeThese = Lists.newArrayList();
+					for (int j = 1; j <= extraRows; j++) {
+						// remove the row and col from loadings,
+						// principalEigenvalues and principalEigenvectors if
+						// it contains the smallest eigenvalue
+						Point pos = r.getPrincipalEigenvalues().getDiagonal()
+								.getPositionOfMinValue();
+						removeThese.add(pos.x);
+					}
+					Collections.sort(removeThese);
+					for (int j = removeThese.size() - 1; j >= 0; j--) {
+						Integer row = removeThese.get(j);
+						r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+								.removeRow(row));
+						r.setPrincipalEigenvalues(r.getPrincipalEigenvalues()
+								.removeColumn(row));
+						r.setPrincipalEigenvectors(r.getPrincipalEigenvectors()
+								.removeColumn(row));
+					}
 				}
 			}
+			System.out
+					.println("\n\nAFTER applying max factors\n----------------------------------\n\n"
+							+ r);
 		}
 		r.setLoadings(r.getEigenvectors().times(
 				r.getEigenvalues().apply(SQUARE_ROOT)));

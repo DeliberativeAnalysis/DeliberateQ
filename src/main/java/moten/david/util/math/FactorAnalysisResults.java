@@ -84,15 +84,32 @@ public class FactorAnalysisResults {
 
 	@Override
 	public String toString() {
-		// StringOutputStream sos = new StringOutputStream();
-		// final PrintWriter out = new PrintWriter(sos);
-		// SimpleHeirarchicalFormatter f = getTextFormatter(out);
-		// process(initial, f);
-		// return sos.toString();
-		return title;
+		return "FactorAnalysisResults [\nextractionMethod="
+				+ extractionMethod
+				+ "\n, initial=\n"
+				+ initial
+				+ "\n, correlations=\n"
+				+ correlations
+				+ "\n, eigenvalues=\n"
+				+ eigenvalues.getDiagonal()
+				+ "\n, eigenvectors=\n"
+				+ eigenvectors
+				+ ",\n percentVariance=\n"
+				+ percentVariance
+				+ ",\n eigenvalueThreshold="
+				+ eigenvalueThreshold
+				+ ",\n principalEigenvalues=\n"
+				+ (principalEigenvalues != null ? principalEigenvalues
+						.getDiagonal() : "null")
+				+ ",\n principalEigenvectors=\n" + principalEigenvectors
+				+ ",\n loadings=\n" + loadings + ",\n principalLoadings=\n"
+				+ principalLoadings + ",\n rotatedLoadings=\n"
+				+ rotatedLoadings + ",\n extractionTimeMs=" + extractionTimeMs
+				+ ",\n rotationTimeMs=" + rotationTimeMs + ",\n title=" + title
+				+ "]";
 	}
 
-	public void print(Matrix data, SimpleHeirarchicalFormatter f) {
+	private void print(Matrix data, SimpleHeirarchicalFormatter f) {
 
 		f.header(extractionMethod.toString(), false);
 		f.blockStart();

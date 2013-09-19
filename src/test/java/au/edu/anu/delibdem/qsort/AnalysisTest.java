@@ -95,8 +95,7 @@ public class AnalysisTest {
 	@Test
 	public void testCentroidMethodLipsetAnalysisWithMinEigenvalue()
 			throws IOException {
-		Data data = new Data(
-				AnalysisTest.class.getResourceAsStream("/studies2/Lipset.txt"));
+		Data data = getLipsetData();
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
@@ -107,6 +106,27 @@ public class AnalysisTest {
 		assertEquals(1, r.getEigenvalueThreshold().getMinEigenvalue(),
 				PRECISION);
 
+		checkLipsetAnalysisPostReductionWith2Factors(r);
+
+	}
+
+	@Test
+	public void testCentroidMethodLipsetAnalysisWithMaxFactorsEquals2()
+			throws IOException {
+		Data data = getLipsetData();
+		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
+				new DataSelection(data.getFilter(), "Questionnaire"), true,
+				FactorExtractionMethod.CENTROID_METHOD,
+				EigenvalueThreshold.createWithMaxFactors(2));
+
+		checkLipsetAnalysisPreReduction(r);
+
+		checkLipsetAnalysisPostReductionWith2Factors(r);
+
+	}
+
+	private void checkLipsetAnalysisPostReductionWith2Factors(
+			FactorAnalysisResults r) {
 		// check principal eigenvalues
 		assertTrue(r.getPrincipalEigenvaluesVector().columnEquals(1, PRECISION,
 				1.6158, 1.4119));
@@ -128,14 +148,12 @@ public class AnalysisTest {
 		assertTrue(r.getPrincipalLoadings().columnEquals(2, PRECISION, -0.5497,
 				-0.2583, -0.5329, -0.4882, 0.5510, 0.2583, 0.2768, -0.2515,
 				-0.1023));
-
 	}
 
 	@Test
-	public void testCentroidMethodUsingMaxFactorsAndEnsurePrincipalEigenvaluesSelection()
+	public void testCentroidMethodUsingMaxFactorsEquals6AndEnsurePrincipalEigenvaluesSelection()
 			throws IOException {
-		Data data = new Data(
-				AnalysisTest.class.getResourceAsStream("/studies2/Lipset.txt"));
+		Data data = getLipsetData();
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
@@ -176,5 +194,11 @@ public class AnalysisTest {
 		assertTrue(r.getPercentVariance()
 				.columnEquals(1, PRECISION, 17.9536, 15.6878, 9.3365, 6.1583,
 						4.2772, 3.0895, 2.0823, 2.0432, 0.9334));
+	}
+
+	private Data getLipsetData() throws IOException {
+		Data data = new Data(
+				AnalysisTest.class.getResourceAsStream("/studies2/Lipset.txt"));
+		return data;
 	}
 }
