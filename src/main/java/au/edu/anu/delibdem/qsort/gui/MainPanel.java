@@ -61,7 +61,7 @@ public class MainPanel extends JPanel {
 									.getCurrentDirectory().getAbsolutePath());
 						}
 					} catch (Exception e) {
-						throw new Error(e);
+						throw new RuntimeException(e);
 					}
 				}
 			});
@@ -79,7 +79,7 @@ public class MainPanel extends JPanel {
 					});
 
 		} catch (Exception e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 	}
 

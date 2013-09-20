@@ -49,7 +49,7 @@ public class FactorTreePanel extends JPanel {
 		try {
 			method = o.getClass().getMethod(methodName, new Class[] {});
 		} catch (NoSuchMethodException e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 		MatrixProvider matrixProvider = new MatrixProvider() {
 			@Override
@@ -68,9 +68,10 @@ public class FactorTreePanel extends JPanel {
 						EigenvalueThreshold et = (EigenvalueThreshold) result;
 						return getMatrix(et);
 					} else
-						throw new Error("not sure how to implement " + result);
+						throw new RuntimeException("not sure how to implement "
+								+ result);
 				} catch (Exception e) {
-					throw new Error(e);
+					throw new RuntimeException(e);
 				}
 			}
 
@@ -121,7 +122,7 @@ public class FactorTreePanel extends JPanel {
 			top.add(createGetterNode("Principal Loadings", results,
 					"principalLoadings"));
 		} catch (Exception e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 		return top;
 	}

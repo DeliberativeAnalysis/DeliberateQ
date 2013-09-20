@@ -6,12 +6,12 @@ import org.apache.commons.math.distribution.TDistributionImpl;
 
 public class RegressionIntervalFunction implements Function {
 
-	private Vector v1;
-	private boolean singleResponse;
+	private final Vector v1;
+	private final boolean singleResponse;
 	private TDistribution tDistribution;
-	private double sumSquares;
-	private double mean;
-	private double sum;
+	private final double sumSquares;
+	private final double mean;
+	private final double sum;
 
 	public RegressionIntervalFunction(Vector v1, boolean singleResponse) {
 		this.v1 = v1;
@@ -31,7 +31,7 @@ public class RegressionIntervalFunction implements Function {
 		try {
 			t95 = tDistribution.inverseCumulativeProbability(0.95);
 		} catch (MathException e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 		return t95
 				* s

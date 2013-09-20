@@ -198,7 +198,7 @@ public class MatrixTestData {
 			m = new Matrix(is, true, true, NullStrategy.SET_TO_NULL_ENTRY_CODE);
 			is.close();
 		} catch (IOException e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 		FactorAnalysisResults results = m.analyzeFactors(
 				FactorExtractionMethod.PRINCIPAL_COMPONENTS_ANALYSIS,

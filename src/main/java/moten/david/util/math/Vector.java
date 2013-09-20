@@ -97,7 +97,7 @@ public class Vector extends Matrix {
 
 	public double getPearsonCorrelation(Vector v) {
 		if (size() != v.size()) {
-			throw new Error("vectors must be same size");
+			throw new RuntimeException("vectors must be same size");
 		}
 		Vector d1 = getDeviation();
 		Vector d2 = v.getDeviation();
@@ -189,9 +189,10 @@ public class Vector extends Matrix {
 	public double getSumSquares(Vector v) {
 		double result = 0;
 		if (v == null)
-			throw new Error("cannot measure distance to a null vector");
+			throw new RuntimeException(
+					"cannot measure distance to a null vector");
 		if (v.size() != this.size())
-			throw new Error("Vectors must be same size!");
+			throw new RuntimeException("Vectors must be same size!");
 		for (int i = 1; i <= this.size(); i++) {
 			result += Math.pow(this.getValue(i) - v.getValue(i), 2);
 		}
@@ -208,7 +209,8 @@ public class Vector extends Matrix {
 
 	public double getAngle() {
 		if (size() != 2)
-			throw new Error("This method applies only for vectors of length 2!");
+			throw new RuntimeException(
+					"This method applies only for vectors of length 2!");
 		double angle = Math.atan(getValue(1) / getValue(2));
 		if (getValue(1) < 0 && getValue(2) < 0)
 			angle = Math.PI + angle;
@@ -221,7 +223,8 @@ public class Vector extends Matrix {
 
 	public Vector rotate(double theta) {
 		if (size() != 2)
-			throw new Error("This method only applies for vectors of length 2!");
+			throw new RuntimeException(
+					"This method only applies for vectors of length 2!");
 		Matrix rotation = new Matrix(new double[][] {
 				{ Math.cos(-theta), -Math.sin(-theta) },
 				{ Math.sin(-theta), Math.cos(-theta) } });
@@ -230,7 +233,8 @@ public class Vector extends Matrix {
 
 	public Vector plus(Vector vector) {
 		if (size() != vector.size())
-			throw new Error("Cannot add a vector of a different size");
+			throw new RuntimeException(
+					"Cannot add a vector of a different size");
 		Vector result = new Vector(size());
 		for (int i = 1; i <= size(); i++) {
 			result.setValue(i, this.getValue(i) + vector.getValue(i));
@@ -254,7 +258,7 @@ public class Vector extends Matrix {
 	public double dotProduct(Vector v) {
 		double result = 0;
 		if (size() != v.size())
-			throw new Error(
+			throw new RuntimeException(
 					"can only do dotProduct with a vector of the same size");
 		for (int i = 1; i <= size(); i++) {
 			result += getValue(i) * v.getValue(i);
@@ -286,7 +290,8 @@ public class Vector extends Matrix {
 			a1 = (float) ((n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX));
 			a0 = (float) (yBar - a1 * xBar);
 		} else {
-			throw new Error("need at least 2 rows to perform linear regression");
+			throw new RuntimeException(
+					"need at least 2 rows to perform linear regression");
 		}
 		// calculate r2
 		double numerator = n * sumXY - sumX * sumY;
@@ -390,7 +395,7 @@ public class Vector extends Matrix {
 	public double getBestCorrelatedRotation(Vector v2, final Vector v) {
 
 		if (size() != v2.size() || size() != v.size()) {
-			throw new Error("vectors must all be of the same length");
+			throw new RuntimeException("vectors must all be of the same length");
 		}
 		double corr = getPearsonCorrelation(v);
 		Matrix m = addColumn(v2);

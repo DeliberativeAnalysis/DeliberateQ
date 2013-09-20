@@ -19,7 +19,7 @@ public class Model {
 		else if (reference instanceof MatrixProvider) {
 			return reference.getMatrix();
 		} else
-			throw new Error("reference not recognized: " + reference);
+			throw new RuntimeException("reference not recognized: " + reference);
 	}
 
 	public void setReference(MatrixProvider reference) {

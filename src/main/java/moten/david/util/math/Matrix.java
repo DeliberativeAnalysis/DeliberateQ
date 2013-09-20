@@ -380,7 +380,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	public Matrix times(Matrix matrix) {
 
 		if (columnCount() != matrix.rowCount())
-			throw new Error("cannot multipy these two matrices, invalid sizes");
+			throw new RuntimeException(
+					"cannot multipy these two matrices, invalid sizes");
 		Matrix result = new Matrix(rowCount(), matrix.columnCount());
 		for (int i = 1; i <= result.rowCount(); i++) {
 			for (int j = 1; j <= result.columnCount(); j++) {
@@ -455,7 +456,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 	public Matrix appendRight(Matrix matrix) {
 		if (rowCount() != matrix.rowCount())
-			throw new Error("matrices must have same number of rows");
+			throw new RuntimeException("matrices must have same number of rows");
 		Matrix result = new Matrix(rowCount(), this.columnCount()
 				+ matrix.columnCount());
 		result.set(this, 1, 1);
@@ -467,7 +468,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 	public Vector getDiagonal() {
 		if (rowCount() != columnCount())
-			throw new Error("rowCount must equal columnCount");
+			throw new RuntimeException("rowCount must equal columnCount");
 		double[] a = new double[rowCount()];
 		for (int i = 1; i <= rowCount(); i++) {
 			a[i - 1] = getValue(i, i);
@@ -521,7 +522,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	public Matrix add(Matrix matrix) {
 		if (rowCount() != matrix.rowCount()
 				|| columnCount() != matrix.columnCount())
-			throw new Error("matrices must be same size");
+			throw new RuntimeException("matrices must be same size");
 		Matrix result = copy();
 		for (int i = 1; i <= rowCount(); i++) {
 			for (int j = 1; j <= columnCount(); j++) {
@@ -534,7 +535,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	public Matrix minus(Matrix matrix) {
 		if (rowCount() != matrix.rowCount()
 				|| columnCount() != matrix.columnCount())
-			throw new Error("matrices must be same size");
+			throw new RuntimeException("matrices must be same size");
 		Matrix result = copy();
 		for (int i = 1; i <= rowCount(); i++) {
 			for (int j = 1; j <= columnCount(); j++) {
@@ -677,7 +678,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			fos.write(getTabDelimited().getBytes());
 			fos.close();
 		} catch (Exception e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -1083,7 +1084,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 	public Matrix getPercentDifference(final Matrix m) {
 		if (!this.hasSameDimensions(m))
-			throw new Error("matrices must be same size");
+			throw new RuntimeException("matrices must be same size");
 		Matrix m2 = copy();
 		m2 = m2.apply(new Function() {
 
@@ -1116,7 +1117,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 	public Matrix setColumnVector(int column, Vector vector) {
 		if (rowCount() != vector.rowCount())
-			throw new Error("vector must have same size as rows in matrix!");
+			throw new RuntimeException(
+					"vector must have same size as rows in matrix!");
 		for (int i = 1; i <= rowCount(); i++) {
 			this.setValue(i, column, vector.getValue(i));
 		}
@@ -1235,7 +1237,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 	public Matrix setDiagonal(Vector v) {
 		if (rowCount() != v.size() || columnCount() != v.size()) {
-			throw new Error("Matrix must be square and of same size as vector!");
+			throw new RuntimeException(
+					"Matrix must be square and of same size as vector!");
 		}
 		for (int row = 1; row <= rowCount(); row++) {
 			setValue(row, row, v.getValue(row));
@@ -1576,7 +1579,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			return new FactorScoreCombination(bestConfidence, bestThreshold,
 					bestStrategy);
 		} catch (Exception e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -1689,7 +1692,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	public Matrix getColumnCorrelations(Matrix m) {
 		Matrix result = new Matrix(columnCount(), m.columnCount());
 		if (m.rowCount() != rowCount())
-			throw new Error("matrices must have same number of rows");
+			throw new RuntimeException("matrices must have same number of rows");
 		result.setRowLabels(getColumnLabels());
 		result.setColumnLabels(m.getColumnLabels());
 		for (int i = 1; i <= columnCount(); i++) {
@@ -1938,12 +1941,14 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 					} else if (nullStrategy.equals(NullStrategy.SET_TO_ZERO)) {
 						m.setValue(row, col, 0);
 					} else if (nullStrategy.equals(NullStrategy.THROW_ERROR)) {
-						throw new Error("null entry at " + row + "," + col);
+						throw new RuntimeException("null entry at " + row + ","
+								+ col);
 					} else if (nullStrategy
 							.equals(NullStrategy.SET_TO_NULL_ENTRY_CODE)) {
 						// do nothing
 					} else
-						throw new Error("null entry at " + row + "," + col);
+						throw new RuntimeException("null entry at " + row + ","
+								+ col);
 				}
 			}
 		}
@@ -2125,7 +2130,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			MatrixComparison comparison, double epsilon) {
 
 		if (rowCount() != reference.rowCount())
-			throw new Error("matrices must have same row count");
+			throw new RuntimeException("matrices must have same row count");
 
 		boolean keepGoing = true;
 		double startCorrelation = -0;

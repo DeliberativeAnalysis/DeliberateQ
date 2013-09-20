@@ -347,8 +347,9 @@ public class DataPanel extends JPanel {
 							.getObject();
 					matrix = matrixProvider.getMatrix();
 				} else
-					throw new Error("unexpected object to display as Matrix:"
-							+ event.getObject());
+					throw new RuntimeException(
+							"unexpected object to display as Matrix:"
+									+ event.getObject());
 				NamedMatrix namedMatrix = new NamedMatrix("", matrix);
 				if (namedMatrix.getMatrix() == null) {
 					dataViewer.removeAll();

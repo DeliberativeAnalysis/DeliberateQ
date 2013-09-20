@@ -37,7 +37,7 @@ public class DataApplet extends JApplet {
 			// add(new MainPanel());
 
 		} catch (Exception e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 	}
 

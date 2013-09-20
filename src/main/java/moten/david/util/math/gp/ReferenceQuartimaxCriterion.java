@@ -8,8 +8,8 @@ import moten.david.util.math.Matrix.MatrixFunction;
 
 public class ReferenceQuartimaxCriterion implements MatrixFunction {
 
-	private Matrix reference;
-	private Matrix matrix;
+	private final Matrix reference;
+	private final Matrix matrix;
 
 	public ReferenceQuartimaxCriterion(Matrix matrix, Matrix reference) {
 		this.reference = reference;
@@ -21,6 +21,6 @@ public class ReferenceQuartimaxCriterion implements MatrixFunction {
 		Map<Point, Double> map = matrix.times(m).getMatchedCorrelations(
 				reference);
 		// TODO write the quartimax criterion
-		throw new Error("not implemented yet");
+		throw new RuntimeException("not implemented yet");
 	}
 }

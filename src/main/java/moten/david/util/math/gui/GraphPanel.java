@@ -123,12 +123,12 @@ public class GraphPanel extends JPanel {
 	public GraphPanel(Matrix m) {
 		this(m.getColumnVector(1), m.getColumnVector(2));
 		if (m.columnCount() != 2)
-			throw new Error("matrix must have exactly two columns");
+			throw new RuntimeException("matrix must have exactly two columns");
 	}
 
 	public void setMatrix(Matrix m) {
 		if (m.columnCount() != 2)
-			throw new Error("matrix must have exactly two columns");
+			throw new RuntimeException("matrix must have exactly two columns");
 		setVector1(new Vector[] { m.getColumnVector(1) });
 		setVector2(new Vector[] { m.getColumnVector(2) });
 	}
@@ -751,7 +751,7 @@ public class GraphPanel extends JPanel {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 	}
 

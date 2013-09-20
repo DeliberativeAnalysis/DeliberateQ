@@ -129,7 +129,7 @@ public class VennInfo {
 		try {
 			t = tDistribution.inverseCumulativeProbability(confidence / 100.0);
 		} catch (MathException e) {
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 		double standardError = 1 / Math.sqrt(numParticipants);
 		float thresholdSE = getThresholdSE();
