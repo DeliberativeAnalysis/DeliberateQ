@@ -1,7 +1,6 @@
 package moten.david.util.math;
 
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
 
 public class FactorAnalysisResults {
 
@@ -114,76 +113,76 @@ public class FactorAnalysisResults {
 
 	}
 
-	private void print(Matrix data, SimpleHeirarchicalFormatter f) {
-
-		f.header(input.getExtractionMethod().toString(), false);
-		f.blockStart();
-
-		// f.header("Raw Data", true);
-		// f.blockStart();
-		// f.item(initial);
-		// f.blockFinish();
-
-		f.header("Correlations", true);
-		f.blockStart();
-		f.item(input.getCorrelations());
-		f.blockFinish();
-
-		f.header("Eigenvalues", true);
-		f.blockStart();
-		f.item("Extraction time = "
-				+ new DecimalFormat("0.000").format(extractionTimeMs / 1000.0)
-				+ "s");
-		f.item(eigenvalues.getDiagonal()
-				.setRowLabels(eigenvalues.getRowLabels())
-				.setColumnLabel(1, "Eigenvalue"));
-		f.blockFinish();
-
-		f.header("Eigenvectors", true);
-		f.blockStart();
-		f.item(eigenvectors);
-		f.blockFinish();
-
-		f.header("Percent Variance", true);
-		f.blockStart();
-		f.item(percentVariance);
-		f.blockFinish();
-
-		f.header("Loadings", true);
-		f.blockStart();
-		f.item(loadings);
-		f.blockFinish();
-
-		f.header("Eigenvalue Threshold", true);
-		f.blockStart();
-		f.item("eigenvalue threshold to extract principal loadings = "
-				+ input.getEigenvalueThreshold());
-		f.blockFinish();
-
-		f.header("Principal Eigenvalues", true);
-		f.blockStart();
-		f.item(principalEigenvalues.getDiagonal()
-				.setRowLabels(principalEigenvalues.getRowLabels())
-				.setColumnLabel(1, "Eigenvalue"));
-		f.blockFinish();
-
-		f.header("Principal Eigenvectors", true);
-		f.blockStart();
-		f.item(principalEigenvectors);
-		f.blockFinish();
-
-		f.header("Principal Loadings", true);
-		f.blockStart();
-		f.item(principalLoadings);
-		f.blockFinish();
-
-		f.header("Principal Rotated Loadings", false);
-		f.blockStart();
-		rotatedLoadings.format(data, f);
-		f.blockFinish();
-
-		f.blockFinish();
-	}
+	// private void print(Matrix data, SimpleHeirarchicalFormatter f) {
+	//
+	// f.header(input.getExtractionMethod().toString(), false);
+	// f.blockStart();
+	//
+	// // f.header("Raw Data", true);
+	// // f.blockStart();
+	// // f.item(initial);
+	// // f.blockFinish();
+	//
+	// f.header("Correlations", true);
+	// f.blockStart();
+	// f.item(input.getCorrelations());
+	// f.blockFinish();
+	//
+	// f.header("Eigenvalues", true);
+	// f.blockStart();
+	// f.item("Extraction time = "
+	// + new DecimalFormat("0.000").format(extractionTimeMs / 1000.0)
+	// + "s");
+	// f.item(eigenvalues.getDiagonal()
+	// .setRowLabels(eigenvalues.getRowLabels())
+	// .setColumnLabel(1, "Eigenvalue"));
+	// f.blockFinish();
+	//
+	// f.header("Eigenvectors", true);
+	// f.blockStart();
+	// f.item(eigenvectors);
+	// f.blockFinish();
+	//
+	// f.header("Percent Variance", true);
+	// f.blockStart();
+	// f.item(percentVariance);
+	// f.blockFinish();
+	//
+	// f.header("Loadings", true);
+	// f.blockStart();
+	// f.item(loadings);
+	// f.blockFinish();
+	//
+	// f.header("Eigenvalue Threshold", true);
+	// f.blockStart();
+	// f.item("eigenvalue threshold to extract principal loadings = "
+	// + input.getEigenvalueThreshold());
+	// f.blockFinish();
+	//
+	// f.header("Principal Eigenvalues", true);
+	// f.blockStart();
+	// f.item(principalEigenvalues.getDiagonal()
+	// .setRowLabels(principalEigenvalues.getRowLabels())
+	// .setColumnLabel(1, "Eigenvalue"));
+	// f.blockFinish();
+	//
+	// f.header("Principal Eigenvectors", true);
+	// f.blockStart();
+	// f.item(principalEigenvectors);
+	// f.blockFinish();
+	//
+	// f.header("Principal Loadings", true);
+	// f.blockStart();
+	// f.item(principalLoadings);
+	// f.blockFinish();
+	//
+	// f.header("Principal Rotated Loadings", false);
+	// f.blockStart();
+	// rotatedLoadings.format(data, f);
+	// f.blockFinish();
+	//
+	// f.blockFinish();
+	// }
 
 	public FactorExtractionMethod getExtractionMethod() {
 		return input.getExtractionMethod();
