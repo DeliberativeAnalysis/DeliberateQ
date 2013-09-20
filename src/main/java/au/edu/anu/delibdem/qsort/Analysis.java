@@ -15,7 +15,7 @@ public class Analysis {
 	public static FactorAnalysisResults getFactorAnalysisResults(Data data,
 			DataSelection dataSelection, boolean isIntersubjective,
 			FactorExtractionMethod method,
-			EigenvalueThreshold eigenvalueThreshold) {
+			EigenvalueThreshold eigenvalueThreshold, String title) {
 		Set<RotationMethod> rotationMethods = new HashSet<RotationMethod>();
 		rotationMethods.add(RotationMethod.VARIMAX);
 		try {
@@ -23,8 +23,10 @@ public class Analysis {
 			if (m == null)
 				return null;
 
-			return m.analyzeFactors(method, eigenvalueThreshold,
-					rotationMethods);
+			FactorAnalysisResults result = m.analyzeFactors(method,
+					eigenvalueThreshold, rotationMethods);
+			result.setTitle(title);
+			return result;
 		} catch (FactorAnalysisException e) {
 			throw new RuntimeException(e);
 		}

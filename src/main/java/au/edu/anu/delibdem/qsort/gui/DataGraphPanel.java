@@ -92,10 +92,10 @@ public class DataGraphPanel extends JPanel {
 							.getFactorAnalysisResults(data, combination,
 									analysis.isIntersubjective(),
 									analysis.getExtractionMethod(),
-									analysis.getEigenvalueThreshold());
+									analysis.getEigenvalueThreshold(),
+									analysis.getTitle());
 
 					if (r != null) {
-						r.setTitle(analysis.getTitle());
 						results.add(r);
 					}
 					Status.finish();

@@ -5,19 +5,15 @@ import java.text.DecimalFormat;
 
 public class FactorAnalysisResults {
 
-	public FactorExtractionMethod extractionMethod;
+	private final FactorAnalysisInput input;
 
 	private Matrix initial;
-
-	private Matrix correlations;
 
 	private Matrix eigenvalues;
 
 	private Matrix eigenvectors;
 
 	private Vector percentVariance;
-
-	private EigenvalueThreshold eigenvalueThreshold;
 
 	private Matrix principalEigenvalues;
 
@@ -34,6 +30,10 @@ public class FactorAnalysisResults {
 	private long rotationTimeMs;
 
 	private String title;
+
+	public FactorAnalysisResults(FactorAnalysisInput input) {
+		this.input = input;
+	}
 
 	public String getTitle() {
 		return title;
@@ -89,11 +89,11 @@ public class FactorAnalysisResults {
 
 	public String toStringVerbose() {
 		return "FactorAnalysisResults [\nextractionMethod="
-				+ extractionMethod
+				+ input.getExtractionMethod()
 				+ "\n, initial=\n"
 				+ initial
 				+ "\n, correlations=\n"
-				+ correlations
+				+ input.getCorrelations()
 				+ "\n, eigenvalues=\n"
 				+ eigenvalues.getDiagonal()
 				+ "\n, eigenvectors=\n"
@@ -101,7 +101,7 @@ public class FactorAnalysisResults {
 				+ ",\n percentVariance=\n"
 				+ percentVariance
 				+ ",\n eigenvalueThreshold="
-				+ eigenvalueThreshold
+				+ input.getEigenvalueThreshold()
 				+ ",\n principalEigenvalues=\n"
 				+ (principalEigenvalues != null ? principalEigenvalues
 						.getDiagonal() : "null")
@@ -116,7 +116,7 @@ public class FactorAnalysisResults {
 
 	private void print(Matrix data, SimpleHeirarchicalFormatter f) {
 
-		f.header(extractionMethod.toString(), false);
+		f.header(input.getExtractionMethod().toString(), false);
 		f.blockStart();
 
 		// f.header("Raw Data", true);
@@ -126,7 +126,7 @@ public class FactorAnalysisResults {
 
 		f.header("Correlations", true);
 		f.blockStart();
-		f.item(correlations);
+		f.item(input.getCorrelations());
 		f.blockFinish();
 
 		f.header("Eigenvalues", true);
@@ -157,7 +157,7 @@ public class FactorAnalysisResults {
 		f.header("Eigenvalue Threshold", true);
 		f.blockStart();
 		f.item("eigenvalue threshold to extract principal loadings = "
-				+ eigenvalueThreshold);
+				+ input.getEigenvalueThreshold());
 		f.blockFinish();
 
 		f.header("Principal Eigenvalues", true);
@@ -186,7 +186,7 @@ public class FactorAnalysisResults {
 	}
 
 	public FactorExtractionMethod getExtractionMethod() {
-		return extractionMethod;
+		return input.getExtractionMethod();
 	}
 
 	public Matrix getInitial() {
@@ -194,7 +194,7 @@ public class FactorAnalysisResults {
 	}
 
 	public Matrix getCorrelations() {
-		return correlations;
+		return input.getCorrelations();
 	}
 
 	public Matrix getEigenvalues() {
@@ -247,16 +247,8 @@ public class FactorAnalysisResults {
 		return rotatedLoadings;
 	}
 
-	public void setExtractionMethod(FactorExtractionMethod extractionMethod) {
-		this.extractionMethod = extractionMethod;
-	}
-
 	public void setInitial(Matrix initial) {
 		this.initial = initial;
-	}
-
-	public void setCorrelations(Matrix correlations) {
-		this.correlations = correlations;
 	}
 
 	public void setEigenvalues(Matrix eigenvalues) {
@@ -308,11 +300,7 @@ public class FactorAnalysisResults {
 	}
 
 	public EigenvalueThreshold getEigenvalueThreshold() {
-		return eigenvalueThreshold;
-	}
-
-	public void setEigenvalueThreshold(EigenvalueThreshold eigenvalueThreshold) {
-		this.eigenvalueThreshold = eigenvalueThreshold;
+		return input.getEigenvalueThreshold();
 	}
 
 }

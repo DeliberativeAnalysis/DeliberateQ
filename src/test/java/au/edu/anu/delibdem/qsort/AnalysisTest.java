@@ -29,7 +29,7 @@ public class AnalysisTest {
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "First"), true,
 				FactorExtractionMethod.PRINCIPAL_COMPONENTS_ANALYSIS,
-				EigenvalueThreshold.createWithMaxFactors(8));
+				EigenvalueThreshold.createWithMaxFactors(8), "test title");
 
 		// check eigenvalues
 		Vector eigenvalues = r.getEigenvaluesVector();
@@ -99,7 +99,7 @@ public class AnalysisTest {
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
-				EigenvalueThreshold.createWithMinEigenvalue(1.0));
+				EigenvalueThreshold.createWithMinEigenvalue(1.0), "test title");
 
 		checkLipsetAnalysisPreReduction(r);
 
@@ -117,7 +117,7 @@ public class AnalysisTest {
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
-				EigenvalueThreshold.createWithMaxFactors(2));
+				EigenvalueThreshold.createWithMaxFactors(2), "test title");
 
 		checkLipsetAnalysisPreReduction(r);
 
@@ -157,7 +157,7 @@ public class AnalysisTest {
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
-				EigenvalueThreshold.createWithMaxFactors(6));
+				EigenvalueThreshold.createWithMaxFactors(6), "title");
 
 		checkLipsetAnalysisPreReduction(r);
 
