@@ -11,3 +11,9 @@ Advance Q is a visualisation tool for Q Methodology analysis. It is a java swing
 * Venn Diagram views for factor interpretation
 
 ![IMAGE](https://bitbucket.org/davidmoten/advance-q/raw/master/docs/images/forq.png)
+
+Mathematics libraries
+---------------------
+T distribution routines from apache [commons-math](http://commons.apache.org/proper/commons-math/) are used in the calculation of factor scores.
+
+[Jama](http://math.nist.gov/javanumerics/jama/) is used for eigenvalue decomposition in Principal Components Analysis.

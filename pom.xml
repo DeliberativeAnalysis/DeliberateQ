@@ -40,14 +40,14 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>commons-math</groupId>
-			<artifactId>commons-math</artifactId>
-			<version>1.2</version>
+            <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-math</artifactId>
+		    <version>2.2</version>
 		</dependency>
 		<dependency>
-			<groupId>jama</groupId>
-			<artifactId>jama</artifactId>
-			<version>1.0.2</version>
+    		<groupId>gov.nist.math</groupId>
+    		<artifactId>jama</artifactId>
+    		<version>1.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>gif4j</groupId>
