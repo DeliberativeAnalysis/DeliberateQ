@@ -713,13 +713,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			performCentroidMethod(eigenvalueThreshold, r);
 		}
 
-		if (legacy) {
-			normalizeLoadingSigns(r);
-
-			// TODO ensure eigenvalues are in descending order
-			// should be done before principal eigen* are calculated
-			makeEigenvaluesDescendInValue(r);
-		}
+		normalizeLoadingSigns(r);
 
 		r.setRotatedLoadings(new RotatedLoadings());
 		RotationMethod[] methods;
