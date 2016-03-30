@@ -38,19 +38,18 @@ import javax.swing.SpringLayout;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
+import org.apache.commons.math3.stat.regression.SimpleRegression;
+
+import com.gif4j.light.GifEncoder;
+import com.gif4j.light.GifFrame;
+import com.gif4j.light.GifImage;
+
 import moten.david.util.gui.swing.v1.SwingUtil;
 import moten.david.util.math.Function;
 import moten.david.util.math.Matrix;
 import moten.david.util.math.RegressionIntervalFunction;
 import moten.david.util.math.Vector;
-
-import org.apache.commons.math.stat.regression.SimpleRegression;
-
 import to.mumble.GIFCodec.AnimGifEncoder;
-
-import com.gif4j.light.GifEncoder;
-import com.gif4j.light.GifFrame;
-import com.gif4j.light.GifImage;
 
 public class GraphPanel extends JPanel {
 

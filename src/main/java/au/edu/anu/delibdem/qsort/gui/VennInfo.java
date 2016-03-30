@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.math3.distribution.TDistribution;
+
 import moten.david.util.math.FactorScoreAnalyzer;
 import moten.david.util.math.Matrix;
 import moten.david.util.math.Matrix.FactorScoreStrategy;
-
-import org.apache.commons.math.MathException;
-import org.apache.commons.math.distribution.TDistribution;
-import org.apache.commons.math.distribution.TDistributionImpl;
 
 public class VennInfo {
 
@@ -124,13 +122,9 @@ public class VennInfo {
 	public double getThreshold() {
 
 		int numParticipants = initialData.rowCount();
-		TDistribution tDistribution = new TDistributionImpl(numParticipants);
+		TDistribution tDistribution = new TDistribution(numParticipants);
 		double t;
-		try {
 			t = tDistribution.inverseCumulativeProbability(confidence / 100.0);
-		} catch (MathException e) {
-			throw new RuntimeException(e);
-		}
 		double standardError = 1 / Math.sqrt(numParticipants);
 		float thresholdSE = getThresholdSE();
 		return thresholdSE * standardError * t;

@@ -22,16 +22,16 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.math3.stat.regression.SimpleRegression;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 import moten.david.util.math.Function;
 import moten.david.util.math.Matrix;
 import moten.david.util.math.RegressionIntervalFunction;
 import moten.david.util.math.Vector;
 import moten.david.util.math.gui.GraphPanel;
-
-import org.apache.commons.math.stat.regression.SimpleRegression;
-
-import com.google.inject.internal.Lists;
-import com.google.inject.internal.Sets;
 
 public class Data implements Serializable {
 

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.google.inject.internal.Lists;
+import com.google.common.collect.Lists;
 
 public class Vector extends Matrix {
 

@@ -36,18 +36,18 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-math3</artifactId>
+    <version>3.6.1</version>
+</dependency>
 		<dependency>
-            <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-math</artifactId>
-		    <version>2.2</version>
-		</dependency>
-		<dependency>
-    		<groupId>gov.nist.math</groupId>
-    		<artifactId>jama</artifactId>
-    		<version>1.0.3</version>
+			<groupId>gov.nist.math</groupId>
+			<artifactId>jama</artifactId>
+			<version>1.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>gif4j</groupId>
@@ -60,14 +60,14 @@
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.inject</groupId>
-			<artifactId>guice</artifactId>
-			<version>2.0</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.inject.extensions</groupId>
-			<artifactId>guice-assisted-inject</artifactId>
-			<version>2.0</version>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>aopalliance</groupId>

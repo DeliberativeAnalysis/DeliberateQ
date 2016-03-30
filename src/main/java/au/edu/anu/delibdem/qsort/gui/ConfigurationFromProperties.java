@@ -3,6 +3,9 @@ package au.edu.anu.delibdem.qsort.gui;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class ConfigurationFromProperties implements Configuration {
 
 	private static final String CONFIGURATION_RESOURCE = "/configuration.properties";

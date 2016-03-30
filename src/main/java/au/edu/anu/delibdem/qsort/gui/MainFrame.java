@@ -22,7 +22,9 @@ import au.edu.anu.delibdem.qsort.Data;
 import au.edu.anu.delibdem.qsort.gui.injection.ApplicationInjector;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 7824719192824923010L;

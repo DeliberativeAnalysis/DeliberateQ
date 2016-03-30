@@ -1,8 +1,6 @@
 package moten.david.util.math;
 
-import org.apache.commons.math.MathException;
-import org.apache.commons.math.distribution.TDistribution;
-import org.apache.commons.math.distribution.TDistributionImpl;
+import org.apache.commons.math3.distribution.TDistribution;
 
 public class RegressionIntervalFunction implements Function {
 
@@ -17,7 +15,7 @@ public class RegressionIntervalFunction implements Function {
 		this.v1 = v1;
 		this.singleResponse = singleResponse;
 		if (v1.size() > 0)
-			this.tDistribution = new TDistributionImpl(v1.size());
+			this.tDistribution = new TDistribution(v1.size());
 		this.sumSquares = v1.getSumSquares();
 		this.mean = v1.getMean();
 		this.sum = v1.getSum();
@@ -25,18 +23,9 @@ public class RegressionIntervalFunction implements Function {
 
 	@Override
 	public double f(double x) {
-		double s = Math.sqrt(v1.getResiduals().getSumSquares()
-				/ (v1.size() - 2));
-		double t95 = 0;
-		try {
-			t95 = tDistribution.inverseCumulativeProbability(0.95);
-		} catch (MathException e) {
-			throw new RuntimeException(e);
-		}
-		return t95
-				* s
-				* Math.sqrt((singleResponse ? 1 : 0) + 1.0 / v1.size()
-						+ Math.pow(x - mean, 2)
-						/ (sumSquares - Math.pow(sum, 2) / v1.size()));
+		double s = Math.sqrt(v1.getResiduals().getSumSquares() / (v1.size() - 2));
+		double t95 = tDistribution.inverseCumulativeProbability(0.95);
+		return t95 * s * Math.sqrt((singleResponse ? 1 : 0) + 1.0 / v1.size()
+				+ Math.pow(x - mean, 2) / (sumSquares - Math.pow(sum, 2) / v1.size()));
 	}
 }
