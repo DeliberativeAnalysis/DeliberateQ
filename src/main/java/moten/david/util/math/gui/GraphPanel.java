@@ -698,61 +698,61 @@ public class GraphPanel extends JPanel {
 		return image;
 	}
 
-	public void writeAnimatedImage(OutputStream os) {
-		try {
-			boolean useGif4J = false;
-			if (useGif4J) {
-				// despite all the claims on the website I've found this library
-				// not to work as well
-				int numFrames = 50;
-				// create new GifImage instance
-				GifImage gifImage = new GifImage();
-				// set default delay between gif frames
-				gifImage.setDefaultDelay(200);
-				// set infinite looping (by default only 1 looping iteration is
-				// set)
-				gifImage.setLoopNumber(0);
-				// add comment to gif image
-				gifImage.addComment("Animated GIF image");
-
-				for (int i = 0; i <= numFrames - 1; i++) {
-					setProportionDrawn(i * 1.0 / (numFrames - 1));
-					int delay = 10;
-					if (i == numFrames - 1)
-						delay = 400;
-
-					Image image = getImage();
-					GifFrame nextFrame = new GifFrame(image);
-					// clear logic screen after every frame
-					nextFrame
-							.setDisposalMethod(GifFrame.DISPOSAL_METHOD_RESTORE_TO_PREVIOUS);
-					nextFrame.setDelay(delay);
-					gifImage.addGifFrame(nextFrame);
-
-				}
-				// save animated gif image
-				GifEncoder.encode(gifImage, os);
-			} else {
-				AnimGifEncoder encoder = new AnimGifEncoder(os);
-				encoder.setLoop(true);
-				int numFrames = 50;
-				for (int i = 0; i <= numFrames - 1; i++) {
-					setProportionDrawn(i * 1.0 / (numFrames - 1));
-					int delay = 10;
-					if (i == numFrames - 1)
-						delay = 400;
-					encoder.add(getImage(), delay);
-				}
-				System.out.println("writeAnimatedGif: "
-						+ (Runtime.getRuntime().totalMemory() - Runtime
-								.getRuntime().freeMemory()));
-				encoder.encode();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
+//	public void writeAnimatedImage(OutputStream os) {
+//		try {
+//			boolean useGif4J = false;
+//			if (useGif4J) {
+//				// despite all the claims on the website I've found this library
+//				// not to work as well
+//				int numFrames = 50;
+//				// create new GifImage instance
+//				GifImage gifImage = new GifImage();
+//				// set default delay between gif frames
+//				gifImage.setDefaultDelay(200);
+//				// set infinite looping (by default only 1 looping iteration is
+//				// set)
+//				gifImage.setLoopNumber(0);
+//				// add comment to gif image
+//				gifImage.addComment("Animated GIF image");
+//
+//				for (int i = 0; i <= numFrames - 1; i++) {
+//					setProportionDrawn(i * 1.0 / (numFrames - 1));
+//					int delay = 10;
+//					if (i == numFrames - 1)
+//						delay = 400;
+//
+//					Image image = getImage();
+//					GifFrame nextFrame = new GifFrame(image);
+//					// clear logic screen after every frame
+//					nextFrame
+//							.setDisposalMethod(GifFrame.DISPOSAL_METHOD_RESTORE_TO_PREVIOUS);
+//					nextFrame.setDelay(delay);
+//					gifImage.addGifFrame(nextFrame);
+//
+//				}
+//				// save animated gif image
+//				GifEncoder.encode(gifImage, os);
+//			} else {
+//				AnimGifEncoder encoder = new AnimGifEncoder(os);
+//				encoder.setLoop(true);
+//				int numFrames = 50;
+//				for (int i = 0; i <= numFrames - 1; i++) {
+//					setProportionDrawn(i * 1.0 / (numFrames - 1));
+//					int delay = 10;
+//					if (i == numFrames - 1)
+//						delay = 400;
+//					encoder.add(getImage(), delay);
+//				}
+//				System.out.println("writeAnimatedGif: "
+//						+ (Runtime.getRuntime().totalMemory() - Runtime
+//								.getRuntime().freeMemory()));
+//				encoder.encode();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			throw new RuntimeException(e);
+//		}
+//	}
 
 	public static void main(String[] args) throws IOException {
 		JFrame frame = new JFrame();

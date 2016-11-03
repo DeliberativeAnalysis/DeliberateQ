@@ -642,7 +642,7 @@ public class Data implements Serializable {
 		if (gp != null) {
 			gp.setDisplayMeans(true);
 			gp.setDisplayRegression(true);
-			if (size <= 1000)
+			if (size <= 1000) 
 				writeImageConnected(gp, size, imageOutputStream);
 			else
 				writeImage(gp, size, imageOutputStream);
@@ -658,7 +658,8 @@ public class Data implements Serializable {
 	private void writeImageConnected(GraphPanel gp, int imageSize,
 			OutputStream imageOs) throws IOException {
 		gp.setSize(imageSize, imageSize);
-		gp.writeAnimatedImage(imageOs);
+		throw new RuntimeException("animated gif not supported");
+//		gp.writeAnimatedImage(imageOs);
 	}
 
 	public Matrix getRawData(DataSelection dataSelection,
