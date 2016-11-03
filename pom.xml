@@ -49,11 +49,13 @@
 			<artifactId>jama</artifactId>
 			<version>1.0.3</version>
 		</dependency>
+<!--
 		<dependency>
 			<groupId>gif4j</groupId>
 			<artifactId>gif4j-light-trial</artifactId>
 			<version>1.0</version>
 		</dependency>
+-->
 		<!-- <dependency> -->
 		<!-- <groupId>org.moten.david</groupId> -->
 		<!-- <artifactId>moten-util-old</artifactId> -->
