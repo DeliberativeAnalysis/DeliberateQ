@@ -1,3 +1,4 @@
 package moten.david.util.event;
 
-public abstract interface EventType {}
+public abstract interface EventType {
+}

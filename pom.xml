@@ -11,7 +11,7 @@
 	</prerequisites>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<compiler.source.version>1.6</compiler.source.version>
+		<compiler.source.version>1.8</compiler.source.version>
 		<cobertura.version>2.5.2</cobertura.version>
 		<checkstyle.version>2.10</checkstyle.version>
 		<findbugs.version>2.5.2</findbugs.version>
@@ -118,7 +118,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
+				<version>3.5.1</version>
 				<configuration>
 					<source>${compiler.source.version}</source>
 					<target>${compiler.source.version}</target>

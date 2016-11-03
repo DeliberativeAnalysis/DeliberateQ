@@ -1,13 +1,13 @@
 package moten.david.util.event;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EventManager {
     private static EventManager instance;
-    private Map<EventType, List<EventManagerListener>> listeners = new HashMap<EventType, List<EventManagerListener>>();
+    private Map<EventType, List<EventManagerListener>> listeners = new ConcurrentHashMap<EventType, List<EventManagerListener>>();
 
     public static synchronized EventManager getInstance() {
         if (instance == null) {
