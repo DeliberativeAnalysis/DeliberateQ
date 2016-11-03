@@ -40,9 +40,9 @@ import javax.swing.UIManager;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
-import com.gif4j.light.GifEncoder;
-import com.gif4j.light.GifFrame;
-import com.gif4j.light.GifImage;
+//import com.gif4j.light.GifEncoder;
+//import com.gif4j.light.GifFrame;
+//import com.gif4j.light.GifImage;
 
 import moten.david.util.gui.swing.v1.SwingUtil;
 import moten.david.util.math.Function;
