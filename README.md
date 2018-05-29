@@ -1,7 +1,7 @@
-Advance Q
+Deliberate Q
 ==============
 
-Advance Q is a visualisation tool for Q Methodology analysis. It is a java swing application with these features:
+Deliberate Q is a visualisation tool for Q Methodology analysis. It is a java swing application with these features:
 
 * Principal Components Analysis
 * Centroid Method
@@ -10,7 +10,7 @@ Advance Q is a visualisation tool for Q Methodology analysis. It is a java swing
 * Animated intersubjective correlation graphs for visualisation of multi stage data
 * Venn Diagram views for factor interpretation
 
-![IMAGE](https://bitbucket.org/davidmoten/advance-q/raw/master/docs/images/forq.png)
+<img src="docs/images/forq.png?raw"/>
 
 Mathematics libraries
 ---------------------
