@@ -183,10 +183,4 @@
             </plugin>
         </plugins>
     </reporting>
-    <repositories>
-        <repository>
-            <id>googlecode-moten-util</id>
-            <url>http://moten-util.googlecode.com/svn/repo</url>
-        </repository>
-    </repositories>
 </project>
