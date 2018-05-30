@@ -1,5 +1,5 @@
-Deliberate Q
-==============
+# Deliberate Q
+
 <a href="https://travis-ci.org/DeliberativeAnalysis/DeliberateQ"><img src="https://travis-ci.org/DeliberativeAnalysis/DeliberateQ.svg"/></a><br/>
 [![codecov](https://codecov.io/gh/DeliberativeAnalysis/DeliberateQ/branch/master/graph/badge.svg)](https://codecov.io/gh/DeliberativeAnalysis/DeliberateQ)
 
@@ -14,14 +14,16 @@ Deliberate Q is a visualisation tool for Q Methodology analysis. It is a java sw
 
 <img src="docs/images/dq.png?raw"/>
 
-Mathematics libraries
----------------------
-T distribution routines from apache [commons-math](http://commons.apache.org/proper/commons-math/) are used in the calculation of factor scores.
+## Getting started
 
-[Jama](http://math.nist.gov/javanumerics/jama/) is used for eigenvalue decomposition in Principal Components Analysis.
+Download the latest release jar from [Releases](https://github.com/DeliberativeAnalysis/DeliberateQ/releases) and run it as below:
 
-Build instructions
---------------------
+```bash
+java -jar deliberate-q-2.1-jar-with-dependencies.jar
+```
+
+## Build instructions
+
 You need to have Java (Oracle or OpenJDK) and [Maven 3+](https://maven.apache.org/) installed.
 
 To build the jar with all dependencies included:
@@ -36,16 +38,20 @@ This writes the jar file to the `target` directory and you can run the applicati
 java -jar deliberate-q-2.0.8-jar-with-dependencies.jar
 ```
 
-To compile the source, run the unit tests and then run the application from the command line using maven:
+Or to compile the source, run the unit tests and then run the application from the command line using maven:
 
 ```
 mvn test exec:java
 ```
 
-How to release a new version
------------------------------
+## How to release a new version
 For project administrators, to build a release (tagged in git source control) on Linux/Unix:
 
 ```bash
 ./release.sh VERSION_HERE
 ```
+## Mathematics libraries
+
+T distribution routines from apache [commons-math](http://commons.apache.org/proper/commons-math/) are used in the calculation of factor scores.
+
+[Jama](http://math.nist.gov/javanumerics/jama/) is used for eigenvalue decomposition in Principal Components Analysis.
