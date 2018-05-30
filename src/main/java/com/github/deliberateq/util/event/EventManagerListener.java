@@ -1,6 +1,6 @@
 package com.github.deliberateq.util.event;
 
-public abstract interface EventManagerListener
+public interface EventManagerListener
 {
-  public abstract void notify(Event paramEvent);
+  void notify(Event paramEvent);
 }
