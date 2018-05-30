@@ -43,12 +43,11 @@ public class DataTree extends JTree {
 						if (referenceNode != null)
 							treeModel.nodeChanged(referenceNode);
 						DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) getLastSelectedPathComponent();
-						if (selectedNode.getUserObject() instanceof MatrixProvider) {
-							if (selectedNode.getUserObject().equals(
+						if (selectedNode.getUserObject() instanceof MatrixProvider //
+						        && selectedNode.getUserObject().equals(
 									Model.getInstance().getReference())) {
-								treeModel.nodeChanged(selectedNode);
-								referenceNode = selectedNode;
-							}
+							treeModel.nodeChanged(selectedNode);
+							referenceNode = selectedNode;
 						}
 					}
 				});

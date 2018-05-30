@@ -229,8 +229,8 @@ public class GraphPanel extends JPanel {
 	}
 
 	private int getMinSize() {
-		return (this.getSize().width > this.getSize().height ? this.getSize().height
-				: this.getSize().width);
+		return this.getSize().width > this.getSize().height ? this.getSize().height
+				: this.getSize().width;
 	}
 
 	private Vector getVector(Point p) {
@@ -272,8 +272,6 @@ public class GraphPanel extends JPanel {
 	}
 
 	private void paintFunction(Graphics g, GraphFunction gf) {
-		Vector vBottom = new Vector(new double[] { 0, -getAxisLength() });
-		Vector vTop = new Vector(new double[] { 0, getAxisLength() });
 		Vector vLeft = new Vector(new double[] { -getAxisLength(), 0 });
 		Vector vRight = new Vector(new double[] { getAxisLength(), 0 });
 
@@ -428,8 +426,8 @@ public class GraphPanel extends JPanel {
 					for (int rowB = 1; rowB <= vector1[vi].rowCount(); rowB++) {
 						if (vector1[vi - 1].getRowLabel(row).equals(
 								vector1[vi].getRowLabel(rowB))
-								&& (vector2[vi - 1].getRowLabel(row)
-										.equals(vector2[vi].getRowLabel(rowB)))) {
+								&& vector2[vi - 1].getRowLabel(row)
+										.equals(vector2[vi].getRowLabel(rowB))) {
 							Vector vb = new Vector(new double[] {
 									vector1[vi].getValue(rowB),
 									vector2[vi].getValue(rowB) });

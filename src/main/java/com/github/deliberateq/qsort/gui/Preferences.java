@@ -62,7 +62,7 @@ public class Preferences {
 	}
 
 	public void setSystemLookAndFeel(boolean value) {
-		setProperty(SYSTEM_LOOK_AND_FEEL, (value ? "true" : "false"));
+		setProperty(SYSTEM_LOOK_AND_FEEL, value ? "true" : "false");
 	}
 
 }

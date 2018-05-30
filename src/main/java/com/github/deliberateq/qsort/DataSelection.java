@@ -26,6 +26,6 @@ public class DataSelection {
 
 	@Override
 	public String toString() {
-		return ("all".equalsIgnoreCase(stage) ? "All Stages" : stage);
+		return "all".equalsIgnoreCase(stage) ? "All Stages" : stage;
 	}
 }

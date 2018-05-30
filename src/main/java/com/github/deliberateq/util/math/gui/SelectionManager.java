@@ -37,10 +37,10 @@ public class SelectionManager {
 			l.selectionChanged(event);
 	}
 
-	public static interface SelectionManagerEvent {
-		public String getDescription();
+	public interface SelectionManagerEvent {
+		String getDescription();
 
-		public Object getObject();
+		Object getObject();
 	}
 
 }

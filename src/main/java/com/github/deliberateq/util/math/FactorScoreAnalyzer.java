@@ -144,7 +144,7 @@ public class FactorScoreAnalyzer {
 					factor = Math.abs(factor);
 					if (map2.get(factor) == null)
 						map2.put(factor, new TreeSet<Integer>());
-					map2.get(factor).add((positive ? question : -question));
+					map2.get(factor).add(positive ? question : -question);
 				}
 			}
 			for (Integer factor : map2.keySet()) {

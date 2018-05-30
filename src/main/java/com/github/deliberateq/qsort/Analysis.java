@@ -34,8 +34,8 @@ public class Analysis {
 
 	private static Matrix getMatrix(Data data, DataSelection combination,
 			boolean isIntersubjective) {
-		Matrix m = data.getRawData(combination, null, (isIntersubjective ? 1
-				: 2));
+		Matrix m = data.getRawData(combination, null, isIntersubjective ? 1
+				: 2);
 		return m;
 	}
 

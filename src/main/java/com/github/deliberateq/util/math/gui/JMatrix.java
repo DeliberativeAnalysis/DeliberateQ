@@ -79,11 +79,10 @@ public class JMatrix extends JTable {
 		Enumeration<TableColumn> enumeration = getColumnModel().getColumns();
 		while (enumeration.hasMoreElements()) {
 			TableColumn tableColumn = enumeration.nextElement();
-			if (tableColumn.getHeaderRenderer() instanceof CheckBoxHeader) {
-				if (((CheckBoxHeader) tableColumn.getHeaderRenderer())
+			if (tableColumn.getHeaderRenderer() instanceof CheckBoxHeader // 
+			        && ((CheckBoxHeader) tableColumn.getHeaderRenderer())
 						.isSelected()) {
-					vectors.add(getColumnVector(tableColumn.getModelIndex()));
-				}
+				vectors.add(getColumnVector(tableColumn.getModelIndex()));
 			}
 		}
 		return vectors;
@@ -185,8 +184,8 @@ public class JMatrix extends JTable {
 		};
 	}
 
-	public static interface ColumnHeaderCheckboxListener {
-		public void selectionChanged(int columnIndex, boolean isSelected);
+	public interface ColumnHeaderCheckboxListener {
+		void selectionChanged(int columnIndex, boolean isSelected);
 	}
 
 	private TableModel getTableModel(final Matrix matrix) {

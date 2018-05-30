@@ -485,8 +485,8 @@ public final class Vector extends Matrix {
 			public int compare(ValueAndIndex o1, ValueAndIndex o2) {
 				int multiplier = ascending ? 1 : -1;
 				return multiplier
-						* ((Double) Math.abs(o1.value)).compareTo((Math
-								.abs(o2.value)));
+						* ((Double) Math.abs(o1.value)).compareTo(Math
+								.abs(o2.value));
 			}
 		});
 		List<Integer> orderedRowNumbers = Lists.newArrayList();

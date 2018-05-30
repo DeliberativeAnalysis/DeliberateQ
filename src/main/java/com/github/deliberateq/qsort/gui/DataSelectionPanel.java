@@ -23,7 +23,7 @@ public class DataSelectionPanel extends JPanel {
 
 	private final List<Listener> listeners = new ArrayList<Listener>();
 
-	public static interface Listener {
+	public interface Listener {
 		void closed();
 	}
 

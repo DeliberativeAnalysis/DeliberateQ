@@ -47,7 +47,7 @@ public class Varimax {
 		GFNORM, GKNORM, GLABELS, NTRASH
 	}
 
-	public static enum RotationMethod implements Serializable {
+	public enum RotationMethod implements Serializable {
 		VARIMAX("Varimax"), QUARTIMAX("Quartimax"), EQUIMAX("Equimax"), ORTHOMAX(
 				"Orthomax"), OBLIMIN("Oblimin"), NMETHODS("N Methods"), NONE(
 				"Unknown");
@@ -171,7 +171,7 @@ public class Varimax {
 			}
 			iterationCount++;
 			criterion = getCriterion(data, lambda);
-			trot = (criterion > 0.0) ? (criterion - oldCrit) / criterion : 0.0;
+			trot = criterion > 0.0 ? (criterion - oldCrit) / criterion : 0.0;
 			inoim++;
 			if (trot > eps2) {
 				inoim = 0;
@@ -249,7 +249,7 @@ public class Varimax {
 					for (int j = 0; j < numFactors; j++) {
 						s += data[j][i] * data[j][i];
 					}
-					kaiserNorm[i] = s = (s > 0) ? Math.sqrt(s) : 1.0;
+					kaiserNorm[i] = s = s > 0 ? Math.sqrt(s) : 1.0;
 
 					for (int j = 0; j < numFactors; j++) {
 						data[j][i] /= s;

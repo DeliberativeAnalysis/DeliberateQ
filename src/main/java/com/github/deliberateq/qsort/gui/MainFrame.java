@@ -156,7 +156,7 @@ public class MainFrame extends JFrame {
     }
 
     private void createMoreListeners() {
-        final JFrame frame = MainFrame.this;
+        final JFrame frame = this;
         eventManager.addListener(Events.FILTER, new EventManagerListener() {
             @Override
             public void notify(Event event) {

@@ -213,7 +213,7 @@ public class LoadingsPanel extends JPanel {
 		saveRotations.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				Preferences prefs = java.util.prefs.Preferences
+				Preferences prefs = Preferences
 						.userNodeForPackage(this.getClass());
 				// Create a file chooser
 				final JFileChooser fc = new JFileChooser();
@@ -258,7 +258,7 @@ public class LoadingsPanel extends JPanel {
 		loadRotations.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				Preferences prefs = java.util.prefs.Preferences
+				Preferences prefs = Preferences
 						.userNodeForPackage(this.getClass());
 				// Create a file chooser
 				final JFileChooser fc = new JFileChooser();

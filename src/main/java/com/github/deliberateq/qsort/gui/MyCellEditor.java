@@ -18,7 +18,7 @@ public class MyCellEditor extends DefaultCellEditor {
 
 	public MyCellEditor() {
 		super(new JTextField());
-		box = ((JTextField) editorComponent);
+		box = (JTextField) editorComponent;
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class MainPanel extends JPanel {
 				@Override
 				public void notify(Event arg0) {
 					try {
-						Preferences prefs = java.util.prefs.Preferences
+						Preferences prefs = Preferences
 								.userNodeForPackage(this.getClass());
 
 						// Create a file chooser

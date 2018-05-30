@@ -61,7 +61,7 @@ public final class TaggedOutputStream {
             closeBracket();
             this.stack.pop();
         } else {
-            if ((this.lastOperationWasCloseTag) && (this.prettyPrint)) {
+            if (this.lastOperationWasCloseTag && this.prettyPrint) {
                 this.out.println();
                 for (int i = 0; i < this.stack.size() - 1 + this.startIndent; i++) {
                     this.out.print(this.indentString);
@@ -86,7 +86,7 @@ public final class TaggedOutputStream {
     }
 
     public void append(boolean b) {
-        append(new Boolean(b).toString());
+        append(String.valueOf(b));
     }
 
     public void append(double d) {
@@ -95,11 +95,11 @@ public final class TaggedOutputStream {
     }
 
     public void append(long d) {
-        append(new Long(d).toString());
+        append(String.valueOf(d));
     }
 
     public void append(int d) {
-        append(new Integer(d).toString());
+        append(String.valueOf(d));
     }
 
     public static void main(String[] args) {

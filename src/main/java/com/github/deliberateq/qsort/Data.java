@@ -180,7 +180,7 @@ public class Data implements Serializable {
 		log.info("loaded");
 	}
 
-	private static enum Marker {
+	private enum Marker {
 		STARTED, TITLE_READ, NUM_PARTICIPANTS_READ, NUM_VARIABLES_READ, PARTICIPANT_DATA_READ, NUM_Q_STATEMENTS_READ, NUM_P_STATEMENTS_READ, DATA_READ, STATEMENTS_READ, STATEMENTS_DATA_READ;
 	}
 

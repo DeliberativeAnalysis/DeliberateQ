@@ -156,8 +156,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return columnLabels;
 	}
 
-	public static interface Function {
-		public double f(int row, int col, double x);
+	public interface Function {
+		double f(int row, int col, double x);
 	}
 
 	public Matrix apply(Function function) {
@@ -1480,7 +1480,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	}
 
 	public interface MatrixFunction {
-		public double function(Matrix m);
+		double function(Matrix m);
 	}
 
 	public Matrix getGradient(MatrixFunction f, double epsilon) {
@@ -1794,7 +1794,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 				if (isNull) {
 					m.setValue(m.rowCount(), col, nullEntry);
 				} else {
-					m.setValue(m.rowCount(), col, Double.parseDouble((item[i])));
+					m.setValue(m.rowCount(), col, Double.parseDouble(item[i]));
 				}
 			}
 			count++;
@@ -1964,8 +1964,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return m;
 	}
 
-	public static interface MatrixComparison {
-		public double compare(Matrix m, Matrix reference);
+	public interface MatrixComparison {
+		double compare(Matrix m, Matrix reference);
 	}
 
 	public List<MatrixRotation> getRotationsTo(Matrix reference) {

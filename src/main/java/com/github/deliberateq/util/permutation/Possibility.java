@@ -23,7 +23,7 @@ public final class Possibility {
                 doPossibility(n - 1, range, new Processor() {
                     public void processValues(int[] values) {
                         for (int i = 0; i < values.length; i++) {
-                            vals[(i + 1)] = values[i];
+                            vals[i + 1] = values[i];
                         }
                         p.processValues(vals);
                     }
