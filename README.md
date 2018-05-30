@@ -1,5 +1,8 @@
 Deliberate Q
 ==============
+<a href="https://travis-ci.org/davidmoten/DeliberateQ"><img src="https://travis-ci.org/davidmoten/DeliberateQ.svg"/></a><br/>
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.davidmoten/DeliberateQ/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.github.davidmoten/DeliberateQ)<br/>
+[![codecov](https://codecov.io/gh/davidmoten/DeliberateQ/branch/master/graph/badge.svg)](https://codecov.io/gh/davidmoten/DeliberateQ)
 
 Deliberate Q is a visualisation tool for Q Methodology analysis. It is a java swing application with these features:
 
