@@ -2,6 +2,7 @@ package moten.david.util.math;
 
 import java.awt.Point;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +30,6 @@ import com.google.common.collect.Lists;
 
 import Jama.EigenvalueDecomposition;
 import Jama.SingularValueDecomposition;
-import moten.david.util.StringOutputStream;
 import moten.david.util.math.EigenvalueThreshold.PrincipalFactorCriterion;
 import moten.david.util.math.Varimax.RotationMethod;
 import moten.david.util.math.gui.GraphPanel;
@@ -941,8 +942,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	}
 
 	private String getTabDelimited() {
-		StringOutputStream sos = new StringOutputStream();
-		PrintWriter out = new PrintWriter(sos);
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		PrintWriter out = new PrintWriter(bytes);
 
 		for (int i = 1; i <= rowCount(); i++) {
 			if (i == 1) {
@@ -959,7 +960,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 			out.println();
 		}
 		out.close();
-		return sos.toString();
+		return new String(bytes.toByteArray(), StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -1597,13 +1598,13 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 		@Override
 		public String toString() {
-			StringOutputStream sos = new StringOutputStream();
-			PrintWriter out = new PrintWriter(sos);
+			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+			PrintWriter out = new PrintWriter(bytes);
 			out.println("eigenvalues:\n" + eigenvalues);
 			out.println("eigenvectors:\n" + eigenvectors);
 			out.println("loadings:\n" + loadings);
 			out.close();
-			return sos.toString();
+			return new String(bytes.toByteArray(), StandardCharsets.UTF_8);
 		}
 	}
 

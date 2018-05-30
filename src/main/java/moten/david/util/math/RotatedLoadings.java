@@ -1,9 +1,10 @@
 package moten.david.util.math;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-import moten.david.util.StringOutputStream;
 import moten.david.util.math.Varimax.RotationMethod;
 
 public class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
@@ -19,13 +20,13 @@ public class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
 
 	@Override
 	public String toString() {
-		StringOutputStream sos = new StringOutputStream();
-		PrintWriter out = new PrintWriter(sos);
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		PrintWriter out = new PrintWriter(bytes);
 		SimpleHeirarchicalFormatter f = FactorAnalysisResults
 				.createTextFormatter(out);
 		format(null, f);
 		out.close();
-		return sos.toString();
+		return new String(bytes.toByteArray(), StandardCharsets.UTF_8);
 	}
 
 	public void format(Matrix data, SimpleHeirarchicalFormatter f) {

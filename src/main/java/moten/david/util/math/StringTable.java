@@ -1,9 +1,10 @@
 package moten.david.util.math;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import moten.david.util.StringOutputStream;
 import moten.david.util.web.html.Html;
 import moten.david.util.xml.TaggedOutputStream;
 
@@ -13,8 +14,8 @@ public class StringTable extends ArrayList<List<String>> implements Html {
 
     @Override
     public String toHtml() {
-        StringOutputStream sos = new StringOutputStream();
-        TaggedOutputStream t = new TaggedOutputStream(sos, true);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        TaggedOutputStream t = new TaggedOutputStream(bytes, true);
         t.startTag("table");
         t.addAttribute("class", "matrix");
         for (List<String> row : this) {
@@ -29,7 +30,7 @@ public class StringTable extends ArrayList<List<String>> implements Html {
         }
         t.closeTag();
         t.close();
-        return sos.toString();
+        return new String(bytes.toByteArray(), StandardCharsets.UTF_8);
     }
 
     public void addRow() {
