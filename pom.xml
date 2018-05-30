@@ -105,7 +105,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>au.edu.anu.delibdem.qsort.gui.MainFrame</mainClass>
+                    <mainClass>com.github.deliberateq.qsort.gui.MainFrame</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -117,7 +117,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>au.edu.anu.delibdem.qsort.gui.MainFrame</mainClass>
+                            <mainClass>com.github.deliberateq.qsort.gui.MainFrame</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
