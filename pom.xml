@@ -10,17 +10,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compiler.source.version>1.8</compiler.source.version>
-        <cobertura.version>2.5.2</cobertura.version>
-        <checkstyle.version>2.10</checkstyle.version>
-        <findbugs.version>2.5.2</findbugs.version>
-        <javadoc.version>2.9</javadoc.version>
-        <pmd.version>2.7.1</pmd.version>
-        <jdepend.version>2.0-beta-2</jdepend.version>
-        <javancss.version>2.0</javancss.version>
-        <project.info.version>2.5</project.info.version>
-        <jxr.version>2.3</jxr.version>
+        <cobertura.version>2.7</cobertura.version>
+        <checkstyle.version>3.0.0</checkstyle.version>
+        <findbugs.version>3.0.5</findbugs.version>
+        <javadoc.version>3.0.1</javadoc.version>
+        <pmd.version>3.9.0</pmd.version>
+        <jdepend.version>2.0</jdepend.version>
+        <jxr.version>2.5</jxr.version>
         <taglist.version>2.4</taglist.version>
-        <m3.site.version>3.2</m3.site.version>
+        <m3.site.version>3.7.1</m3.site.version>
     </properties>
 
     <licenses>
@@ -47,22 +45,15 @@
             <artifactId>jama</artifactId>
             <version>1.0.3</version>
         </dependency>
-        <!-- <dependency> <groupId>gif4j</groupId> <artifactId>gif4j-light-trial</artifactId> 
-            <version>1.0</version> </dependency> -->
-        <!-- <dependency> -->
-        <!-- <groupId>org.moten.david</groupId> -->
-        <!-- <artifactId>moten-util-old</artifactId> -->
-        <!-- <version>1.0.0</version> -->
-        <!-- </dependency> -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>25.1-jre</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>4.0</version>
+            <version>4.2.0</version>
         </dependency>
         <dependency>
             <groupId>aopalliance</groupId>
@@ -75,7 +66,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.1.1</version>
+                <version>1.6.0</version>
                 <executions>
                     <execution>
                         <!-- <phase>assembly</phase> -->
@@ -90,6 +81,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
                 <configuration>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -113,7 +105,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.7.0</version>
                 <configuration>
                     <source>${compiler.source.version}</source>
                     <target>${compiler.source.version}</target>
@@ -178,20 +170,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jdepend-maven-plugin</artifactId>
                 <version>${jdepend.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>javancss-maven-plugin</artifactId>
-                <version>${javancss.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${project.info.version}</version>
-                <configuration>
-                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
-                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
