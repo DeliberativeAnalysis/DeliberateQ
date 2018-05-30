@@ -13,7 +13,7 @@ Deliberate Q is a visualisation tool for Q Methodology analysis. It is a java sw
 * Animated intersubjective correlation graphs for visualisation of multi stage data
 * Venn Diagram views for factor interpretation
 
-<img src="docs/images/forq.png?raw"/>
+<img src="docs/images/dq.png?raw"/>
 
 Mathematics libraries
 ---------------------
