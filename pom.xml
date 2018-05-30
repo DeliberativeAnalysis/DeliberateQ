@@ -18,6 +18,7 @@
         <jxr.version>2.5</jxr.version>
         <taglist.version>2.4</taglist.version>
         <m3.site.version>3.7.1</m3.site.version>
+        <project.info.version>2.9</project.info.version>
     </properties>
 
     <licenses>
@@ -213,6 +214,16 @@
                 <artifactId>jdepend-maven-plugin</artifactId>
                 <version>${jdepend.version}</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${project.info.version}</version>
+                <configuration>
+                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
