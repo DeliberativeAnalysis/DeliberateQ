@@ -41,7 +41,7 @@ public final class EigenvalueThreshold {
 		return maxFactors;
 	}
 
-	public static enum PrincipalFactorCriterion {
+	public enum PrincipalFactorCriterion {
 		MIN_EIGENVALUE, MAX_FACTORS
 	};
 }

@@ -16,8 +16,8 @@ public class LookAndFeel {
     public static void setLookAndFeel() {
 
         if ("true".equalsIgnoreCase(System.getProperty("systemLookAndFeel"))
-                || (System.getProperty("systemLookAndFeel") == null
-                        && Preferences.getInstance().isSystemLookAndFeel())) {
+                || System.getProperty("systemLookAndFeel") == null
+                        && Preferences.getInstance().isSystemLookAndFeel()) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {

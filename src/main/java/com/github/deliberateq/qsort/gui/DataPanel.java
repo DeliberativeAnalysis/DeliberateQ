@@ -287,7 +287,7 @@ public class DataPanel extends JPanel {
 				if (node == null)
 					return;
 				Object o = node.getUserObject();
-				log.info((o == null ? null : o.toString()));
+				log.info(o == null ? null : o.toString());
 				if (o instanceof DataSelection) {
 					updateDataViewer((DataSelection) o);
 				} else if (o instanceof RotatedLoadings) {
