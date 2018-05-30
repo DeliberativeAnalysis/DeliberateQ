@@ -74,9 +74,8 @@ public class TaggedOutputStream {
 
     public void close() {
         if (this.stack.size() > 0) {
-            throw new Error(this.stack.size() + "unclosed tags!");
+            throw new RuntimeException(this.stack.size() + "unclosed tags!");
         }
-        this.out.flush();
         this.out.close();
     }
 
