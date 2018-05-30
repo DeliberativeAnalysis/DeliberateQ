@@ -44,7 +44,7 @@ mvn test exec:java
 
 How to release a new version
 -----------------------------
-To build a release (tagged in git source control) on Linux/Unix:
+For project administrators, to build a release (tagged in git source control) on Linux/Unix:
 
 ```bash
 ./release.sh VERSION_HERE
