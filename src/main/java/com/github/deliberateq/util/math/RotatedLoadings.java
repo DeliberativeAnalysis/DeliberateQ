@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import com.github.deliberateq.util.math.Varimax.RotationMethod;
 
-public class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
+public final class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
 
 	private static final long serialVersionUID = 4765552026257009699L;
 

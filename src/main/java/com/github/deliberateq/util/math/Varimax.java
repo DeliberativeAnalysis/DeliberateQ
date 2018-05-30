@@ -6,23 +6,23 @@ import java.util.List;
 
 public class Varimax {
 
-	private RotationMethod method;
+	private final RotationMethod method;
 
-	private double[][] data;
+	private final double[][] data;
 
+	private final double[] fnorm;
+
+	private double[] kaiserNorm;
+
+	private final int maxIterations = 100;
+
+	private final double epsilon = 0.00001;
+	
 	private double param;
-
-	double[] fnorm;
-
-	double[] kaiserNorm;
-
-	private int maxIterations = 100;
-
-	private double epsilon = 0.00001;
 
 	private static boolean verbose = false;
 
-	public boolean kaiserNormalisation = false;
+	private boolean kaiserNormalisation = false;
 
 	public boolean getKaiserNormalisation() {
 		return kaiserNormalisation;
@@ -37,10 +37,10 @@ public class Varimax {
 	}
 
 	public Varimax(RotationMethod method, double[][] data, double param) {
-		super();
 		this.method = method;
 		this.data = data;
 		this.param = param;
+		this.fnorm = null;
 	}
 
 	public enum RotationScratch {
@@ -273,40 +273,20 @@ public class Varimax {
 		return data;
 	}
 
-	public void setData(double[][] data) {
-		this.data = data;
-	}
-
 	public double getEpsilon() {
 		return epsilon;
-	}
-
-	public void setEpsilon(double epsilon) {
-		this.epsilon = epsilon;
 	}
 
 	public int getMaxIterations() {
 		return maxIterations;
 	}
 
-	public void setMaxIterations(int maxIterations) {
-		this.maxIterations = maxIterations;
-	}
-
 	public RotationMethod getMethod() {
 		return method;
 	}
 
-	public void setMethod(RotationMethod method) {
-		this.method = method;
-	}
-
 	public double getParam() {
 		return param;
-	}
-
-	public void setParam(double param) {
-		this.param = param;
 	}
 
 	public static boolean getVerbose() {

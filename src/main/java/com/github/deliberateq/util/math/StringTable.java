@@ -8,7 +8,7 @@ import java.util.List;
 import com.github.deliberateq.util.web.html.Html;
 import com.github.deliberateq.util.xml.TaggedOutputStream;
 
-public class StringTable extends ArrayList<List<String>> implements Html {
+public final class StringTable extends ArrayList<List<String>> implements Html {
 
     private static final long serialVersionUID = 4581287593900054692L;
 

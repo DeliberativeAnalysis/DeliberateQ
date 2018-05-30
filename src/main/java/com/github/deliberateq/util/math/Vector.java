@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-public class Vector extends Matrix {
+public final class Vector extends Matrix {
 
 	private static final long serialVersionUID = -4275438891677241883L;
 
