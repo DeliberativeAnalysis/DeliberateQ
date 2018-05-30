@@ -209,7 +209,7 @@ public class MainFrame extends JFrame {
         LookAndFeel.setLookAndFeel();
         final MainFrame frame = ApplicationInjector.getInjector().getInstance(MainFrame.class);
         final EventManager eventManager = ApplicationInjector.getInjector().getInstance(EventManager.class);
-        frame.setTitle("AdvanceQ");
+        frame.setTitle("DeliberateQ");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         SwingUtilities.invokeLater(new Runnable() {
