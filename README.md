@@ -23,7 +23,7 @@ T distribution routines from apache [commons-math](http://commons.apache.org/pro
 
 Build instructions
 --------------------
-You need to have Maven 3 installed.
+You need to have Java (Oracle or OpenJDK) and Maven 3+ (https://maven.apache.org/) installed.
 
 To build the jar with all dependencies included:
 
