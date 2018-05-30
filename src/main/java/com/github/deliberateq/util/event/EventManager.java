@@ -5,16 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EventManager {
-    private static EventManager instance;
-    private Map<EventType, List<EventManagerListener>> listeners = new ConcurrentHashMap<EventType, List<EventManagerListener>>();
+public final class EventManager {
 
-    public static synchronized EventManager getInstance() {
-        if (instance == null) {
-            instance = new EventManager();
-        }
+    private static final EventManager instance = new EventManager();
+
+    public static EventManager getInstance() {
         return instance;
     }
+
+    public EventManager() {
+        // allow instantiation of a local event manager
+    }
+
+    private Map<EventType, List<EventManagerListener>> listeners = new ConcurrentHashMap<EventType, List<EventManagerListener>>();
 
     public synchronized void addListener(EventType eventType, EventManagerListener l) {
         if (this.listeners.get(eventType) == null) {
