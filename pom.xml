@@ -34,7 +34,7 @@
         <system>Travis</system>
         <url>https://travis-ci.org/DeliberativeAnalysis/DeliberateQ</url>
     </ciManagement>
-    
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/DeliberativeAnalysis/DeliberateQ/issues</url>
@@ -82,8 +82,8 @@
             <artifactId>guice</artifactId>
             <version>4.2.0</version>
         </dependency>
-        
-        <!--  test dependencies -->
+
+        <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -139,6 +139,25 @@
                     <source>${compiler.source.version}</source>
                     <target>${compiler.source.version}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
