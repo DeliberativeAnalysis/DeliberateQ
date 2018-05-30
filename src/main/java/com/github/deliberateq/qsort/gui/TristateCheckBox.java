@@ -58,7 +58,10 @@ public class TristateCheckBox extends JCheckBox {
 		// Reset the keyboard action map
 		ActionMap map = new ActionMapUIResource();
 		map.put("pressed", new AbstractAction() {
-			@Override
+		    
+            private static final long serialVersionUID = -8137280068305264391L;
+
+            @Override
 			public void actionPerformed(ActionEvent e) {
 				grabFocus();
 				model.nextState();
