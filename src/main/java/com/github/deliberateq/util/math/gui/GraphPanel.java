@@ -266,11 +266,6 @@ public class GraphPanel extends JPanel {
 				BasicStroke.JOIN_ROUND, 1f, new float[] { 5f, 5f }, 0f);
 	}
 
-	private Stroke getDottedStroke2() {
-		return new BasicStroke(1f, BasicStroke.CAP_ROUND,
-				BasicStroke.JOIN_ROUND, 1f, new float[] { 2f, 2f }, 0f);
-	}
-
 	private Stroke getDefaultStroke() {
 		return new BasicStroke(1f * getSizeScaling(), BasicStroke.CAP_ROUND,
 				BasicStroke.JOIN_ROUND);
