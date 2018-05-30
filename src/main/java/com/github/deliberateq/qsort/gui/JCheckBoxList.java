@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 public class JCheckBoxList extends JList<Object> {
 	private static final long serialVersionUID = 4925919191595135688L;
-	protected static Border noFocusBorder = new EmptyBorder(1, 1, 1, 1);
+	private static final Border noFocusBorder = new EmptyBorder(1, 1, 1, 1);
 
 	public JCheckBoxList() {
 		setCellRenderer(new CheckBoxCellRenderer());

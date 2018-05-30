@@ -83,7 +83,7 @@ public class CloseableTabComponent extends JPanel {
 
 	}
 
-	private class TabButton extends JButton {
+	private static final class TabButton extends JButton {
 
 		private static final long serialVersionUID = -3639717649770278574L;
 

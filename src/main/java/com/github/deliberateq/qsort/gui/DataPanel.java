@@ -510,7 +510,6 @@ public class DataPanel extends JPanel {
 					treeModel.insertNodeInto(newAnalysisNode, node,
 							node.getChildCount());
 
-					List<DefaultMutableTreeNode> newLeaves = new ArrayList<DefaultMutableTreeNode>();
 					for (FactorAnalysisResults result : results) {
 						// create a new node for the factor analysis result
 						DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(
@@ -523,7 +522,6 @@ public class DataPanel extends JPanel {
 								.createNodes(result);
 						treeModel.insertNodeInto(newNode2, newNode,
 								newNode.getChildCount());
-						newLeaves.add(newNode2);
 					}
 
 					tree.expandPath(new TreePath(node.getPath()));

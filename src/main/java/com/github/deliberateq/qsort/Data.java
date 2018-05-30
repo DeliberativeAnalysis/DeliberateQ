@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,7 +99,7 @@ public class Data implements Serializable {
 
 	public void load(InputStream is) throws IOException {
 		log.info("loading data..");
-		InputStreamReader isr = new InputStreamReader(is);
+		InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
 		LineCountingReader br = new LineCountingReader(new BufferedReader(isr));
 
 		String line;
@@ -509,7 +510,7 @@ public class Data implements Serializable {
 	}
 
 	public void writeMatrix(Matrix m, OutputStream os) throws IOException {
-		os.write(m.getDelimited(TAB, true).getBytes());
+		os.write(m.getDelimited(TAB, true).getBytes(StandardCharsets.UTF_8));
 		os.flush();
 	}
 
