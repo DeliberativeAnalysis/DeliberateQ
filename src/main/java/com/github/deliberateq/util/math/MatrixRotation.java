@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class MatrixRotation implements Serializable {
+public final class MatrixRotation implements Serializable {
 
 	private static final long serialVersionUID = 2930912548858495735L;
-	private int column1;
-	private int column2;
+	private final int column1;
+	private final int column2;
 	private double angle;
 
 	public int getColumn1() {
@@ -23,22 +23,13 @@ public class MatrixRotation implements Serializable {
 	}
 
 	public MatrixRotation(int column1, int column2, int angleDegrees) {
-		super();
 		this.column1 = column1;
 		this.column2 = column2;
 		this.angle = Math.PI / 180 * angleDegrees;
 	}
 
-	public void setColumn1(int column1) {
-		this.column1 = column1;
-	}
-
 	public int getColumn2() {
 		return column2;
-	}
-
-	public void setColumn2(int column2) {
-		this.column2 = column2;
 	}
 
 	public double getAngle() {

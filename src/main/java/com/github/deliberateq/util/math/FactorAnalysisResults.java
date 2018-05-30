@@ -2,7 +2,7 @@ package com.github.deliberateq.util.math;
 
 import java.io.PrintWriter;
 
-public class FactorAnalysisResults {
+public final class FactorAnalysisResults {
 
 	private final FactorAnalysisInput input;
 

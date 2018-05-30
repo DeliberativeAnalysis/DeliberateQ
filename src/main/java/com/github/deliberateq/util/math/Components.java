@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.github.deliberateq.util.math.EigenvalueThreshold.PrincipalFactorCriterion;
 
-public class Components {
+public final class Components {
 
 	private final Matrix eigenvectors;
 	private final Matrix eigenvalues;

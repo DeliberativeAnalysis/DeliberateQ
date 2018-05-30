@@ -1,12 +1,11 @@
 package com.github.deliberateq.util.math;
 
-public class MatrixEntry {
+public final class MatrixEntry {
 
-	private int row;
-	private int column;
+	private final int row;
+	private final int column;
 
 	public MatrixEntry(int row, int column) {
-		super();
 		this.row = row;
 		this.column = column;
 	}
@@ -15,16 +14,8 @@ public class MatrixEntry {
 		return row;
 	}
 
-	public void setRow(int row) {
-		this.row = row;
-	}
-
 	public int getColumn() {
 		return column;
-	}
-
-	public void setColumn(int column) {
-		this.column = column;
 	}
 
 }

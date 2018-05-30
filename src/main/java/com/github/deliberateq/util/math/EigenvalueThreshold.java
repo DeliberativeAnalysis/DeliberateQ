@@ -1,6 +1,6 @@
 package com.github.deliberateq.util.math;
 
-public class EigenvalueThreshold {
+public final class EigenvalueThreshold {
 
 	public static EigenvalueThreshold createWithMaxFactors(int maxFactors) {
 		return new EigenvalueThreshold(maxFactors);
