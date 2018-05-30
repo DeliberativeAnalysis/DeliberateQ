@@ -2,7 +2,7 @@ package com.github.deliberateq.util.math;
 
 import org.apache.commons.math3.distribution.TDistribution;
 
-public class RegressionIntervalFunction implements Function {
+public final class RegressionIntervalFunction implements Function {
 
 	private final Vector v1;
 	private final boolean singleResponse;
