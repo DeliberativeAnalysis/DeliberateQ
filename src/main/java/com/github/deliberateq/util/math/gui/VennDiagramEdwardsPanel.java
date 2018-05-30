@@ -20,11 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.Spring;
 import javax.swing.SpringLayout;
 import javax.swing.SpringLayout.Constraints;
+import javax.swing.ToolTipManager;
 
 import com.github.deliberateq.util.event.EventManager;
 import com.github.deliberateq.util.gui.swing.v1.SwingUtil;
-
-import javax.swing.ToolTipManager;
 
 public class VennDiagramEdwardsPanel extends JPanel {
 
@@ -277,49 +276,33 @@ public class VennDiagramEdwardsPanel extends JPanel {
 	}
 
 	private static class LabelPosition {
-		private float centreXFactor;
-		private float radiusXFactor;
-		private float centreYFactor;
-		private float radiusYFactor;
+		private final float centreXFactor;
+		private final float radiusXFactor;
+		private final float centreYFactor;
+		private final float radiusYFactor;
 
-		public float getCentreXFactor() {
+        LabelPosition(float centreXFactor, float radiusXFactor,
+                float centreYFactor, float radiusYFactor) {
+            this.centreXFactor = centreXFactor;
+            this.radiusXFactor = radiusXFactor;
+            this.centreYFactor = centreYFactor;
+            this.radiusYFactor = radiusYFactor;
+        }
+		
+		float getCentreXFactor() {
 			return centreXFactor;
 		}
 
-		public void setCentreXFactor(float centreXFactor) {
-			this.centreXFactor = centreXFactor;
-		}
-
-		public float getRadiusXFactor() {
+		float getRadiusXFactor() {
 			return radiusXFactor;
 		}
 
-		public void setRadiusXFactor(float radiusXFactor) {
-			this.radiusXFactor = radiusXFactor;
-		}
-
-		public float getCentreYFactor() {
+		float getCentreYFactor() {
 			return centreYFactor;
 		}
 
-		public void setCentreYFactor(float centreYFactor) {
-			this.centreYFactor = centreYFactor;
-		}
-
-		public float getRadiusYFactor() {
+		float getRadiusYFactor() {
 			return radiusYFactor;
-		}
-
-		public void setRadiusYFactor(float radiusYFactor) {
-			this.radiusYFactor = radiusYFactor;
-		}
-
-		public LabelPosition(float centreXFactor, float radiusXFactor,
-				float centreYFactor, float radiusYFactor) {
-			this.centreXFactor = centreXFactor;
-			this.radiusXFactor = radiusXFactor;
-			this.centreYFactor = centreYFactor;
-			this.radiusYFactor = radiusYFactor;
 		}
 	}
 

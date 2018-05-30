@@ -3,9 +3,9 @@ package com.github.deliberateq.util.math.gp;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.Matrix.MatrixFunction;
 
-public class QuartimaxCriterion implements MatrixFunction {
+public final class QuartimaxCriterion implements MatrixFunction {
 
-	private Matrix matrix;
+	private final Matrix matrix;
 
 	public QuartimaxCriterion(Matrix matrix) {
 		this.matrix = matrix;

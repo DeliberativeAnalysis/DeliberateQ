@@ -5,22 +5,23 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.Stack;
 
-public class TaggedOutputStream {
+public final class TaggedOutputStream {
+
     public String indentString = "  ";
     private Stack<String> stack = new Stack<String>();
     private boolean tagOpen = false;
-    private boolean prettyPrint = false;
-    private int startIndent = 0;
+    private final boolean prettyPrint;
+    private final int startIndent;
     private PrintWriter out;
     private boolean lastOperationWasCloseTag = false;
 
     public TaggedOutputStream(OutputStream os, boolean prettyPrint) {
-        this.out = new PrintWriter(os);
-        this.prettyPrint = prettyPrint;
+        this(os, prettyPrint, 0);
     }
 
     public TaggedOutputStream(OutputStream os, boolean prettyPrint, int startIndent) {
-        this(os, prettyPrint);
+        this.out = new PrintWriter(os);
+        this.prettyPrint = prettyPrint;
         this.startIndent = startIndent;
     }
 

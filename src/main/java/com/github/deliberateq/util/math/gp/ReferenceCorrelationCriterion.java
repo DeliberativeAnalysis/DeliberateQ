@@ -6,10 +6,10 @@ import java.util.Map;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.Matrix.MatrixFunction;
 
-public class ReferenceCorrelationCriterion implements MatrixFunction {
+public final class ReferenceCorrelationCriterion implements MatrixFunction {
 
-	private Matrix reference;
-	private Matrix matrix;
+	private final Matrix reference;
+	private final Matrix matrix;
 
 	public ReferenceCorrelationCriterion(Matrix matrix, Matrix reference) {
 		this.reference = reference;

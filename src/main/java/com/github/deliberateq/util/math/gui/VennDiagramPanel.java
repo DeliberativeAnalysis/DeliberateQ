@@ -12,7 +12,9 @@ import com.github.deliberateq.util.gui.swing.v1.SwingUtil;
 
 public class VennDiagramPanel extends JPanel {
 
-	private int numCircles;
+    private static final long serialVersionUID = -5420193567677216537L;
+    
+    private int numCircles;
 
 	public VennDiagramPanel(int numCircles) {
 		this.numCircles = numCircles;

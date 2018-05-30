@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
@@ -21,7 +20,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,8 +43,6 @@ import com.github.deliberateq.util.math.Function;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.RegressionIntervalFunction;
 import com.github.deliberateq.util.math.Vector;
-
-import to.mumble.GIFCodec.AnimGifEncoder;
 
 public class GraphPanel extends JPanel {
 

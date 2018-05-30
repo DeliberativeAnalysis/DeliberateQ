@@ -1,8 +1,11 @@
 package com.github.deliberateq.util.permutation;
 
-import java.io.PrintStream;
+public final class Possibility {
 
-public class Possibility {
+    private Possibility() {
+        // prevent instantiation
+    }
+
     public static void doPossibility(int n, int range, final Processor p) {
         if (n < 1) {
             return;

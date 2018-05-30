@@ -6,7 +6,7 @@ import java.util.Map;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.Matrix.MatrixFunction;
 
-public class ReferenceQuartimaxCriterion implements MatrixFunction {
+public final class ReferenceQuartimaxCriterion implements MatrixFunction {
 
 	private final Matrix reference;
 	private final Matrix matrix;
