@@ -195,5 +195,12 @@ public class MatrixTest {
 		assertEquals(3.0, m.getValue(2, 1), PRECISION);
 		assertEquals(4.0, m.getValue(2, 2), PRECISION);
 	}
+	
+    @Test
+    public void testConcordanceCalculation() {
+        Vector a = new Vector(new double[] { 1, 2, 3, 4, 5 });
+        Vector b = new Vector(new double[] { -1, 5, 2, 8, 0 });
+        assertEquals(0.075416, a.getConcordanceCorrelation(b), PRECISION);
+    }
 
 }
