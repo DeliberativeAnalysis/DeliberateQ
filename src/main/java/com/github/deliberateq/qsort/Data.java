@@ -451,9 +451,9 @@ public class Data implements Serializable {
 
 		// perform correlations
 		Matrix qSortsCorrelated = qSorts.transpose()
-				.getPearsonCorrelationMatrix();
+				.getCorrelationCoefficientMatrix();
 		Matrix rankingsCorrelated = rankings.transpose()
-				.getPearsonCorrelationMatrix();
+				.getCorrelationCoefficientMatrix();
 
 		// compare rankings and qSorts
 		List<String> participants1 = new ArrayList<String>();
@@ -542,10 +542,15 @@ public class Data implements Serializable {
 		gp.setBackground(Color.white);
 		gp.setLabelsVisible(labelPoints);
 		gp.setSize(size, size);
-		gp.setXLabel("Intersubjective Agreement (Pearson)");
-		gp.setYLabel("Preferences Agreement (Pearson)");
+		setXYLabels(gp);
 		return gp;
 	}
+
+    private static void setXYLabels(GraphPanel gp) {
+        String correlationMethodName = Matrix.DEFAULT_CORRELATION_COEFFICIENT_TYPE.abbreviatedName();
+        gp.setXLabel("Intersubjective Agreement (" + correlationMethodName + ")");
+		gp.setYLabel("Preferences Agreement (" + correlationMethodName + ")");
+    }
 
 	public GraphPanel getGraph(List<QSort> list, boolean labelPoints, int size,
 			Set<String> filter, final String bands,
@@ -572,8 +577,7 @@ public class Data implements Serializable {
 		gp.setBackground(Color.white);
 		gp.setLabelsVisible(labelPoints);
 		gp.setSize(size, size);
-		gp.setXLabel("Intersubjective Agreement (Pearson)");
-		gp.setYLabel("Preferences Agreement (Pearson)");
+		setXYLabels(gp);
 		final SimpleRegression sr = new SimpleRegression();
 		double[][] vals = new double[v1.size()][2];
 		for (int i = 0; i < vals.length; i++) {

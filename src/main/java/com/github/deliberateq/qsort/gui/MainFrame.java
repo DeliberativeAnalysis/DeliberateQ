@@ -19,6 +19,7 @@ import com.github.deliberateq.util.event.EventManagerListener;
 import com.github.deliberateq.util.gui.swing.v1.SwingUtil;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.MatrixProvider;
+import com.github.deliberateq.util.math.Matrix.CorrelationCoefficientType;
 import com.github.deliberateq.util.math.gui.JMatrix;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -205,6 +206,7 @@ public class MainFrame extends JFrame {
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, UnsupportedLookAndFeelException {
+        Matrix.DEFAULT_CORRELATION_COEFFICIENT_TYPE = CorrelationCoefficientType.CONCORDANCE;
         LookAndFeel.setLookAndFeel();
         final MainFrame frame = ApplicationInjector.getInjector().getInstance(MainFrame.class);
         final EventManager eventManager = ApplicationInjector.getInjector().getInstance(EventManager.class);

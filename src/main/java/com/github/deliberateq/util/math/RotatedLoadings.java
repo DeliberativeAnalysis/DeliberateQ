@@ -41,7 +41,7 @@ public final class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
 
 			f.header("Correlation", true);
 			f.blockStart();
-			f.item(get(method).getPearsonCorrelationMatrix());
+			f.item(get(method).getCorrelationCoefficientMatrix());
 			f.blockFinish();
 
 			Object[] objects = new Object[] {

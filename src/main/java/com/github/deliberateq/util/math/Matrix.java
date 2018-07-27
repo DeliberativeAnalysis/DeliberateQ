@@ -44,6 +44,22 @@ import Jama.SingularValueDecomposition;
 public class Matrix implements Html, Serializable, MatrixProvider {
 
 	private static final long serialVersionUID = 9023597611514181325L;
+	
+	public enum CorrelationCoefficientType {
+	    PEARSONS ("Pearsons"), CONCORDANCE ("Concordance");
+
+	    private final String abbreviatedName;
+        
+	    private CorrelationCoefficientType(String abbreviatedName) {
+	        this.abbreviatedName = abbreviatedName;
+	    }
+	    
+        public String abbreviatedName() {
+            return abbreviatedName;
+        }
+	}
+	
+	public static CorrelationCoefficientType DEFAULT_CORRELATION_COEFFICIENT_TYPE = CorrelationCoefficientType.PEARSONS; 
 
 	public static double nullEntry = -99999999.1111;
 
@@ -362,6 +378,28 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		result.setColumnLabels(columnLabels);
 		return result;
 	}
+	
+    public Matrix getCorrelationCoefficientMatrix() {
+        if (DEFAULT_CORRELATION_COEFFICIENT_TYPE == CorrelationCoefficientType.PEARSONS) {
+            return getPearsonCorrelationMatrix();
+        } else {
+            return getConcordanceCorrelationMatrix();
+        }
+    }
+	
+	public Matrix getConcordanceCorrelationMatrix() {
+	    Matrix result = new Matrix(columnCount(), columnCount());
+        for (int i = 1; i <= columnCount(); i++) {
+            for (int j = 1; j <= columnCount(); j++) {
+                Vector v1 = getColumnVector(i);
+                Vector v2 = getColumnVector(j);
+                result.setValue(i, j, v1.getConcordanceCorrelation(v2));
+            }
+        }
+        result.setRowLabels(columnLabels);
+        result.setColumnLabels(columnLabels);
+        return result;
+	}
 
 	public Jama.Matrix toJamaMatrix() {
 		return new Jama.Matrix(m);
@@ -584,7 +622,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	public FactorAnalysisResults analyzeFactors(FactorExtractionMethod extractionMethod,
 			EigenvalueThreshold eigenvalueThreshold, Set<RotationMethod> rotationMethods)
 					throws FactorAnalysisException {
-		Matrix c = getPearsonCorrelationMatrix();
+		Matrix c = getCorrelationCoefficientMatrix();
 		FactorAnalysisResults r = c.analyzeCorrelationMatrixFactors(extractionMethod, eigenvalueThreshold,
 				rotationMethods);
 		r.setInitial(this);
@@ -593,7 +631,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 	public FactorAnalysisResults analyzeFactors(FactorExtractionMethod extractionMethod,
 			Set<RotationMethod> rotationMethods) throws FactorAnalysisException {
-		Matrix c = getPearsonCorrelationMatrix();
+		Matrix c = getCorrelationCoefficientMatrix();
 		FactorAnalysisResults r = c.analyzeCorrelationMatrixFactors(extractionMethod, rotationMethods);
 		r.setInitial(this);
 		return r;

@@ -9,7 +9,7 @@ import com.google.common.collect.Lists;
 public final class Vector extends Matrix {
 
 	private static final long serialVersionUID = -4275438891677241883L;
-
+	
 	public Vector(int size) {
 		// a vector is a matrix with one or many rows and only one column
 		super(size, 1);
@@ -95,6 +95,19 @@ public final class Vector extends Matrix {
 		return result;
 	}
 
+    public double getConcordanceCorrelation(Vector v) {
+        double p = getPearsonCorrelation(v);
+        double meanX = getMean();
+        double meanY = v.getMean();
+        double varX = sqr(getVariance());
+        double varY = sqr(v.getVariance());
+        return 2 * p * Math.sqrt(varX * varY) / (sqr(meanX - meanY) + varX + varY);
+    }
+	
+	private static double sqr(double x) {
+	    return x * x;
+	}
+	
 	public double getPearsonCorrelation(Vector v) {
 		if (size() != v.size()) {
 			throw new RuntimeException("vectors must be same size");
@@ -117,8 +130,7 @@ public final class Vector extends Matrix {
 			sigmaX2 += d1.getValue(i) * d1.getValue(i);
 			sigmaY2 += d2.getValue(i) * d2.getValue(i);
 		}
-		double result = sigmaXY / Math.sqrt(sigmaX2 * sigmaY2);
-		return result;
+		return sigmaXY / Math.sqrt(sigmaX2 * sigmaY2);
 	}
 
 	public double[] getValues() {
@@ -165,12 +177,8 @@ public final class Vector extends Matrix {
 		return getColumnLabel(1);
 	}
 
-	public Vector getVariance() {
-		Vector result = getDeviation();
-		for (int i = 1; i <= result.size(); i++) {
-			result.setValue(i, Math.pow(result.getValue(i), 2));
-		}
-		return result;
+	public double getVariance() {
+		return getDeviation().getSumSquares() / size();
 	}
 
 	public double getSumSquares() {

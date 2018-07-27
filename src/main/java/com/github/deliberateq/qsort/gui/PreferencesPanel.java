@@ -98,7 +98,7 @@ public class PreferencesPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane
 						.showMessageDialog(PreferencesPanel.this,
-								"You will need to restart Forq for this to take effect");
+								"You will need to restart DeliberateQ for this to take effect");
 				Preferences.getInstance().setSystemLookAndFeel(
 						systemLookAndFeel.isSelected());
 				EventManager.getInstance().notify(

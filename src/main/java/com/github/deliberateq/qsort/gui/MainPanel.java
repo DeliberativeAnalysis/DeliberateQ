@@ -17,6 +17,8 @@ import com.github.deliberateq.qsort.Data;
 import com.github.deliberateq.util.event.Event;
 import com.github.deliberateq.util.event.EventManager;
 import com.github.deliberateq.util.event.EventManagerListener;
+import com.github.deliberateq.util.math.Matrix;
+import com.github.deliberateq.util.math.Matrix.CorrelationCoefficientType;
 import com.google.inject.Inject;
 
 public class MainPanel extends JPanel {
@@ -26,7 +28,6 @@ public class MainPanel extends JPanel {
 
 	@Inject
 	public MainPanel(EventManager eventManager) {
-
 		setLayout(new GridLayout(1, 1));
 
 		final JTabbedPane tabs = new JTabbedPane();
