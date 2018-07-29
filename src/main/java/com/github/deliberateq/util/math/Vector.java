@@ -21,8 +21,8 @@ public final class Vector extends Matrix {
 			setValue(i, startValue);
 		}
 	}
-
-	public Vector(double[] values) {
+	
+	public Vector(double... values) {
 		this(values.length);
 		for (int i = 0; i < values.length; i++) {
 			setValue(i + 1, values[i]);
