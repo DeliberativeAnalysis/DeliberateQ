@@ -99,8 +99,8 @@ public final class Vector extends Matrix {
         double p = getPearsonCorrelation(v);
         double meanX = getMean();
         double meanY = v.getMean();
-        double varX = sqr(getVariance());
-        double varY = sqr(v.getVariance());
+        double varX = getVariance();
+        double varY = v.getVariance();
         return 2 * p * Math.sqrt(varX * varY) / (sqr(meanX - meanY) + varX + varY);
     }
 	
