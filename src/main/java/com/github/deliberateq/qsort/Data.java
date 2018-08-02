@@ -171,7 +171,7 @@ public class Data implements Serializable {
 				throw new RuntimeException(
 						"Line "
 								+ br.getLinesRead()
-								+ " was unexpected. Please compare your file to the example forq input file. Perhaps the lines are not in the right order?\n"
+								+ " was unexpected. Please compare your file to the example DeliberateQ input file. Perhaps the lines are not in the right order?\n"
 								+ line);
 		}
 		br.close();

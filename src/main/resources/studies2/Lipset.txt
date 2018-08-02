@@ -1,8 +1,8 @@
 ########################################################################################################																																														
-# Forq input file																																																
+# DeliberateQ input file																																																
 #																																																
 # Any line starting with '#' is a comment line and will not be processed																																																
-# A line starting with ':' is like a bookmark to enable the Forq loader to know where it is in the file																																																
+# A line starting with ':' is like a bookmark to enable the DeliberateQ loader to know where it is in the file																																																
 # A line with only white space is ignored	
 # All columns are delimited with a tab character																																															
 ########################################################################################################																																																
