@@ -1,6 +1,7 @@
 package com.github.deliberateq.qsort;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,13 +13,14 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
@@ -42,14 +44,14 @@ public class Data implements Serializable {
 	private static final long serialVersionUID = -8216642174736641063L;
 	private static final String TAB = "\t";
 
-	private final Map<Integer, String> statements = new HashMap<Integer, String>();
-	private final Set<Integer> statementsToExclude = new HashSet<Integer>();
+	private final SortedMap<Integer, String> statements = new TreeMap<>();
 
 	public static final String PREDICTION_INTERVAL_95 = "Prediction_Interval_95";
 
-	private final Map<String, Participant> participants = new HashMap<String, Participant>();
-	private final Set<String> participantFilter = new TreeSet<String>();
-	private final Set<String> stageFilter = new TreeSet<String>();
+	private final Map<String, Participant> participants = new HashMap<>();
+	private final Set<String> participantFilter = new TreeSet<>();
+	private final Set<Integer> statementFilter = new TreeSet<>();
+	private final Set<String> stageFilter = new TreeSet<>();
 
 	private List<QSort> qSorts;
 	private String title = "Untitled";
@@ -180,6 +182,7 @@ public class Data implements Serializable {
 		isr.close();
 		is.close();
 		participantFilter.addAll(getParticipantIds());
+		statementFilter.addAll(getStatements().keySet());
 		stageFilter.addAll(getStageTypes());
 		log.info("loaded");
 	}
@@ -723,7 +726,7 @@ public class Data implements Serializable {
 		return participantFilter;
 	}
 
-	public Map<Integer, String> getStatements() {
+	public SortedMap<Integer, String> getStatements() {
 		return statements;
 	}
 
@@ -738,5 +741,9 @@ public class Data implements Serializable {
 	public Set<String> getStageFilter() {
 		return stageFilter;
 	}
+
+    public Set<Integer> getStatementFilter() {
+        return statementFilter;
+    }
 
 }

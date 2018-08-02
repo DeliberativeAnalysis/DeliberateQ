@@ -63,21 +63,32 @@ public class DataPanel extends JPanel {
 		SpringLayout layout = new SpringLayout();
 		left.setLayout(layout);
 		tree = new DataTree(data, cc);
-		LinkButton filter = new LinkButton("Filter Participants...");
-		left.add(filter);
+		LinkButton participantFilter = new LinkButton("Filter Participants...");
+		left.add(participantFilter);
+		participantFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventManager.getInstance().notify(
+                        new Event(data, Events.PARTICIPANT_FILTER));
+            }
+        });
+		
+		LinkButton statementFilter = new LinkButton("Filter Q Statements...");
+        left.add(statementFilter);
+        statementFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventManager.getInstance().notify(
+                        new Event(data, Events.STATEMENT_FILTER));
+            }
+        });
 		// LinkButton newDataSelection = new LinkButton("New...");
 		// left.add(newDataSelection);
 		JScrollPane scroll = new JScrollPane(tree);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		left.add(scroll);
 
-		filter.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				EventManager.getInstance().notify(
-						new Event(data, Events.FILTER));
-			}
-		});
+		
 
 		// newDataSelection.addActionListener(new ActionListener() {
 		// public void actionPerformed(ActionEvent e) {
@@ -85,17 +96,22 @@ public class DataPanel extends JPanel {
 		// new Event(data, Events.NEW_DATA_COMBINATION));
 		// }
 		// });
+		int leftMargin = 6;
 
-		layout.putConstraint(SpringLayout.NORTH, filter, 2, SpringLayout.NORTH,
+		layout.putConstraint(SpringLayout.NORTH, participantFilter, 2, SpringLayout.NORTH,
 				left);
-		layout.putConstraint(SpringLayout.WEST, filter, 6, SpringLayout.WEST,
+		layout.putConstraint(SpringLayout.WEST, participantFilter, leftMargin, SpringLayout.WEST,
 				left);
 		// layout.putConstraint(SpringLayout.NORTH, newDataSelection, 5,
 		// SpringLayout.SOUTH, filter);
 		// layout.putConstraint(SpringLayout.WEST, newDataSelection, 6,
 		// SpringLayout.WEST, left);
+		layout.putConstraint(SpringLayout.NORTH, statementFilter, 2, SpringLayout.SOUTH,
+                participantFilter);
+		layout.putConstraint(SpringLayout.WEST, statementFilter, leftMargin, SpringLayout.WEST,
+                left);
 		layout.putConstraint(SpringLayout.NORTH, scroll, 5, SpringLayout.SOUTH,
-				filter);
+		        statementFilter);
 		layout.putConstraint(SpringLayout.SOUTH, scroll, 0, SpringLayout.SOUTH,
 				left);
 		layout.putConstraint(SpringLayout.WEST, scroll, 5, SpringLayout.WEST,
