@@ -27,7 +27,7 @@ public class MainPanel extends JPanel {
 
 	@Inject
 	public MainPanel(EventManager eventManager) {
-	    CorrelationCoefficient cc = CorrelationCoefficient.PEARSONS;
+	    CorrelationCoefficient cc = CorrelationCoefficient.CONCORDANCE;
 		setLayout(new GridLayout(1, 1));
 
 		final JTabbedPane tabs = new JTabbedPane();

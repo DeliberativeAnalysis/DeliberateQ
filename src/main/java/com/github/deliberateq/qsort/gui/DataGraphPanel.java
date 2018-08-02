@@ -64,9 +64,11 @@ public class DataGraphPanel extends JPanel {
 		this.data = data;
 		this.combination = combination;
 		this.cc = cc;
-		setBackground(Color.white);
-		setOpaque(true);
-		update();
+		if (combination != null) {
+    		setBackground(Color.white);
+    		setOpaque(true);
+    		update();
+		}
 	}
 
 	public void update() {
