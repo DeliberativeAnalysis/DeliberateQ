@@ -59,8 +59,6 @@ public class Matrix implements Html, Serializable, MatrixProvider {
         }
 	}
 	
-	public static CorrelationCoefficientType DEFAULT_CORRELATION_COEFFICIENT_TYPE = CorrelationCoefficientType.PEARSONS; 
-
 	public static double nullEntry = -99999999.1111;
 
 	private final double[][] m;
@@ -365,42 +363,20 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return result;
 	}
 
-	public Matrix getPearsonCorrelationMatrix() {
-		Matrix result = new Matrix(columnCount(), columnCount());
-		for (int i = 1; i <= columnCount(); i++) {
-			for (int j = 1; j <= columnCount(); j++) {
-				Vector v1 = getColumnVector(i);
-				Vector v2 = getColumnVector(j);
-				result.setValue(i, j, v1.getPearsonCorrelation(v2));
-			}
-		}
-		result.setRowLabels(columnLabels);
-		result.setColumnLabels(columnLabels);
-		return result;
-	}
-	
-    public Matrix getCorrelationCoefficientMatrix() {
-        if (DEFAULT_CORRELATION_COEFFICIENT_TYPE == CorrelationCoefficientType.PEARSONS) {
-            return getPearsonCorrelationMatrix();
-        } else {
-            return getConcordanceCorrelationMatrix();
-        }
-    }
-	
-	public Matrix getConcordanceCorrelationMatrix() {
-	    Matrix result = new Matrix(columnCount(), columnCount());
+    public Matrix getCorrelationMatrix(CorrelationCoefficient cc) {
+        Matrix result = new Matrix(columnCount(), columnCount());
         for (int i = 1; i <= columnCount(); i++) {
             for (int j = 1; j <= columnCount(); j++) {
                 Vector v1 = getColumnVector(i);
                 Vector v2 = getColumnVector(j);
-                result.setValue(i, j, v1.getConcordanceCorrelation(v2));
+                result.setValue(i, j, v1.getCorrelation(v2, cc));
             }
         }
         result.setRowLabels(columnLabels);
         result.setColumnLabels(columnLabels);
         return result;
-	}
-
+    }
+	
 	public Jama.Matrix toJamaMatrix() {
 		return new Jama.Matrix(m);
 	}
@@ -603,9 +579,11 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		// c.setValue(8, 8, 0.9);
 		// c.setValue(9, 9, 0.73);
 		// c.setValue(10, 10, 0.82);
+		
+		CorrelationCoefficient cc = CorrelationCoefficient.PEARSONS;
 
 		m.analyzeFactors(FactorExtractionMethod.PRINCIPAL_COMPONENTS_ANALYSIS,
-				EigenvalueThreshold.createWithMinEigenvalue(0.5), null);
+				EigenvalueThreshold.createWithMinEigenvalue(0.5), null, cc);
 
 		m = new Matrix(new double[][] { { 1, 2, 3 }, { 2, 3, 4 }, { 4, 7, 9 } });
 		new Matrix(new double[][] { { 1, 1.5, 4 }, { 3, 4, 5 }, { 8, 4, 2 } });
@@ -614,25 +592,25 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		Matrix m4 = m3.rotateDegrees(1, 2, 25);
 		System.out.println(m3 + "\n" + m4);
 		System.out.println(
-				"rot=" + m3.getColumnVector(1).getBestCorrelatedRotation(m3.getColumnVector(2), m4.getColumnVector(1))
+				"rot=" + m3.getColumnVector(1).getBestCorrelatedRotation(m3.getColumnVector(2), m4.getColumnVector(1), cc)
 						* 180 / Math.PI);
 
 	}
 
 	public FactorAnalysisResults analyzeFactors(FactorExtractionMethod extractionMethod,
-			EigenvalueThreshold eigenvalueThreshold, Set<RotationMethod> rotationMethods)
+			EigenvalueThreshold eigenvalueThreshold, Set<RotationMethod> rotationMethods, CorrelationCoefficient cc)
 					throws FactorAnalysisException {
-		Matrix c = getCorrelationCoefficientMatrix();
+		Matrix c = getCorrelationMatrix(cc);
 		FactorAnalysisResults r = c.analyzeCorrelationMatrixFactors(extractionMethod, eigenvalueThreshold,
-				rotationMethods);
+				rotationMethods, cc);
 		r.setInitial(this);
 		return r;
 	}
 
 	public FactorAnalysisResults analyzeFactors(FactorExtractionMethod extractionMethod,
-			Set<RotationMethod> rotationMethods) throws FactorAnalysisException {
-		Matrix c = getCorrelationCoefficientMatrix();
-		FactorAnalysisResults r = c.analyzeCorrelationMatrixFactors(extractionMethod, rotationMethods);
+			Set<RotationMethod> rotationMethods, CorrelationCoefficient cc) throws FactorAnalysisException {
+	    Matrix c = getCorrelationMatrix(cc);
+		FactorAnalysisResults r = c.analyzeCorrelationMatrixFactors(extractionMethod, rotationMethods, cc);
 		r.setInitial(this);
 		return r;
 	}
@@ -700,18 +678,18 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	}
 
 	public FactorAnalysisResults analyzeCorrelationMatrixFactors(FactorExtractionMethod extractionMethod,
-			Set<RotationMethod> rotationMethods) throws FactorAnalysisException {
+			Set<RotationMethod> rotationMethods, CorrelationCoefficient cc) throws FactorAnalysisException {
 		// return analyzeCorrelationMatrixFactors(extractionMethod, 2.5 * 1 /
 		// Math
 		// .sqrt(rowCount()));
 		return analyzeCorrelationMatrixFactors(extractionMethod, EigenvalueThreshold.createWithMinEigenvalue(1.0),
-				rotationMethods);
+				rotationMethods, cc);
 	}
 
 	private static boolean legacy = true;
 
 	public FactorAnalysisResults analyzeCorrelationMatrixFactors(FactorExtractionMethod extractionMethod,
-			EigenvalueThreshold eigenvalueThreshold, Set<RotationMethod> rotationMethods)
+			EigenvalueThreshold eigenvalueThreshold, Set<RotationMethod> rotationMethods, CorrelationCoefficient cc)
 					throws FactorAnalysisException {
 		FactorAnalysisInput input = new FactorAnalysisInput(this, extractionMethod, eigenvalueThreshold);
 		final FactorAnalysisResults r = new FactorAnalysisResults(input);
@@ -726,7 +704,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 
 		normalizeLoadingSigns(r);
 
-		r.setRotatedLoadings(new RotatedLoadings());
+		r.setRotatedLoadings(new RotatedLoadings(cc));
 		RotationMethod[] methods;
 		if (rotationMethods == null) {
 			methods = RotationMethod.values();
@@ -1614,7 +1592,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return subMatrix(start, finish, 1, columnCount());
 	}
 
-	public Matrix getColumnCorrelations(Matrix m) {
+	public Matrix getColumnCorrelations(Matrix m, CorrelationCoefficient cc) {
 		Matrix result = new Matrix(columnCount(), m.columnCount());
 		if (m.rowCount() != rowCount())
 			throw new RuntimeException("matrices must have same number of rows");
@@ -1622,7 +1600,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		result.setColumnLabels(m.getColumnLabels());
 		for (int i = 1; i <= columnCount(); i++) {
 			for (int j = 1; j <= m.columnCount(); j++) {
-				result.setValue(i, j, getColumnVector(i).getPearsonCorrelation(m.getColumnVector(j)));
+				result.setValue(i, j, getColumnVector(i).getCorrelation(m.getColumnVector(j), cc));
 			}
 		}
 		return result;
@@ -1726,8 +1704,8 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return m;
 	}
 
-	public Map<Point, Double> getMatchedCorrelations(Matrix ref) {
-		Matrix c = getColumnCorrelations(ref);
+	public Map<Point, Double> getMatchedCorrelations(Matrix ref, CorrelationCoefficient cc) {
+		Matrix c = getColumnCorrelations(ref, cc);
 		// map from ref factor to main factor and correlation value
 		Map<Point, Double> map = new LinkedHashMap<Point, Double>();
 		for (int i = 1; i <= c.columnCount(); i++) {
@@ -1925,11 +1903,11 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		return m;
 	}
 
-	public int getColumnOfBestCorrelation(Vector v) {
+	public int getColumnOfBestCorrelation(Vector v, CorrelationCoefficient cc) {
 		double d = 0;
 		int col = 1;
 		for (int i = 1; i <= columnCount(); i++) {
-			double corr = Math.abs(getColumnVector(i).getPearsonCorrelation(v));
+			double corr = Math.abs(getColumnVector(i).getCorrelation(v, cc));
 			if (corr > d) {
 				d = corr;
 				col = i;
@@ -1939,7 +1917,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 	}
 
 	public List<MatrixRotation> rotateTo2(final Vector v, final int startCol, int maxCols, final double startDegrees,
-			final double finishDegrees, final int numSectors, final List<Integer> excludeTheseColumnsFromRotation) {
+			final double finishDegrees, final int numSectors, final List<Integer> excludeTheseColumnsFromRotation, CorrelationCoefficient cc) {
 		// brute force method not tested succesfully yet
 		final int[] counter = new int[1];
 		final List<MatrixRotation> rotations = new ArrayList<MatrixRotation>();
@@ -1961,7 +1939,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 						m = m.rotateDegrees(startCol, startCol + i + 1, startDegrees + (values[i] - 1) * change);
 					}
 				}
-				double corr = Math.abs(m.getColumnVector(startCol).getPearsonCorrelation(v));
+				double corr = Math.abs(m.getColumnVector(startCol).getCorrelation(v, cc));
 				if (corr > bestCorrelation[0]) {
 					bestCorrelation[0] = corr;
 					rotations.clear();
@@ -2006,22 +1984,22 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 		double compare(Matrix m, Matrix reference);
 	}
 
-	public List<MatrixRotation> getRotationsTo(Matrix reference) {
+	public List<MatrixRotation> getRotationsTo(Matrix reference, CorrelationCoefficient cc) {
 		MatrixComparison comparison = new MatrixComparison() {
 
 			@Override
 			public double compare(Matrix m, Matrix reference) {
-				Map<Point, Double> map = m.getMatchedCorrelations(reference);
+				Map<Point, Double> map = m.getMatchedCorrelations(reference, cc);
 				double sum = 0;
 				for (double d : map.values())
 					sum += d * d;
 				return sum;
 			}
 		};
-		return getRotationsTo(reference, comparison, 0.005);
+		return getRotationsTo(reference, comparison, 0.005, cc);
 	}
 
-	public List<MatrixRotation> getRotationsTo(Matrix reference, MatrixComparison comparison, double epsilon) {
+	public List<MatrixRotation> getRotationsTo(Matrix reference, MatrixComparison comparison, double epsilon, CorrelationCoefficient cc) {
 
 		if (rowCount() != reference.rowCount())
 			throw new RuntimeException("matrices must have same row count");
@@ -2041,7 +2019,7 @@ public class Matrix implements Html, Serializable, MatrixProvider {
 						Vector v1 = m.getColumnVector(i);
 						Vector v2 = m.getColumnVector(j);
 						Vector v = reference.getColumnVector(k);
-						double angle = v1.getBestCorrelatedRotation(v2, v);
+						double angle = v1.getBestCorrelatedRotation(v2, v, cc);
 						MatrixRotation rotation = new MatrixRotation(i, j, angle);
 						double test = comparison.compare(m.rotate(rotation), reference);
 						if (test > bestCorrelation) {

@@ -17,8 +17,7 @@ import com.github.deliberateq.qsort.Data;
 import com.github.deliberateq.util.event.Event;
 import com.github.deliberateq.util.event.EventManager;
 import com.github.deliberateq.util.event.EventManagerListener;
-import com.github.deliberateq.util.math.Matrix;
-import com.github.deliberateq.util.math.Matrix.CorrelationCoefficientType;
+import com.github.deliberateq.util.math.CorrelationCoefficient;
 import com.google.inject.Inject;
 
 public class MainPanel extends JPanel {
@@ -28,6 +27,7 @@ public class MainPanel extends JPanel {
 
 	@Inject
 	public MainPanel(EventManager eventManager) {
+	    CorrelationCoefficient cc = CorrelationCoefficient.PEARSONS;
 		setLayout(new GridLayout(1, 1));
 
 		final JTabbedPane tabs = new JTabbedPane();
@@ -55,7 +55,7 @@ public class MainPanel extends JPanel {
 							File[] files = fc.getSelectedFiles();
 							for (File file : files) {
 								tabs.addTab(file.getName(), new DataPanel(
-										new Data(new FileInputStream(file))));
+										new Data(new FileInputStream(file)), cc));
 							}
 							prefs.put(PREF_OPEN_STUDY_CURRENT_DIRECTORY, fc
 									.getCurrentDirectory().getAbsolutePath());
@@ -71,7 +71,7 @@ public class MainPanel extends JPanel {
 						@Override
 						public void notify(Event event) {
 							try {
-								addSampleTabs(tabs);
+								addSampleTabs(tabs, cc);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -83,7 +83,7 @@ public class MainPanel extends JPanel {
 		}
 	}
 
-	private void addSampleTabs(JTabbedPane tabs) throws IOException {
+	private void addSampleTabs(JTabbedPane tabs, CorrelationCoefficient cc) throws IOException {
 
 		// addTab(tabs, new Data(getClass().getResourceAsStream(
 		// "/studies/New Mexico.txt")));
@@ -95,17 +95,17 @@ public class MainPanel extends JPanel {
 		// "/studies/Lipset.txt")));
 		addTab(tabs,
 				new Data(getClass().getResourceAsStream(
-						"/studies2/Bloomfield Track.txt")));
+						"/studies2/Bloomfield Track.txt")), cc);
 		addTab(tabs,
 				new Data(getClass().getResourceAsStream(
-						"/studies2/Bloomfield Track - No Prefs.txt")));
+						"/studies2/Bloomfield Track - No Prefs.txt")), cc);
 		addTab(tabs,
-				new Data(getClass().getResourceAsStream("/studies2/Lipset.txt")));
+				new Data(getClass().getResourceAsStream("/studies2/Lipset.txt")), cc);
 	}
 
-	private void addTab(JTabbedPane tabs, Data data) {
+	private void addTab(JTabbedPane tabs, Data data, CorrelationCoefficient cc) {
 		final ImageIcon icon = createImageIcon("images/graph.gif", "graphs");
-		tabs.addTab(data.getTitle(), icon, new DataPanel(data));
+		tabs.addTab(data.getTitle(), icon, new DataPanel(data, cc));
 		CloseableTabComponent buttonTab = new CloseableTabComponent(tabs, icon,
 				true);
 		tabs.setTabComponentAt(tabs.getTabCount() - 1, buttonTab);

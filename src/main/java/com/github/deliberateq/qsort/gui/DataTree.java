@@ -10,13 +10,14 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
 import com.github.deliberateq.qsort.Data;
+import com.github.deliberateq.qsort.Data.DataComponents;
 import com.github.deliberateq.qsort.DataSelection;
 import com.github.deliberateq.qsort.QSort;
-import com.github.deliberateq.qsort.Data.DataComponents;
 import com.github.deliberateq.qsort.gui.injection.ApplicationInjector;
 import com.github.deliberateq.util.event.Event;
 import com.github.deliberateq.util.event.EventManager;
 import com.github.deliberateq.util.event.EventManagerListener;
+import com.github.deliberateq.util.math.CorrelationCoefficient;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.MatrixProvider;
 
@@ -26,8 +27,8 @@ public class DataTree extends JTree {
 
 	private DefaultMutableTreeNode referenceNode;
 
-	public DataTree(Data data) {
-		super(getRoot(data));
+	public DataTree(Data data, CorrelationCoefficient cc) {
+		super(getRoot(data, cc));
 		this.setEditable(true);
 		this.setCellEditor(new MyCellEditor());
 
@@ -54,7 +55,7 @@ public class DataTree extends JTree {
 	}
 
 	private static void addDataSelectionNode(final Data data,
-			DefaultMutableTreeNode parent, final DataSelection combination) {
+			DefaultMutableTreeNode parent, final DataSelection combination, CorrelationCoefficient cc) {
 		DefaultMutableTreeNode node = new DefaultMutableTreeNode(combination);
 		parent.add(node);
 		DefaultMutableTreeNode matrixNode = new DefaultMutableTreeNode(
@@ -63,7 +64,7 @@ public class DataTree extends JTree {
 					public Matrix getMatrix() {
 						List<QSort> list = data.restrictList(
 								combination.getStage(), combination.getFilter());
-						DataComponents d = data.buildMatrix(list, null);
+						DataComponents d = data.buildMatrix(list, null, cc);
 						return d.correlations;
 					}
 
@@ -75,7 +76,7 @@ public class DataTree extends JTree {
 		node.add(matrixNode);
 	}
 
-	private static TreeNode getRoot(Data data) {
+	private static TreeNode getRoot(Data data, CorrelationCoefficient cc) {
 		Collection<String> stageTypes = data.getStageTypes();
 		Collection<String> participantTypes = data.getParticipantTypes();
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
@@ -87,12 +88,12 @@ public class DataTree extends JTree {
 				for (String stage : stageTypes) {
 					DataSelection combination = new DataSelection(
 							data.getParticipantIds(participantType), stage);
-					addDataSelectionNode(data, root, combination);
+					addDataSelectionNode(data, root, combination, cc);
 				}
 				if (stageTypes.size() > 1) {
 					DataSelection combination = new DataSelection(
 							data.getParticipantIds(participantType), "all");
-					addDataSelectionNode(data, root, combination);
+					addDataSelectionNode(data, root, combination, cc);
 				}
 			}
 		// nodes by stage
@@ -101,7 +102,7 @@ public class DataTree extends JTree {
 			for (String stage : stageTypes) {
 				DataSelection combination = new DataSelection(
 						data.getParticipantIds(), stage);
-				addDataSelectionNode(data, root, combination);
+				addDataSelectionNode(data, root, combination, cc);
 			}
 		}
 		// nodes across all
@@ -109,7 +110,7 @@ public class DataTree extends JTree {
 				.size() > 1) && stageTypes.size() > 1) {
 			DataSelection combination = new DataSelection(
 					data.getParticipantIds(), "all");
-			addDataSelectionNode(data, root, combination);
+			addDataSelectionNode(data, root, combination, cc);
 		}
 		return root;
 	}

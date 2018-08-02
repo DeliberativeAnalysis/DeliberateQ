@@ -11,6 +11,7 @@ import javax.swing.plaf.FontUIResource;
 
 import com.github.deliberateq.qsort.Data;
 import com.github.deliberateq.util.gui.swing.v1.SwingUtil;
+import com.github.deliberateq.util.math.CorrelationCoefficient;
 
 public class DataApplet extends JApplet {
 
@@ -31,7 +32,7 @@ public class DataApplet extends JApplet {
 			InputStream is = url.openStream();
 			data = new Data(is);
 			is.close();
-			DataPanel dp = new DataPanel(data);
+			DataPanel dp = new DataPanel(data, CorrelationCoefficient.PEARSONS);
 			setLayout(new GridLayout(1, 1));
 			add(dp);
 			// add(new MainPanel());

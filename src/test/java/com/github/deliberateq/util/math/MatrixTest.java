@@ -27,7 +27,7 @@ public class MatrixTest {
 		Matrix m = new Matrix(new double[][] { { 1, 2, 3 }, { 2, 7, 4 },
 				{ 6, 1, 8 } });
 		Matrix reference = m.rotateDegrees(1, 2, 75);
-		List<MatrixRotation> rotations = m.getRotationsTo(reference);
+		List<MatrixRotation> rotations = m.getRotationsTo(reference, CorrelationCoefficient.PEARSONS);
 		Assert.assertTrue(rotations.size() > 0);
 		assertMagnitudeLessThan(
 				Math.abs(rotations.get(0).getAngleDegrees() - 75.0), 0.01);

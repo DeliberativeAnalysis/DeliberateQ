@@ -206,7 +206,6 @@ public class MainFrame extends JFrame {
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, UnsupportedLookAndFeelException {
-        Matrix.DEFAULT_CORRELATION_COEFFICIENT_TYPE = CorrelationCoefficientType.CONCORDANCE;
         LookAndFeel.setLookAndFeel();
         final MainFrame frame = ApplicationInjector.getInjector().getInstance(MainFrame.class);
         final EventManager eventManager = ApplicationInjector.getInjector().getInstance(EventManager.class);

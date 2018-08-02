@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -30,6 +28,7 @@ import com.github.deliberateq.qsort.gui.loadings.LoadingsPanel;
 import com.github.deliberateq.util.event.Event;
 import com.github.deliberateq.util.event.EventManager;
 import com.github.deliberateq.util.event.EventManagerListener;
+import com.github.deliberateq.util.math.CorrelationCoefficient;
 import com.github.deliberateq.util.math.FactorAnalysisResults;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.MatrixProvider;
@@ -55,7 +54,7 @@ public class DataPanel extends JPanel {
 
 	private DefaultMutableTreeNode referenceNode;
 
-	public DataPanel(final Data data) {
+	public DataPanel(final Data data, CorrelationCoefficient cc) {
 		localEventManager = new EventManager();
 		this.data = data;
 		setLayout(new GridLayout(1, 1));
@@ -63,7 +62,7 @@ public class DataPanel extends JPanel {
 		JPanel left = new JPanel();
 		SpringLayout layout = new SpringLayout();
 		left.setLayout(layout);
-		tree = new DataTree(data);
+		tree = new DataTree(data, cc);
 		LinkButton filter = new LinkButton("Filter Participants...");
 		left.add(filter);
 		// LinkButton newDataSelection = new LinkButton("New...");
@@ -113,16 +112,16 @@ public class DataPanel extends JPanel {
 		dataViewer = new DataViewerPanel(split);
 		split.setRightComponent(dataViewer);
 		EventManager.getInstance().addListener(Events.DATA_CHANGED,
-				createDataChangedListener());
+				createDataChangedListener(cc));
 		tree.addMouseListener(createTreeMouseListener());
-		tree.addTreeSelectionListener(createTreeSelectionListener());
+		tree.addTreeSelectionListener(createTreeSelectionListener(cc));
 		split.setDividerLocation(250);
 		tree.setSelectionInterval(0, 0);
 		tree.requestFocus();
 		localEventManager.addListener(Events.ANALYZED, createAnalyzeListener());
 		localEventManager.addListener(Events.MATRIX, createMatrixListener());
 		localEventManager.addListener(Events.ROTATIONS,
-				createRotationListener());
+				createRotationListener(cc));
 		localEventManager.addListener(Events.VENN, createVennListener());
 		localEventManager.addListener(Events.SET_REFERENCE_REQUESTED,
 				createReferenceSetterListener());
@@ -238,7 +237,7 @@ public class DataPanel extends JPanel {
 		};
 	}
 
-	private EventManagerListener createDataChangedListener() {
+	private EventManagerListener createDataChangedListener(CorrelationCoefficient cc) {
 		return new EventManagerListener() {
 			@Override
 			public void notify(Event event) {
@@ -248,7 +247,7 @@ public class DataPanel extends JPanel {
 					return;
 				Object o = node.getUserObject();
 				if (o instanceof DataSelection) {
-					updateDataViewer((DataSelection) o);
+					updateDataViewer((DataSelection) o, cc);
 				}
 			}
 		};
@@ -278,7 +277,7 @@ public class DataPanel extends JPanel {
 		};
 	}
 
-	private TreeSelectionListener createTreeSelectionListener() {
+	private TreeSelectionListener createTreeSelectionListener(CorrelationCoefficient cc) {
 		return new TreeSelectionListener() {
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
@@ -289,7 +288,7 @@ public class DataPanel extends JPanel {
 				Object o = node.getUserObject();
 				log.info(o == null ? null : o.toString());
 				if (o instanceof DataSelection) {
-					updateDataViewer((DataSelection) o);
+					updateDataViewer((DataSelection) o, cc);
 				} else if (o instanceof RotatedLoadings) {
 					RotatedLoadings rotatedLoadings = (RotatedLoadings) o;
 					localEventManager.notify(new Event(rotatedLoadings,
@@ -309,13 +308,13 @@ public class DataPanel extends JPanel {
 		};
 	}
 
-	private EventManagerListener createRotationListener() {
+	private EventManagerListener createRotationListener(CorrelationCoefficient cc) {
 		return new EventManagerListener() {
 			@Override
 			public void notify(Event event) {
 				Rotations rotations = (Rotations) event.getObject();
 				LoadingsPanel panel = new LoadingsPanel(rotations,
-						createRowLabelsFilter());
+						createRowLabelsFilter(), cc);
 				dataViewer.setContent(panel);
 			}
 
@@ -545,8 +544,8 @@ public class DataPanel extends JPanel {
 		}
 	}
 
-	private void updateDataViewer(DataSelection c) {
-		DataGraphExtendedPanel d = new DataGraphExtendedPanel(data);
+	private void updateDataViewer(DataSelection c, CorrelationCoefficient cc) {
+		DataGraphExtendedPanel d = new DataGraphExtendedPanel(data, cc);
 		d.getDataGraphPanel().setCombination(c);
 		d.getDataGraphPanel().update();
 		d.addEventManager(localEventManager);

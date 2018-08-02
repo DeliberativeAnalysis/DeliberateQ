@@ -13,9 +13,15 @@ public final class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
 
 	private static int counter = 0;
 
+    private final CorrelationCoefficient cc;
+
 	private synchronized int nextCounter() {
 		counter++;
 		return counter;
+	}
+	
+	public RotatedLoadings(CorrelationCoefficient cc) {
+	    this.cc = cc;
 	}
 
 	@Override
@@ -41,7 +47,7 @@ public final class RotatedLoadings extends HashMap<RotationMethod, Matrix> {
 
 			f.header("Correlation", true);
 			f.blockStart();
-			f.item(get(method).getCorrelationCoefficientMatrix());
+			f.item(get(method).getCorrelationMatrix(cc));
 			f.blockFinish();
 
 			Object[] objects = new Object[] {

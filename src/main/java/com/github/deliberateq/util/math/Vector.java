@@ -69,7 +69,7 @@ public final class Vector extends Matrix {
 		return total / count;
 	}
 
-	public boolean isNullEntry(double d) {
+	public static boolean isNullEntry(double d) {
 		return d == nullEntry;
 	}
 
@@ -94,44 +94,11 @@ public final class Vector extends Matrix {
 		}
 		return result;
 	}
-
-    public double getConcordanceCorrelation(Vector v) {
-        double p = getPearsonCorrelation(v);
-        double meanX = getMean();
-        double meanY = v.getMean();
-        double varX = getVariance();
-        double varY = v.getVariance();
-        return 2 * p * Math.sqrt(varX * varY) / (sqr(meanX - meanY) + varX + varY);
-    }
 	
-	private static double sqr(double x) {
-	    return x * x;
+	public double getCorrelation(Vector v, CorrelationCoefficient cc) {
+	    return cc.apply(this,  v);
 	}
 	
-	public double getPearsonCorrelation(Vector v) {
-		if (size() != v.size()) {
-			throw new RuntimeException("vectors must be same size");
-		}
-		Vector d1 = getDeviation();
-		Vector d2 = v.getDeviation();
-		for (int i = size(); i >= 1; i--) {
-			// go down because we are removing
-			if (isNullEntry(getValue(i)) || isNullEntry(v.getValue(i))) {
-				// pairwise deletion
-				d1 = d1.removeRow(i).getColumnVector(1);
-				d2 = d2.removeRow(i).getColumnVector(1);
-			}
-		}
-		double sigmaXY = 0;
-		double sigmaX2 = 0;
-		double sigmaY2 = 0;
-		for (int i = 1; i <= d1.size(); i++) {
-			sigmaXY += d1.getValue(i) * d2.getValue(i);
-			sigmaX2 += d1.getValue(i) * d1.getValue(i);
-			sigmaY2 += d2.getValue(i) * d2.getValue(i);
-		}
-		return sigmaXY / Math.sqrt(sigmaX2 * sigmaY2);
-	}
 
 	public double[] getValues() {
 		double[] values = new double[rowCount()];
@@ -400,12 +367,12 @@ public final class Vector extends Matrix {
 	 * @param v
 	 * @return
 	 */
-	public double getBestCorrelatedRotation(Vector v2, final Vector v) {
+	public double getBestCorrelatedRotation(Vector v2, final Vector v, CorrelationCoefficient cc) {
 
 		if (size() != v2.size() || size() != v.size()) {
 			throw new RuntimeException("vectors must all be of the same length");
 		}
-		double corr = getPearsonCorrelation(v);
+		double corr = getCorrelation(v, cc);
 		Matrix m = addColumn(v2);
 		double initialRotation = 0;
 
@@ -414,8 +381,10 @@ public final class Vector extends Matrix {
 		for (int i = 1; i <= numSteps; i++) {
 			for (int sign : new int[] { -1, 1 }) {
 				double angle = sign * i * stepSize;
-				double c = m.rotateDegrees(1, 2, angle).getColumnVector(1)
-						.getPearsonCorrelation(v);
+				double c = m //
+				        .rotateDegrees(1, 2, angle) //
+				        .getColumnVector(1) //
+						.getCorrelation(v, cc);
 				if (c > corr) {
 					corr = c;
 					initialRotation = angle;
@@ -431,7 +400,7 @@ public final class Vector extends Matrix {
 			@Override
 			public double f(double x) {
 				return finalM.rotateDegrees(1, 2, x).getColumnVector(1)
-						.getPearsonCorrelation(v);
+						.getCorrelation(v, cc);
 			}
 		};
 

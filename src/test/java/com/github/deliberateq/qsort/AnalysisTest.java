@@ -8,9 +8,7 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.deliberateq.qsort.Analysis;
-import com.github.deliberateq.qsort.Data;
-import com.github.deliberateq.qsort.DataSelection;
+import com.github.deliberateq.util.math.CorrelationCoefficient;
 import com.github.deliberateq.util.math.EigenvalueThreshold;
 import com.github.deliberateq.util.math.FactorAnalysisResults;
 import com.github.deliberateq.util.math.FactorExtractionMethod;
@@ -20,7 +18,6 @@ import com.github.deliberateq.util.math.Vector;
 public class AnalysisTest {
 
 	private static final double PRECISION = 0.0001;
-	private static final double LIPSET_PRECISION = 0.01;
 
 	@Test
 	public void testBloomfieldAnalysisFirstStagePrincipalComponentsAnalysis()
@@ -32,7 +29,7 @@ public class AnalysisTest {
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "First"), true,
 				FactorExtractionMethod.PRINCIPAL_COMPONENTS_ANALYSIS,
-				EigenvalueThreshold.createWithMaxFactors(8), "test title");
+				EigenvalueThreshold.createWithMaxFactors(8), "test title", CorrelationCoefficient.PEARSONS);
 
 		// check eigenvalues
 		Vector eigenvalues = r.getEigenvaluesVector();
@@ -102,7 +99,7 @@ public class AnalysisTest {
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
-				EigenvalueThreshold.createWithMinEigenvalue(1.0), "test title");
+				EigenvalueThreshold.createWithMinEigenvalue(1.0), "test title", CorrelationCoefficient.PEARSONS);
 
 		checkLipsetAnalysisPreReduction(r);
 
@@ -120,7 +117,7 @@ public class AnalysisTest {
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
-				EigenvalueThreshold.createWithMaxFactors(2), "test title");
+				EigenvalueThreshold.createWithMaxFactors(2), "test title", CorrelationCoefficient.PEARSONS);
 
 		checkLipsetAnalysisPreReduction(r);
 
@@ -160,7 +157,7 @@ public class AnalysisTest {
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
 				new DataSelection(data.getFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
-				EigenvalueThreshold.createWithMaxFactors(6), "title");
+				EigenvalueThreshold.createWithMaxFactors(6), "title", CorrelationCoefficient.PEARSONS);
 
 		checkLipsetAnalysisPreReduction(r);
 
