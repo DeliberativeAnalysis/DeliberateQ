@@ -97,7 +97,7 @@ public class ParticipantsPanel extends JPanel {
 		participantList = new JCheckBoxList();
 		for (int i = 0; i < participantIds.length; i++) {
 			final JCheckBox checkBox = new JCheckBox("" + participantIds[i]);
-			checkBox.setSelected(data.getFilter().contains(participantIds[i]));
+			checkBox.setSelected(data.getParticipantFilter().contains(participantIds[i]));
 			participantCheckBoxes[i] = checkBox;
 			checkBox.addChangeListener(createChangeListener(checkBox, data,
 					participantIds[i]));
@@ -117,9 +117,9 @@ public class ParticipantsPanel extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				if (checkBox.isSelected())
-					data.getFilter().add(participantId);
+					data.getParticipantFilter().add(participantId);
 				else
-					data.getFilter().remove(participantId);
+					data.getParticipantFilter().remove(participantId);
 				if (!updatingMultipleCheckBoxes)
 					EventManager.getInstance().notify(
 							new Event(data, Events.DATA_CHANGED));
@@ -144,12 +144,12 @@ public class ParticipantsPanel extends JPanel {
 					if (checkBox.isSelected()) {
 						for (String participantId : data
 								.getParticipantIds(participantTypes[finalI])) {
-							data.getFilter().add(participantId);
+							data.getParticipantFilter().add(participantId);
 						}
 					} else
 						for (String participantId : data
 								.getParticipantIds(participantTypes[finalI])) {
-							data.getFilter().remove(participantId);
+							data.getParticipantFilter().remove(participantId);
 						}
 					refreshParticipantList();
 					EventManager.getInstance().notify(
@@ -167,7 +167,7 @@ public class ParticipantsPanel extends JPanel {
 		updatingMultipleCheckBoxes = true;
 		for (Object o : participantCheckBoxes) {
 			JCheckBox checkBox = (JCheckBox) o;
-			checkBox.setSelected(data.getFilter().contains(checkBox.getText()));
+			checkBox.setSelected(data.getParticipantFilter().contains(checkBox.getText()));
 		}
 		updatingMultipleCheckBoxes = false;
 		participantList.setListData(participantCheckBoxes);

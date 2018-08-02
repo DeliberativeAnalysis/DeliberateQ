@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -42,11 +43,12 @@ public class Data implements Serializable {
 	private static final String TAB = "\t";
 
 	private final Map<Integer, String> statements = new HashMap<Integer, String>();
+	private final Set<Integer> statementsToExclude = new HashSet<Integer>();
 
 	public static final String PREDICTION_INTERVAL_95 = "Prediction_Interval_95";
 
 	private final Map<String, Participant> participants = new HashMap<String, Participant>();
-	private final Set<String> filter = new TreeSet<String>();
+	private final Set<String> participantFilter = new TreeSet<String>();
 	private final Set<String> stageFilter = new TreeSet<String>();
 
 	private List<QSort> qSorts;
@@ -177,7 +179,7 @@ public class Data implements Serializable {
 		br.close();
 		isr.close();
 		is.close();
-		filter.addAll(getParticipantIds());
+		participantFilter.addAll(getParticipantIds());
 		stageFilter.addAll(getStageTypes());
 		log.info("loaded");
 	}
@@ -327,7 +329,7 @@ public class Data implements Serializable {
 	public List<QSort> getQSorts() {
 		List<QSort> list = new ArrayList<QSort>(qSorts);
 		for (int i = list.size() - 1; i >= 0; i--)
-			if (!filter.contains(list.get(i).getParticipant().getId())) {
+			if (!participantFilter.contains(list.get(i).getParticipant().getId())) {
 				list.remove(i);
 			}
 		return list;
@@ -672,7 +674,7 @@ public class Data implements Serializable {
 				dataSet);
 	}
 
-	public Matrix getRawData(String stage, Set<String> filter, int dataSet) {
+	private Matrix getRawData(String stage, Set<String> filter, int dataSet) {
 		List<QSort> subList = restrictList(stage, filter);
 
 		if (subList.size() == 0) {
@@ -717,8 +719,8 @@ public class Data implements Serializable {
 		return set.size() == 1;
 	}
 
-	public Set<String> getFilter() {
-		return filter;
+	public Set<String> getParticipantFilter() {
+		return participantFilter;
 	}
 
 	public Map<Integer, String> getStatements() {

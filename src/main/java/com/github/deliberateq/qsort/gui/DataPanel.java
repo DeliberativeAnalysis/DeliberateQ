@@ -322,7 +322,7 @@ public class DataPanel extends JPanel {
 				return new StringFilter() {
 					@Override
 					public boolean accept(String s) {
-						return data.getFilter().contains(s);
+						return data.getParticipantFilter().contains(s);
 					}
 				};
 			}
