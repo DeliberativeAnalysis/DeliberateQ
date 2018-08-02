@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class VectorTest {
+public class CorrelationCoefficientTest {
 
     private static final double PRECISION = 0.00001;
     
