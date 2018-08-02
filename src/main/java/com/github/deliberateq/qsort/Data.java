@@ -25,6 +25,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
+import com.github.deliberateq.util.math.CorrelationCoefficient;
 import com.github.deliberateq.util.math.Function;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.RegressionIntervalFunction;
@@ -334,19 +335,19 @@ public class Data implements Serializable {
 
 	public void graph(String stage, String bands,
 			OutputStream imageOutputStream, boolean labelPoints, int size,
-			Set<String> filter) throws IOException {
+			Set<String> filter, CorrelationCoefficient cc) throws IOException {
 		List<QSort> subList = restrictList(stage, filter);
 		if (stage.equals("all"))
 			graphConnected(subList, imageOutputStream, labelPoints, size,
-					filter);
+					filter, cc);
 		else
-			graph(subList, imageOutputStream, labelPoints, size, filter, bands);
+			graph(subList, imageOutputStream, labelPoints, size, filter, bands, cc);
 	}
 
 	public DataComponents getDataComponents(String stage,
-			Set<String> participantFilter) {
+			Set<String> participantFilter, CorrelationCoefficient cc) {
 		List<QSort> subList = restrictList(stage, participantFilter);
-		return buildMatrix(subList, participantFilter);
+		return buildMatrix(subList, participantFilter, cc);
 
 	}
 
@@ -386,7 +387,7 @@ public class Data implements Serializable {
 		public List<String> participants2;
 	}
 
-	public DataComponents buildMatrix(List<QSort> list, Set<String> filter) {
+	public DataComponents buildMatrix(List<QSort> list, Set<String> filter, CorrelationCoefficient cc) {
 		if (list == null)
 			return null;
 		list = Lists.newArrayList(list);
@@ -451,9 +452,9 @@ public class Data implements Serializable {
 
 		// perform correlations
 		Matrix qSortsCorrelated = qSorts.transpose()
-				.getPearsonCorrelationMatrix();
+				.getCorrelationMatrix(cc);
 		Matrix rankingsCorrelated = rankings.transpose()
-				.getPearsonCorrelationMatrix();
+				.getCorrelationMatrix(cc);
 
 		// compare rankings and qSorts
 		List<String> participants1 = new ArrayList<String>();
@@ -515,11 +516,11 @@ public class Data implements Serializable {
 	}
 
 	public GraphPanel getGraphConnected(List<QSort>[] list,
-			boolean labelPoints, int size, Set<String> filter) {
+			boolean labelPoints, int size, Set<String> filter, CorrelationCoefficient cc) {
 		List<Vector> vectors1 = new ArrayList<Vector>();
 		List<Vector> vectors2 = new ArrayList<Vector>();
 		for (int vi = 0; vi < list.length; vi++) {
-			DataComponents d = buildMatrix(list[vi], filter);
+			DataComponents d = buildMatrix(list[vi], filter, cc);
 			if (d == null)
 				return null;
 			Matrix m = d.correlations;
@@ -542,15 +543,19 @@ public class Data implements Serializable {
 		gp.setBackground(Color.white);
 		gp.setLabelsVisible(labelPoints);
 		gp.setSize(size, size);
-		gp.setXLabel("Intersubjective Agreement (Pearson)");
-		gp.setYLabel("Preferences Agreement (Pearson)");
+		setXYLabels(gp, cc);
 		return gp;
 	}
 
+    private static void setXYLabels(GraphPanel gp, CorrelationCoefficient cc) {
+        gp.setXLabel("Intersubjective Agreement (" + cc.abbreviatedName() + ")");
+		gp.setYLabel("Preferences Agreement (" + cc.abbreviatedName() + ")");
+    }
+
 	public GraphPanel getGraph(List<QSort> list, boolean labelPoints, int size,
 			Set<String> filter, final String bands,
-			boolean includeRegressionLines) {
-		DataComponents d = buildMatrix(list, filter);
+			boolean includeRegressionLines, CorrelationCoefficient cc) {
+		DataComponents d = buildMatrix(list, filter, cc);
 		if (d == null)
 			return null;
 		Matrix m = d.correlations;
@@ -572,8 +577,7 @@ public class Data implements Serializable {
 		gp.setBackground(Color.white);
 		gp.setLabelsVisible(labelPoints);
 		gp.setSize(size, size);
-		gp.setXLabel("Intersubjective Agreement (Pearson)");
-		gp.setYLabel("Preferences Agreement (Pearson)");
+		setXYLabels(gp, cc);
 		final SimpleRegression sr = new SimpleRegression();
 		double[][] vals = new double[v1.size()][2];
 		for (int i = 0; i < vals.length; i++) {
@@ -616,17 +620,17 @@ public class Data implements Serializable {
 	}
 
 	private void graph(List<QSort> list, OutputStream imageOutputStream,
-			boolean labelPoints, int size, Set<String> filter, String bands)
+			boolean labelPoints, int size, Set<String> filter, String bands, CorrelationCoefficient cc)
 			throws IOException {
 
-		GraphPanel gp = getGraph(list, labelPoints, size, filter, bands, true);
+		GraphPanel gp = getGraph(list, labelPoints, size, filter, bands, true, cc);
 		if (gp != null)
 			writeImage(gp, size, imageOutputStream);
 	}
 
 	private void graphConnected(List<QSort> list,
 			OutputStream imageOutputStream, boolean labelPoints, int size,
-			Set<String> filter) throws IOException {
+			Set<String> filter, CorrelationCoefficient cc) throws IOException {
 		// split the list into separate lists by stage
 		Map<String, List<QSort>> map = new LinkedHashMap<String, List<QSort>>();
 		for (QSort q : list) {
@@ -637,7 +641,7 @@ public class Data implements Serializable {
 
 		@SuppressWarnings("unchecked")
 		GraphPanel gp = getGraphConnected(map.values()
-				.toArray(new ArrayList[1]), labelPoints, size, filter);
+				.toArray(new ArrayList[1]), labelPoints, size, filter, cc);
 
 		if (gp != null) {
 			gp.setDisplayMeans(true);

@@ -6,13 +6,14 @@ import javax.swing.JPanel;
 
 import com.github.deliberateq.qsort.Data;
 import com.github.deliberateq.util.event.EventManager;
+import com.github.deliberateq.util.math.CorrelationCoefficient;
 
 public class DataGraphExtendedPanel extends JPanel {
 
 	private static final long serialVersionUID = -2494288904017423756L;
 	private final DataGraphPanel dataGraphPanel;
 
-	public DataGraphExtendedPanel(Data data) {
+	public DataGraphExtendedPanel(Data data, CorrelationCoefficient cc) {
 		// SpringLayout layout = new SpringLayout();
 		// setLayout(layout);
 		// dataGraphPanel = new DataGraphPanel(data);
@@ -28,7 +29,7 @@ public class DataGraphExtendedPanel extends JPanel {
 		// SpringLayout.SOUTH, this);
 
 		setLayout(new GridLayout(1, 1));
-		dataGraphPanel = new DataGraphPanel(data);
+		dataGraphPanel = new DataGraphPanel(data, cc);
 		add(dataGraphPanel);
 	}
 

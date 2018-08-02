@@ -3,6 +3,7 @@ package com.github.deliberateq.qsort;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.github.deliberateq.util.math.CorrelationCoefficient;
 import com.github.deliberateq.util.math.EigenvalueThreshold;
 import com.github.deliberateq.util.math.FactorAnalysisException;
 import com.github.deliberateq.util.math.FactorAnalysisResults;
@@ -15,7 +16,7 @@ public class Analysis {
 	public static FactorAnalysisResults getFactorAnalysisResults(Data data,
 			DataSelection dataSelection, boolean isIntersubjective,
 			FactorExtractionMethod method,
-			EigenvalueThreshold eigenvalueThreshold, String title) {
+			EigenvalueThreshold eigenvalueThreshold, String title, CorrelationCoefficient cc) {
 		Set<RotationMethod> rotationMethods = new HashSet<RotationMethod>();
 		rotationMethods.add(RotationMethod.VARIMAX);
 		try {
@@ -24,7 +25,7 @@ public class Analysis {
 				return null;
 
 			FactorAnalysisResults result = m.analyzeFactors(method,
-					eigenvalueThreshold, rotationMethods);
+					eigenvalueThreshold, rotationMethods, cc);
 			result.setTitle(title);
 			return result;
 		} catch (FactorAnalysisException e) {
