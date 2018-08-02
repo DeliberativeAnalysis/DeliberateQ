@@ -31,8 +31,10 @@ public class StatementsPanel extends JPanel {
         setLayout(layout);
         LinkButton selectAll = new LinkButton("Select all");
         LinkButton selectNone = new LinkButton("Select none");
+        LinkButton autoSelect = new LinkButton("Autoselect");
         add(selectAll);
         add(selectNone);
+        add(autoSelect);
 
         Component list = createStatementList(data, selectAll, selectNone);
         JScrollPane scroll = new JScrollPane(list);
@@ -47,8 +49,13 @@ public class StatementsPanel extends JPanel {
                 SpringLayout.SOUTH, selectAll);
         layout.putConstraint(SpringLayout.WEST, selectNone, 0,
                 SpringLayout.WEST, selectAll);
+        layout.putConstraint(SpringLayout.NORTH, autoSelect, 5,
+                SpringLayout.SOUTH, selectNone);
+        layout.putConstraint(SpringLayout.WEST, autoSelect, 0,
+                SpringLayout.WEST, selectAll);
+        
         layout.putConstraint(SpringLayout.NORTH, scroll, 5, SpringLayout.SOUTH,
-                selectNone);
+                autoSelect);
         layout.putConstraint(SpringLayout.SOUTH, scroll, 0, SpringLayout.SOUTH,
                 this);
         layout.putConstraint(SpringLayout.WEST, scroll, 5, SpringLayout.WEST,
