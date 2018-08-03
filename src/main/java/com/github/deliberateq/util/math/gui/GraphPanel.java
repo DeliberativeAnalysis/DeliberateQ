@@ -125,7 +125,7 @@ public class GraphPanel extends JPanel {
 		setVector2(new Vector[] { m.getColumnVector(2) });
 	}
 
-	public GraphPanel(Vector[] vector1, Vector[] vector2, double proportionDrawn) {
+	private GraphPanel(Vector[] vector1, Vector[] vector2, double proportionDrawn) {
 		this.vector1 = vector1;
 		this.vector2 = vector2;
 		this.proportionDrawn = proportionDrawn;
