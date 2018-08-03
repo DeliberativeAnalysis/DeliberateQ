@@ -804,7 +804,7 @@ public class GraphPanel extends JPanel {
 		}, Color.BLACK);
 		DecimalFormat df = new DecimalFormat("0.00");
 		gp.addComment(new Vector(new double[] { -0.5, 0.5 }),
-				"r2=" + df.format(Math.pow(sr.getR(), 2)));
+				"r2=" + df.format(sr.getRSquare()));
 		gp.setDisplayMeans(true);
 		frame.setSize(300, 300);
 		SwingUtil.centre(frame);
