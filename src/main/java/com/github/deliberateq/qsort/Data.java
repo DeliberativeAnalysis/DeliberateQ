@@ -1,7 +1,6 @@
 package com.github.deliberateq.qsort;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,14 +54,6 @@ public class Data implements Serializable {
 
 	private List<QSort> qSorts;
 	private String title = "Untitled";
-
-	public Data(String name) throws IOException {
-		this(new File(name));
-	}
-
-	public Data(File file) throws IOException {
-		this(new FileInputStream(file));
-	}
 
 	public Data(InputStream is) throws IOException {
 		log.info("loading");

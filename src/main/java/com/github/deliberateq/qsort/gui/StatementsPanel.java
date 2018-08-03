@@ -60,7 +60,7 @@ public class StatementsPanel extends JPanel {
                 this);
         layout.putConstraint(SpringLayout.WEST, scroll, 5, SpringLayout.WEST,
                 this);
-     // layout
+        // layout
         setPreferredSize(new Dimension(scroll.getPreferredSize().width, frame.getHeight() * 2 / 3));
 
     }
