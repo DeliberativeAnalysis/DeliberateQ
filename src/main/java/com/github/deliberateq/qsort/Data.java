@@ -2,8 +2,6 @@ package com.github.deliberateq.qsort;
 
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,6 +20,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
@@ -226,8 +225,9 @@ public class Data implements Serializable {
 							+ " not found on qsort line. Have you declared it in the participants section?");
 		q.setParticipant(participant);
 		q.setStage(items[1].trim());
-		for (int j = 2; j < 2 + numQStatements; j++)
-			q.getQResults().add(getDouble(items[j]));
+		for (int j = 2; j < 2 + numQStatements; j++) {
+			q.getQResults().add(new QResult(j - 1, getDouble(items[j])));
+		}
 		for (int j = 2 + numQStatements; j < 2 + numQStatements
 				+ numPStatements; j++)
 			q.getRankings().add(getDouble(items[j]));
@@ -402,7 +402,7 @@ public class Data implements Serializable {
 			if (q.getQResults().size() == 0) {
 				removeThese.add(q);
 			} else {
-				for (Double v : q.getQResults()) {
+				for (QResult v : q.getQResults()) {
 					if (v == null)
 						removeThese.add(q);
 				}
@@ -429,8 +429,9 @@ public class Data implements Serializable {
 			QSort q = list.get(i);
 			qSorts.setRowLabel(i + 1, getParticipantLabel(singleStage, q));
 			for (int j = 0; j < q.getQResults().size(); j++) {
-				qSorts.setValue(i + 1, j + 1, q.getQResults().get(j));
-				qSorts.setColumnLabel(j + 1, "Q" + (j + 1));
+			    QResult r = q.getQResults().get(j);
+				qSorts.setValue(i + 1, j + 1, r.value());
+				qSorts.setColumnLabel(j + 1, "Q" + (r.statementNo()));
 			}
 		}
 
@@ -686,7 +687,7 @@ public class Data implements Serializable {
 		int col = 1;
 		for (QSort q : subList) {
 			int row = 1;
-			List<Double> items = q.getQResults();
+			List<Double> items = q.getQResults().stream().map(QResult::value).collect(Collectors.toList());
 			if (dataSet == 2)
 				items = q.getRankings();
 			for (double value : items) {
