@@ -37,10 +37,6 @@ public class QSort implements Serializable {
 		return rankings;
 	}
 
-	public void setRankings(List<Double> rankings) {
-		this.rankings = rankings;
-	}
-
 	public List<QResult> getQResults() {
 		return qResults;
 	}
@@ -49,7 +45,7 @@ public class QSort implements Serializable {
 		QSort q = new QSort();
 		q.setParticipant(participant);
 		q.qResults = new ArrayList<>(this.qResults);
-		q.setRankings(new ArrayList<Double>(rankings));
+		q.rankings = new ArrayList<>(rankings);
 		q.setStage(stage);
 		return q;
 	}
