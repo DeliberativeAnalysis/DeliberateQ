@@ -423,17 +423,19 @@ public class Data implements Serializable {
 			return null;
 		}
 		// make the matrix of the qResults
-		Matrix qSorts = new Matrix(list.size(), list.get(0).getQResults()
-				.size());
-		for (int i = 0; i < list.size(); i++) {
-			QSort q = list.get(i);
-			qSorts.setRowLabel(i + 1, getParticipantLabel(singleStage, q));
-			for (int j = 0; j < q.getQResults().size(); j++) {
-			    QResult r = q.getQResults().get(j);
-				qSorts.setValue(i + 1, j + 1, r.value());
-				qSorts.setColumnLabel(j + 1, "Q" + (r.statementNo()));
-			}
-		}
+        Matrix qSorts = new Matrix(list.size(), list.get(0).getQResults().size());
+        for (int i = 0; i < list.size(); i++) {
+            QSort q = list.get(i);
+            qSorts.setRowLabel(i + 1, getParticipantLabel(singleStage, q));
+            int j = 0;
+            for (QResult r : q.getQResults()) {
+                if (statementFilter.contains(r.statementNo())) {
+                    qSorts.setValue(i + 1, j + 1, r.value());
+                    qSorts.setColumnLabel(j + 1, "Q" + (r.statementNo()));
+                    j++;
+                }
+            }
+        }
 
 		// make the matrix of rankings
 		Matrix rankings = new Matrix(list.size(), list.get(0).getRankings()
