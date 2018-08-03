@@ -629,7 +629,7 @@ public class Data implements Serializable {
 
 	private void graphConnected(List<QSort> list,
 			OutputStream imageOutputStream, boolean labelPoints, int size,
-			Set<String> filter, CorrelationCoefficient cc) throws IOException {
+			Set<String> participantFilter, CorrelationCoefficient cc) throws IOException {
 		// split the list into separate lists by stage
 		Map<String, List<QSort>> map = new LinkedHashMap<String, List<QSort>>();
 		for (QSort q : list) {
@@ -640,7 +640,7 @@ public class Data implements Serializable {
 
 		@SuppressWarnings("unchecked")
 		GraphPanel gp = getGraphConnected(map.values()
-				.toArray(new ArrayList[1]), labelPoints, size, filter, cc);
+				.toArray(new ArrayList[1]), labelPoints, size, participantFilter, cc);
 
 		if (gp != null) {
 			gp.setDisplayMeans(true);
@@ -667,7 +667,7 @@ public class Data implements Serializable {
 
 	public Matrix getRawData(DataSelection dataSelection,
 			Set<Integer> exclusions, int dataSet) {
-		return getRawData(dataSelection.getStage(), dataSelection.getFilter(),
+		return getRawData(dataSelection.getStage(), dataSelection.getParticipantFilter(),
 				dataSet);
 	}
 

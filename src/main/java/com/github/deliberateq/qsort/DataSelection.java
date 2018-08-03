@@ -5,14 +5,14 @@ import java.util.Set;
 public class DataSelection {
 
 	private String stage;
-	private final Set<String> filter;
+	private final Set<String> participantFilter;
 
-	public Set<String> getFilter() {
-		return filter;
+	public Set<String> getParticipantFilter() {
+		return participantFilter;
 	}
 
-	public DataSelection(Set<String> filter, String stage) {
-		this.filter = filter;
+	public DataSelection(Set<String> participantFilter, String stage) {
+		this.participantFilter = participantFilter;
 		this.stage = stage;
 	}
 
