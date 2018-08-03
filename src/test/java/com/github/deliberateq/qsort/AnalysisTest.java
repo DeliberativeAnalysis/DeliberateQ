@@ -27,7 +27,7 @@ public class AnalysisTest {
 						.getResourceAsStream("/studies2/Bloomfield Track.txt"));
 
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
-				new DataSelection(data.getFilter(), "First"), true,
+				new DataSelection(data.getParticipantFilter(), "First"), true,
 				FactorExtractionMethod.PRINCIPAL_COMPONENTS_ANALYSIS,
 				EigenvalueThreshold.createWithMaxFactors(8), "test title", CorrelationCoefficient.PEARSONS);
 
@@ -97,7 +97,7 @@ public class AnalysisTest {
 			throws IOException {
 		Data data = getLipsetData();
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
-				new DataSelection(data.getFilter(), "Questionnaire"), true,
+				new DataSelection(data.getParticipantFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
 				EigenvalueThreshold.createWithMinEigenvalue(1.0), "test title", CorrelationCoefficient.PEARSONS);
 
@@ -115,7 +115,7 @@ public class AnalysisTest {
 			throws IOException {
 		Data data = getLipsetData();
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
-				new DataSelection(data.getFilter(), "Questionnaire"), true,
+				new DataSelection(data.getParticipantFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
 				EigenvalueThreshold.createWithMaxFactors(2), "test title", CorrelationCoefficient.PEARSONS);
 
@@ -155,7 +155,7 @@ public class AnalysisTest {
 			throws IOException {
 		Data data = getLipsetData();
 		FactorAnalysisResults r = Analysis.getFactorAnalysisResults(data,
-				new DataSelection(data.getFilter(), "Questionnaire"), true,
+				new DataSelection(data.getParticipantFilter(), "Questionnaire"), true,
 				FactorExtractionMethod.CENTROID_METHOD,
 				EigenvalueThreshold.createWithMaxFactors(6), "title", CorrelationCoefficient.PEARSONS);
 

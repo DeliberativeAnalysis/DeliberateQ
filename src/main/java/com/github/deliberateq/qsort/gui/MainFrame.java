@@ -1,6 +1,7 @@
 package com.github.deliberateq.qsort.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Stack;
 
@@ -19,7 +20,6 @@ import com.github.deliberateq.util.event.EventManagerListener;
 import com.github.deliberateq.util.gui.swing.v1.SwingUtil;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.MatrixProvider;
-import com.github.deliberateq.util.math.Matrix.CorrelationCoefficientType;
 import com.github.deliberateq.util.math.gui.JMatrix;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -158,7 +158,7 @@ public class MainFrame extends JFrame {
 
     private void createMoreListeners() {
         final JFrame frame = this;
-        eventManager.addListener(Events.FILTER, new EventManagerListener() {
+        eventManager.addListener(Events.PARTICIPANT_FILTER, new EventManagerListener() {
             @Override
             public void notify(Event event) {
 
@@ -168,6 +168,26 @@ public class MainFrame extends JFrame {
 
                 dialog.getContentPane().setLayout(new GridLayout(1, 1));
                 JPanel panel = new ParticipantsPanel((Data) event.getObject(), frame);
+                dialog.getContentPane().add(panel);
+                dialog.setSize(panel.getPreferredSize());
+                dialog.setModal(false);
+                int x = frame.getLocation().x + frame.getWidth() - 2 * dialog.getWidth() - 50;
+                dialog.setLocation(x, frame.getLocation().y + 150);
+                dialog.setVisible(true);
+            }
+        });
+        
+        eventManager.addListener(Events.STATEMENT_FILTER, new EventManagerListener() {
+            @Override
+            public void notify(Event event) {
+
+                JDialog dialog = new JDialog(frame);
+                dialog.setIconImage(LookAndFeel.getPersonIcon().getImage());
+                dialog.setTitle("Q Statements");
+
+                dialog.getContentPane().setLayout(new GridLayout(1, 1));
+                JPanel panel = new StatementsPanel((Data) event.getObject(), frame);
+//                panel.setPreferredSize(new Dimension(frame.getWidth() -10, frame.getHeight() - 50));
                 dialog.getContentPane().add(panel);
                 dialog.setSize(panel.getPreferredSize());
                 dialog.setModal(false);

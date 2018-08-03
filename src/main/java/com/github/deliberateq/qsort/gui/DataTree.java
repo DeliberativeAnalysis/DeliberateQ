@@ -63,7 +63,7 @@ public class DataTree extends JTree {
 					@Override
 					public Matrix getMatrix() {
 						List<QSort> list = data.restrictList(
-								combination.getStage(), combination.getFilter());
+								combination.getStage(), combination.getParticipantFilter());
 						DataComponents d = data.buildMatrix(list, null, cc);
 						return d.correlations;
 					}

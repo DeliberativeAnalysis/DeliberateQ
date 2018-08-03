@@ -7,8 +7,8 @@ import java.util.List;
 public class QSort implements Serializable {
 	private static final long serialVersionUID = -7796050822543154325L;
 	private String stage;
-	private List<Double> rankings = new ArrayList<Double>();
-	private List<Double> qResults = new ArrayList<Double>();
+	private List<Double> rankings = new ArrayList<>();
+	private List<QResult> qResults = new ArrayList<>();
 	private Participant participant;
 
 	@Override
@@ -37,23 +37,15 @@ public class QSort implements Serializable {
 		return rankings;
 	}
 
-	public void setRankings(List<Double> rankings) {
-		this.rankings = rankings;
-	}
-
-	public List<Double> getQResults() {
+	public List<QResult> getQResults() {
 		return qResults;
 	}
-
-	public void setQResults(List<Double> results) {
-		qResults = results;
-	}
-
+	
 	public QSort copy() {
 		QSort q = new QSort();
 		q.setParticipant(participant);
-		q.setQResults(new ArrayList<Double>(this.qResults));
-		q.setRankings(new ArrayList<Double>(rankings));
+		q.qResults = new ArrayList<>(this.qResults);
+		q.rankings = new ArrayList<>(rankings);
 		q.setStage(stage);
 		return q;
 	}

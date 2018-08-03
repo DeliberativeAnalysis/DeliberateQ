@@ -2,8 +2,6 @@ package com.github.deliberateq.qsort;
 
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,8 +16,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
@@ -41,24 +42,17 @@ public class Data implements Serializable {
 	private static final long serialVersionUID = -8216642174736641063L;
 	private static final String TAB = "\t";
 
-	private final Map<Integer, String> statements = new HashMap<Integer, String>();
+	private final SortedMap<Integer, String> statements = new TreeMap<>();
 
 	public static final String PREDICTION_INTERVAL_95 = "Prediction_Interval_95";
 
-	private final Map<String, Participant> participants = new HashMap<String, Participant>();
-	private final Set<String> filter = new TreeSet<String>();
-	private final Set<String> stageFilter = new TreeSet<String>();
+	private final Map<String, Participant> participants = new HashMap<>();
+	private final Set<String> participantFilter = new TreeSet<>();
+	private final Set<Integer> statementFilter = new TreeSet<>();
+	private final Set<String> stageFilter = new TreeSet<>();
 
 	private List<QSort> qSorts;
 	private String title = "Untitled";
-
-	public Data(String name) throws IOException {
-		this(new File(name));
-	}
-
-	public Data(File file) throws IOException {
-		this(new FileInputStream(file));
-	}
 
 	public Data(InputStream is) throws IOException {
 		log.info("loading");
@@ -171,13 +165,14 @@ public class Data implements Serializable {
 				throw new RuntimeException(
 						"Line "
 								+ br.getLinesRead()
-								+ " was unexpected. Please compare your file to the example forq input file. Perhaps the lines are not in the right order?\n"
+								+ " was unexpected. Please compare your file to the example DeliberateQ input file. Perhaps the lines are not in the right order?\n"
 								+ line);
 		}
 		br.close();
 		isr.close();
 		is.close();
-		filter.addAll(getParticipantIds());
+		participantFilter.addAll(getParticipantIds());
+		statementFilter.addAll(getStatements().keySet());
 		stageFilter.addAll(getStageTypes());
 		log.info("loaded");
 	}
@@ -230,8 +225,9 @@ public class Data implements Serializable {
 							+ " not found on qsort line. Have you declared it in the participants section?");
 		q.setParticipant(participant);
 		q.setStage(items[1].trim());
-		for (int j = 2; j < 2 + numQStatements; j++)
-			q.getQResults().add(getDouble(items[j]));
+		for (int j = 2; j < 2 + numQStatements; j++) {
+			q.getQResults().add(new QResult(j - 1, getDouble(items[j])));
+		}
 		for (int j = 2 + numQStatements; j < 2 + numQStatements
 				+ numPStatements; j++)
 			q.getRankings().add(getDouble(items[j]));
@@ -327,7 +323,7 @@ public class Data implements Serializable {
 	public List<QSort> getQSorts() {
 		List<QSort> list = new ArrayList<QSort>(qSorts);
 		for (int i = list.size() - 1; i >= 0; i--)
-			if (!filter.contains(list.get(i).getParticipant().getId())) {
+			if (!participantFilter.contains(list.get(i).getParticipant().getId())) {
 				list.remove(i);
 			}
 		return list;
@@ -387,7 +383,7 @@ public class Data implements Serializable {
 		public List<String> participants2;
 	}
 
-	public DataComponents buildMatrix(List<QSort> list, Set<String> filter, CorrelationCoefficient cc) {
+	public DataComponents buildMatrix(List<QSort> list, Set<String> participantFilter, CorrelationCoefficient cc) {
 		if (list == null)
 			return null;
 		list = Lists.newArrayList(list);
@@ -406,7 +402,7 @@ public class Data implements Serializable {
 			if (q.getQResults().size() == 0) {
 				removeThese.add(q);
 			} else {
-				for (Double v : q.getQResults()) {
+				for (QResult v : q.getQResults()) {
 					if (v == null)
 						removeThese.add(q);
 				}
@@ -427,16 +423,19 @@ public class Data implements Serializable {
 			return null;
 		}
 		// make the matrix of the qResults
-		Matrix qSorts = new Matrix(list.size(), list.get(0).getQResults()
-				.size());
-		for (int i = 0; i < list.size(); i++) {
-			QSort q = list.get(i);
-			qSorts.setRowLabel(i + 1, getParticipantLabel(singleStage, q));
-			for (int j = 0; j < q.getQResults().size(); j++) {
-				qSorts.setValue(i + 1, j + 1, q.getQResults().get(j));
-				qSorts.setColumnLabel(j + 1, "Q" + (j + 1));
-			}
-		}
+        Matrix qSorts = new Matrix(list.size(), list.get(0).getQResults().size());
+        for (int i = 0; i < list.size(); i++) {
+            QSort q = list.get(i);
+            qSorts.setRowLabel(i + 1, getParticipantLabel(singleStage, q));
+            int j = 0;
+            for (QResult r : q.getQResults()) {
+                if (statementFilter.contains(r.statementNo())) {
+                    qSorts.setValue(i + 1, j + 1, r.value());
+                    qSorts.setColumnLabel(j + 1, "Q" + (r.statementNo()));
+                    j++;
+                }
+            }
+        }
 
 		// make the matrix of rankings
 		Matrix rankings = new Matrix(list.size(), list.get(0).getRankings()
@@ -462,9 +461,9 @@ public class Data implements Serializable {
 		Matrix m = new Matrix(1, 2);
 		for (int i = 1; i <= qSortsCorrelated.rowCount(); i++) {
 			for (int j = i + 1; j <= qSortsCorrelated.columnCount(); j++) {
-				boolean includeIt = filter == null || filter.size() == 0
-						|| filter.contains(qSortsCorrelated.getRowLabel(i))
-						|| filter.contains(qSortsCorrelated.getRowLabel(j));
+				boolean includeIt = participantFilter == null || participantFilter.size() == 0
+						|| participantFilter.contains(qSortsCorrelated.getRowLabel(i))
+						|| participantFilter.contains(qSortsCorrelated.getRowLabel(j));
 				if (includeIt) {
 					if (i != 1 || j != 2)
 						m = m.addRow();
@@ -630,7 +629,7 @@ public class Data implements Serializable {
 
 	private void graphConnected(List<QSort> list,
 			OutputStream imageOutputStream, boolean labelPoints, int size,
-			Set<String> filter, CorrelationCoefficient cc) throws IOException {
+			Set<String> participantFilter, CorrelationCoefficient cc) throws IOException {
 		// split the list into separate lists by stage
 		Map<String, List<QSort>> map = new LinkedHashMap<String, List<QSort>>();
 		for (QSort q : list) {
@@ -641,7 +640,7 @@ public class Data implements Serializable {
 
 		@SuppressWarnings("unchecked")
 		GraphPanel gp = getGraphConnected(map.values()
-				.toArray(new ArrayList[1]), labelPoints, size, filter, cc);
+				.toArray(new ArrayList[1]), labelPoints, size, participantFilter, cc);
 
 		if (gp != null) {
 			gp.setDisplayMeans(true);
@@ -668,11 +667,11 @@ public class Data implements Serializable {
 
 	public Matrix getRawData(DataSelection dataSelection,
 			Set<Integer> exclusions, int dataSet) {
-		return getRawData(dataSelection.getStage(), dataSelection.getFilter(),
+		return getRawData(dataSelection.getStage(), dataSelection.getParticipantFilter(),
 				dataSet);
 	}
 
-	public Matrix getRawData(String stage, Set<String> filter, int dataSet) {
+	private Matrix getRawData(String stage, Set<String> filter, int dataSet) {
 		List<QSort> subList = restrictList(stage, filter);
 
 		if (subList.size() == 0) {
@@ -690,7 +689,7 @@ public class Data implements Serializable {
 		int col = 1;
 		for (QSort q : subList) {
 			int row = 1;
-			List<Double> items = q.getQResults();
+			List<Double> items = q.getQResults().stream().map(QResult::value).collect(Collectors.toList());
 			if (dataSet == 2)
 				items = q.getRankings();
 			for (double value : items) {
@@ -717,11 +716,11 @@ public class Data implements Serializable {
 		return set.size() == 1;
 	}
 
-	public Set<String> getFilter() {
-		return filter;
+	public Set<String> getParticipantFilter() {
+		return participantFilter;
 	}
 
-	public Map<Integer, String> getStatements() {
+	public SortedMap<Integer, String> getStatements() {
 		return statements;
 	}
 
@@ -736,5 +735,9 @@ public class Data implements Serializable {
 	public Set<String> getStageFilter() {
 		return stageFilter;
 	}
+
+    public Set<Integer> getStatementFilter() {
+        return statementFilter;
+    }
 
 }
