@@ -383,7 +383,7 @@ public class Data implements Serializable {
 		public List<String> participants2;
 	}
 
-	public DataComponents buildMatrix(List<QSort> list, Set<String> filter, CorrelationCoefficient cc) {
+	public DataComponents buildMatrix(List<QSort> list, Set<String> participantFilter, CorrelationCoefficient cc) {
 		if (list == null)
 			return null;
 		list = Lists.newArrayList(list);
@@ -459,9 +459,9 @@ public class Data implements Serializable {
 		Matrix m = new Matrix(1, 2);
 		for (int i = 1; i <= qSortsCorrelated.rowCount(); i++) {
 			for (int j = i + 1; j <= qSortsCorrelated.columnCount(); j++) {
-				boolean includeIt = filter == null || filter.size() == 0
-						|| filter.contains(qSortsCorrelated.getRowLabel(i))
-						|| filter.contains(qSortsCorrelated.getRowLabel(j));
+				boolean includeIt = participantFilter == null || participantFilter.size() == 0
+						|| participantFilter.contains(qSortsCorrelated.getRowLabel(i))
+						|| participantFilter.contains(qSortsCorrelated.getRowLabel(j));
 				if (includeIt) {
 					if (i != 1 || j != 2)
 						m = m.addRow();
