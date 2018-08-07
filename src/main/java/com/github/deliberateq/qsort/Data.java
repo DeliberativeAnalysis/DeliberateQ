@@ -584,7 +584,18 @@ public class Data implements Serializable {
 			vals[i][1] = v2.getValue(i + 1);
 		}
 		sr.addData(vals);
-
+		
+        double sumDistanceFromXEqualsY = 0;
+        double sumDistanceSquaredFromXEqualsY = 0;
+        for (int i = 0; i < vals.length; i++) {
+            double x = Math.abs(v1.getValue(i + 1) - v2.getValue(i + 1))
+                    / Math.sqrt(2);
+            sumDistanceFromXEqualsY += x;
+            sumDistanceSquaredFromXEqualsY += x * x;
+        }
+        final double meanDistanceFromXEqualsY = sumDistanceFromXEqualsY / vals.length;
+        final double meanStandardErrorFromXEqualsY = Math.sqrt(sumDistanceSquaredFromXEqualsY/ vals.length);
+		
 		if (includeRegressionLines) {
 			final Function interval = new RegressionIntervalFunction(v1,
 					PREDICTION_INTERVAL_95.equals(bands));
@@ -614,7 +625,7 @@ public class Data implements Serializable {
 		}
 		DecimalFormat df = new DecimalFormat("0.00");
 		gp.addComment(new Vector(new double[] { -0.8, 0.8 }),
-				"r2=" + df.format(Math.pow(sr.getR(), 2)));
+				"r2=" + df.format(Math.pow(sr.getR(), 2)) + ", D1=" + df.format(meanDistanceFromXEqualsY) + ", D2="+ df.format(meanStandardErrorFromXEqualsY));
 		return gp;
 	}
 
