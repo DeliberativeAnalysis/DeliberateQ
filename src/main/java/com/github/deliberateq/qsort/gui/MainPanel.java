@@ -29,6 +29,7 @@ public class MainPanel extends JPanel {
 	public MainPanel(EventManager eventManager) {
 	    String ccOption = System.getProperty("cc", CorrelationCoefficient.CONCORDANCE.name());
 	    CorrelationCoefficient cc = CorrelationCoefficient.valueOf(ccOption);
+	    Options options = new Options(cc);
 		setLayout(new GridLayout(1, 1));
 
 		final JTabbedPane tabs = new JTabbedPane();
