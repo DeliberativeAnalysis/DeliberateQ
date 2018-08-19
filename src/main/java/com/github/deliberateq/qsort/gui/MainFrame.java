@@ -3,6 +3,8 @@ package com.github.deliberateq.qsort.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.Stack;
 
 import javax.swing.JDialog;
@@ -225,11 +227,14 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException, UnsupportedLookAndFeelException {
+            IllegalAccessException, UnsupportedLookAndFeelException, IOException {
         LookAndFeel.setLookAndFeel();
         final MainFrame frame = ApplicationInjector.getInjector().getInstance(MainFrame.class);
         final EventManager eventManager = ApplicationInjector.getInjector().getInstance(EventManager.class);
-        frame.setTitle("DeliberateQ");
+        Properties p = new Properties();
+        p.load(MainFrame.class.getResourceAsStream("/version.properties"));
+        String version = p.getProperty("version", "?");
+        frame.setTitle("DeliberateQ " + version);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         SwingUtilities.invokeLater(new Runnable() {
