@@ -13,7 +13,7 @@ public class DataGraphExtendedPanel extends JPanel {
 	private static final long serialVersionUID = -2494288904017423756L;
 	private final DataGraphPanel dataGraphPanel;
 
-	public DataGraphExtendedPanel(Data data, CorrelationCoefficient cc) {
+	public DataGraphExtendedPanel(Data data, Options options) {
 		// SpringLayout layout = new SpringLayout();
 		// setLayout(layout);
 		// dataGraphPanel = new DataGraphPanel(data);
@@ -29,7 +29,7 @@ public class DataGraphExtendedPanel extends JPanel {
 		// SpringLayout.SOUTH, this);
 
 		setLayout(new GridLayout(1, 1));
-		dataGraphPanel = new DataGraphPanel(data, cc);
+		dataGraphPanel = new DataGraphPanel(data, options);
 		add(dataGraphPanel);
 	}
 

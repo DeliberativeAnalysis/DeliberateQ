@@ -30,12 +30,12 @@ import javax.swing.filechooser.FileFilter;
 import com.github.deliberateq.qsort.gui.Events;
 import com.github.deliberateq.qsort.gui.LookAndFeel;
 import com.github.deliberateq.qsort.gui.Model;
+import com.github.deliberateq.qsort.gui.Options;
 import com.github.deliberateq.qsort.gui.ReferencePanel;
 import com.github.deliberateq.qsort.gui.Rotations;
 import com.github.deliberateq.util.event.Event;
 import com.github.deliberateq.util.event.EventManager;
 import com.github.deliberateq.util.event.EventManagerListener;
-import com.github.deliberateq.util.math.CorrelationCoefficient;
 import com.github.deliberateq.util.math.Matrix;
 import com.github.deliberateq.util.math.MatrixRotation;
 import com.github.deliberateq.util.math.StringFilter;
@@ -51,7 +51,7 @@ public class LoadingsPanel extends JPanel {
 
 	private final Rotations rotations;
 
-	public LoadingsPanel(Rotations rots, StringFilter rowLabelsFilter, CorrelationCoefficient cc) {
+	public LoadingsPanel(Rotations rots, StringFilter rowLabelsFilter, Options options) {
 		this.rotations = rots;
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
@@ -95,7 +95,7 @@ public class LoadingsPanel extends JPanel {
 		controls.add(rotationSummaryScroll);
 		final ReferencePanel referencePanel = new ReferencePanel(this);
 		controls.add(referencePanel);
-		referencePanel.update(rotations, cc);
+		referencePanel.update(rotations, options);
 		JCheckBox applyFilter = new JCheckBox("Filter");
 		controls.add(applyFilter);
 		applyFilter.setSelected(false);
@@ -119,7 +119,7 @@ public class LoadingsPanel extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				rotationSummary.setText(rotations.getSummary());
-				referencePanel.update(rotations, cc);
+				referencePanel.update(rotations, options);
 			}
 		});
 
@@ -171,7 +171,7 @@ public class LoadingsPanel extends JPanel {
 								.restrictRows(rotations.getUseWithReference());
 						m = m.restrictRows(r);
 						r = r.restrictRows(m);
-						List<MatrixRotation> list = m.getRotationsTo(r, cc);
+						List<MatrixRotation> list = m.getRotationsTo(r, options.cc());
 						rotations.setRotationMethod(null);
 						rotations.addRotations(list);
 						graphs.setRotations(rotations);

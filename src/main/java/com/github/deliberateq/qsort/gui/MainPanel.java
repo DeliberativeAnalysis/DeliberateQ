@@ -57,7 +57,7 @@ public class MainPanel extends JPanel {
 							File[] files = fc.getSelectedFiles();
 							for (File file : files) {
 								tabs.addTab(file.getName(), new DataPanel(
-										new Data(new FileInputStream(file)), cc));
+										new Data(new FileInputStream(file)), options));
 							}
 							prefs.put(PREF_OPEN_STUDY_CURRENT_DIRECTORY, fc
 									.getCurrentDirectory().getAbsolutePath());
@@ -73,7 +73,7 @@ public class MainPanel extends JPanel {
 						@Override
 						public void notify(Event event) {
 							try {
-								addSampleTabs(tabs, cc);
+								addSampleTabs(tabs, options);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -85,7 +85,7 @@ public class MainPanel extends JPanel {
 		}
 	}
 
-	private void addSampleTabs(JTabbedPane tabs, CorrelationCoefficient cc) throws IOException {
+	private void addSampleTabs(JTabbedPane tabs, Options options) throws IOException {
 
 		// addTab(tabs, new Data(getClass().getResourceAsStream(
 		// "/studies/New Mexico.txt")));
@@ -97,17 +97,17 @@ public class MainPanel extends JPanel {
 		// "/studies/Lipset.txt")));
 		addTab(tabs,
 				new Data(getClass().getResourceAsStream(
-						"/studies2/Bloomfield Track.txt")), cc);
+						"/studies2/Bloomfield Track.txt")), options);
 		addTab(tabs,
 				new Data(getClass().getResourceAsStream(
-						"/studies2/Bloomfield Track - No Prefs.txt")), cc);
+						"/studies2/Bloomfield Track - No Prefs.txt")), options);
 		addTab(tabs,
-				new Data(getClass().getResourceAsStream("/studies2/Lipset.txt")), cc);
+				new Data(getClass().getResourceAsStream("/studies2/Lipset.txt")), options);
 	}
 
-	private void addTab(JTabbedPane tabs, Data data, CorrelationCoefficient cc) {
+	private void addTab(JTabbedPane tabs, Data data, Options options) {
 		final ImageIcon icon = createImageIcon("images/graph.gif", "graphs");
-		tabs.addTab(data.getTitle(), icon, new DataPanel(data, cc));
+		tabs.addTab(data.getTitle(), icon, new DataPanel(data, options));
 		CloseableTabComponent buttonTab = new CloseableTabComponent(tabs, icon,
 				true);
 		tabs.setTabComponentAt(tabs.getTabCount() - 1, buttonTab);

@@ -27,8 +27,8 @@ public class DataTree extends JTree {
 
 	private DefaultMutableTreeNode referenceNode;
 
-	public DataTree(Data data, CorrelationCoefficient cc) {
-		super(getRoot(data, cc));
+	public DataTree(Data data, Options options) {
+		super(getRoot(data, options));
 		this.setEditable(true);
 		this.setCellEditor(new MyCellEditor());
 
@@ -55,7 +55,7 @@ public class DataTree extends JTree {
 	}
 
 	private static void addDataSelectionNode(final Data data,
-			DefaultMutableTreeNode parent, final DataSelection combination, CorrelationCoefficient cc) {
+			DefaultMutableTreeNode parent, final DataSelection combination, Options options) {
 		DefaultMutableTreeNode node = new DefaultMutableTreeNode(combination);
 		parent.add(node);
 		DefaultMutableTreeNode matrixNode = new DefaultMutableTreeNode(
@@ -64,7 +64,7 @@ public class DataTree extends JTree {
 					public Matrix getMatrix() {
 						List<QSort> list = data.restrictList(
 								combination.getStage(), combination.getParticipantFilter());
-						DataComponents d = data.buildMatrix(list, null, cc);
+						DataComponents d = data.buildMatrix(list, null, options.cc());
 						return d.correlations;
 					}
 
@@ -76,7 +76,7 @@ public class DataTree extends JTree {
 		node.add(matrixNode);
 	}
 
-	private static TreeNode getRoot(Data data, CorrelationCoefficient cc) {
+	private static TreeNode getRoot(Data data, Options options) {
 		Collection<String> stageTypes = data.getStageTypes();
 		Collection<String> participantTypes = data.getParticipantTypes();
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
@@ -88,12 +88,12 @@ public class DataTree extends JTree {
 				for (String stage : stageTypes) {
 					DataSelection combination = new DataSelection(
 							data.getParticipantIds(participantType), stage);
-					addDataSelectionNode(data, root, combination, cc);
+					addDataSelectionNode(data, root, combination, options);
 				}
 				if (stageTypes.size() > 1) {
 					DataSelection combination = new DataSelection(
 							data.getParticipantIds(participantType), "all");
-					addDataSelectionNode(data, root, combination, cc);
+					addDataSelectionNode(data, root, combination, options);
 				}
 			}
 		// nodes by stage
@@ -102,7 +102,7 @@ public class DataTree extends JTree {
 			for (String stage : stageTypes) {
 				DataSelection combination = new DataSelection(
 						data.getParticipantIds(), stage);
-				addDataSelectionNode(data, root, combination, cc);
+				addDataSelectionNode(data, root, combination, options);
 			}
 		}
 		// nodes across all
@@ -110,7 +110,7 @@ public class DataTree extends JTree {
 				.size() > 1) && stageTypes.size() > 1) {
 			DataSelection combination = new DataSelection(
 					data.getParticipantIds(), "all");
-			addDataSelectionNode(data, root, combination, cc);
+			addDataSelectionNode(data, root, combination, options);
 		}
 		return root;
 	}

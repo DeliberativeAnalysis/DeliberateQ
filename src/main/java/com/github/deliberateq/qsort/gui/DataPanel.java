@@ -54,7 +54,7 @@ public class DataPanel extends JPanel {
 
 	private DefaultMutableTreeNode referenceNode;
 
-	public DataPanel(final Data data, CorrelationCoefficient cc) {
+	public DataPanel(final Data data, Options options) {
 		localEventManager = new EventManager();
 		this.data = data;
 		setLayout(new GridLayout(1, 1));
@@ -62,7 +62,7 @@ public class DataPanel extends JPanel {
 		JPanel left = new JPanel();
 		SpringLayout layout = new SpringLayout();
 		left.setLayout(layout);
-		tree = new DataTree(data, cc);
+		tree = new DataTree(data, options);
 		LinkButton participantFilter = new LinkButton("Filter Participants...");
 		left.add(participantFilter);
 		participantFilter.addActionListener(new ActionListener() {
@@ -128,16 +128,16 @@ public class DataPanel extends JPanel {
 		dataViewer = new DataViewerPanel(split);
 		split.setRightComponent(dataViewer);
 		EventManager.getInstance().addListener(Events.DATA_CHANGED,
-				createDataChangedListener(cc));
+				createDataChangedListener(options));
 		tree.addMouseListener(createTreeMouseListener());
-		tree.addTreeSelectionListener(createTreeSelectionListener(cc));
+		tree.addTreeSelectionListener(createTreeSelectionListener(options));
 		split.setDividerLocation(250);
 		tree.setSelectionInterval(0, 0);
 		tree.requestFocus();
 		localEventManager.addListener(Events.ANALYZED, createAnalyzeListener());
 		localEventManager.addListener(Events.MATRIX, createMatrixListener());
 		localEventManager.addListener(Events.ROTATIONS,
-				createRotationListener(cc));
+				createRotationListener(options));
 		localEventManager.addListener(Events.VENN, createVennListener());
 		localEventManager.addListener(Events.SET_REFERENCE_REQUESTED,
 				createReferenceSetterListener());
@@ -253,7 +253,7 @@ public class DataPanel extends JPanel {
 		};
 	}
 
-	private EventManagerListener createDataChangedListener(CorrelationCoefficient cc) {
+	private EventManagerListener createDataChangedListener(Options options) {
 		return new EventManagerListener() {
 			@Override
 			public void notify(Event event) {
@@ -263,7 +263,7 @@ public class DataPanel extends JPanel {
 					return;
 				Object o = node.getUserObject();
 				if (o instanceof DataSelection) {
-					updateDataViewer((DataSelection) o, cc);
+					updateDataViewer((DataSelection) o, options);
 				}
 			}
 		};
@@ -293,7 +293,7 @@ public class DataPanel extends JPanel {
 		};
 	}
 
-	private TreeSelectionListener createTreeSelectionListener(CorrelationCoefficient cc) {
+	private TreeSelectionListener createTreeSelectionListener(Options options) {
 		return new TreeSelectionListener() {
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
@@ -304,7 +304,7 @@ public class DataPanel extends JPanel {
 				Object o = node.getUserObject();
 				log.info(o == null ? null : o.toString());
 				if (o instanceof DataSelection) {
-					updateDataViewer((DataSelection) o, cc);
+					updateDataViewer((DataSelection) o, options);
 				} else if (o instanceof RotatedLoadings) {
 					RotatedLoadings rotatedLoadings = (RotatedLoadings) o;
 					localEventManager.notify(new Event(rotatedLoadings,
@@ -324,13 +324,13 @@ public class DataPanel extends JPanel {
 		};
 	}
 
-	private EventManagerListener createRotationListener(CorrelationCoefficient cc) {
+	private EventManagerListener createRotationListener(Options options) {
 		return new EventManagerListener() {
 			@Override
 			public void notify(Event event) {
 				Rotations rotations = (Rotations) event.getObject();
 				LoadingsPanel panel = new LoadingsPanel(rotations,
-						createRowLabelsFilter(), cc);
+						createRowLabelsFilter(), options);
 				dataViewer.setContent(panel);
 			}
 
@@ -560,8 +560,8 @@ public class DataPanel extends JPanel {
 		}
 	}
 
-	private void updateDataViewer(DataSelection c, CorrelationCoefficient cc) {
-		DataGraphExtendedPanel d = new DataGraphExtendedPanel(data, cc);
+	private void updateDataViewer(DataSelection c, Options options) {
+		DataGraphExtendedPanel d = new DataGraphExtendedPanel(data, options);
 		d.getDataGraphPanel().setCombination(c);
 		d.getDataGraphPanel().update();
 		d.addEventManager(localEventManager);

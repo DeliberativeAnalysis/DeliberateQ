@@ -15,9 +15,9 @@ public class DataFrame extends JFrame {
 
 	private static final long serialVersionUID = -2032992163241329984L;
 
-	public DataFrame(Data data, CorrelationCoefficient cc) {
+	public DataFrame(Data data, Options options) {
 		setLayout(new GridLayout(1, 1));
-		DataPanel dp = new DataPanel(data, cc);
+		DataPanel dp = new DataPanel(data, options);
 		setTitle("Intersubjective Correlation");
 		add(dp);
 	}
@@ -30,7 +30,7 @@ public class DataFrame extends JFrame {
 		if (args.length > 0)
 			filename = args[0];
 		Data data = new Data(new FileInputStream(filename));
-		DataFrame frame = new DataFrame(data, CorrelationCoefficient.PEARSONS);
+		DataFrame frame = new DataFrame(data, new Options(CorrelationCoefficient.PEARSONS));
 		frame.setSize(1000, 600);
 		SwingUtil.centre(frame);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

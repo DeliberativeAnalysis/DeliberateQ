@@ -27,7 +27,6 @@ import com.github.deliberateq.qsort.QSort;
 import com.github.deliberateq.qsort.gui.injection.ApplicationInjector;
 import com.github.deliberateq.util.event.Event;
 import com.github.deliberateq.util.event.EventManager;
-import com.github.deliberateq.util.math.CorrelationCoefficient;
 import com.github.deliberateq.util.math.EigenvalueThreshold;
 import com.github.deliberateq.util.math.FactorAnalysisResults;
 import com.github.deliberateq.util.math.FactorExtractionMethod;
@@ -41,8 +40,8 @@ public class DataGraphPanel extends JPanel {
 	private final List<EventManager> eventManagers = new ArrayList<EventManager>();
 
 	private GraphPanel gp;
-    private final CorrelationCoefficient cc;
     private final DataRenderer dataRenderer;
+    private Options options;
 
 	public GraphPanel getGraphPanel() {
 		return gp;
@@ -56,15 +55,15 @@ public class DataGraphPanel extends JPanel {
 		this.combination = combination;
 	}
 
-	public DataGraphPanel(Data data, CorrelationCoefficient cc) {
-		this(data, null, cc);
+	public DataGraphPanel(Data data, Options options) {
+		this(data, null, options);
 	}
 
-	public DataGraphPanel(Data data, DataSelection combination, CorrelationCoefficient cc) {
+	public DataGraphPanel(Data data, DataSelection combination, Options options) {
 		this.data = data;
 		this.dataRenderer = new DataRenderer(data);
 		this.combination = combination;
-		this.cc = cc;
+		this.options = options;
 		if (combination != null) {
     		setBackground(Color.white);
     		setOpaque(true);
@@ -99,7 +98,7 @@ public class DataGraphPanel extends JPanel {
 									analysis.isIntersubjective(),
 									analysis.getExtractionMethod(),
 									analysis.getEigenvalueThreshold(),
-									analysis.getTitle(), cc);
+									analysis.getTitle(), options.cc());
 
 					if (r != null) {
 						results.add(r);
@@ -130,7 +129,7 @@ public class DataGraphPanel extends JPanel {
 		panel.add(analyze);
 		boolean showRegressionLines = true;
 		gp = dataRenderer.getGraph(list, labelPoints, 200, null, null,
-				showRegressionLines, cc);
+				showRegressionLines, options.cc());
 		if (gp != null) {
 			gp.setOpaque(true);
 			panel.add(gp);
@@ -210,7 +209,7 @@ public class DataGraphPanel extends JPanel {
 		panel.setLayout(layout);
 
 		gp = dataRenderer.getGraphConnected(map.values().toArray(new ArrayList[1]),
-				false, size, null, cc);
+				false, size, null, options.cc());
 		if (gp != null) {
 			panel.add(gp);
 			// gp.setBackground(getBackground());

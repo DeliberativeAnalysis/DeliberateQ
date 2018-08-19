@@ -24,7 +24,7 @@ public class ReferencePanel extends JPanel {
 		this.parent = parent;
 	}
 
-	public void update(Rotations rotations, CorrelationCoefficient cc) {
+	public void update(Rotations rotations, Options options) {
 		removeAll();
 		if (Model.getInstance().getReferenceMatrix() != null) {
 			Matrix m = rotations.getRotatedLoadingsToUseWithReference();
@@ -32,7 +32,7 @@ public class ReferencePanel extends JPanel {
 					.restrictRows(rotations.getUseWithReference());
 			m = m.restrictRows(r);
 			r = r.restrictRows(m);
-			Map<Point, Double> map = m.getMatchedCorrelations(r, cc);
+			Map<Point, Double> map = m.getMatchedCorrelations(r, options.cc());
 			setLayout(new GridLayout(3, map.keySet().size() + 1));
 			addBoldItem("Reference");
 			for (Point p : map.keySet())
