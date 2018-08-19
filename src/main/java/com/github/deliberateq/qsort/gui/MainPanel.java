@@ -100,11 +100,11 @@ public class MainPanel extends JPanel {
 	            "/studies2/Bloomfield Track.txt",
 	            "/studies2/Bloomfield Track - No Prefs.txt",
 	            "/studies2/Lipset.txt"
-//	            ,"/studies2/UppsalaSt25CombinedLikertRank.txt"
+	            ,"/studies2/UppsalaSt25CombinedLikertRank.txt"
 //	            ,"/studies2/UppsalaSt25CombinedForced.txt"
 	    };
         for (String study : studies) {
-            addTab(tabs, new Data(getClass().getResourceAsStream("/studies2/Bloomfield Track.txt")),
+            addTab(tabs, new Data(getClass().getResourceAsStream(study)),
                     options);
         }
 	}

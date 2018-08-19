@@ -41,64 +41,39 @@ public class StatementsPanel extends JPanel {
         scroll.setBorder(BorderFactory.createEmptyBorder());
         add(scroll);
 
-        layout.putConstraint(SpringLayout.NORTH, selectAll, 5,
-                SpringLayout.NORTH, this);
-        layout.putConstraint(SpringLayout.WEST, selectAll, 5,
-                SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.NORTH, selectNone, 5,
-                SpringLayout.SOUTH, selectAll);
-        layout.putConstraint(SpringLayout.WEST, selectNone, 0,
-                SpringLayout.WEST, selectAll);
-        layout.putConstraint(SpringLayout.NORTH, autoSelect, 5,
-                SpringLayout.SOUTH, selectNone);
-        layout.putConstraint(SpringLayout.WEST, autoSelect, 0,
-                SpringLayout.WEST, selectAll);
-        
-        layout.putConstraint(SpringLayout.NORTH, scroll, 5, SpringLayout.SOUTH,
-                autoSelect);
-        layout.putConstraint(SpringLayout.SOUTH, scroll, 0, SpringLayout.SOUTH,
-                this);
-        layout.putConstraint(SpringLayout.WEST, scroll, 5, SpringLayout.WEST,
-                this);
+        layout.putConstraint(SpringLayout.NORTH, selectAll, 5, SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.WEST, selectAll, 5, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.NORTH, selectNone, 5, SpringLayout.SOUTH, selectAll);
+        layout.putConstraint(SpringLayout.WEST, selectNone, 0, SpringLayout.WEST, selectAll);
+        layout.putConstraint(SpringLayout.NORTH, autoSelect, 5, SpringLayout.SOUTH, selectNone);
+        layout.putConstraint(SpringLayout.WEST, autoSelect, 0, SpringLayout.WEST, selectAll);
+
+        layout.putConstraint(SpringLayout.NORTH, scroll, 5, SpringLayout.SOUTH, autoSelect);
+        layout.putConstraint(SpringLayout.SOUTH, scroll, 0, SpringLayout.SOUTH, this);
+        layout.putConstraint(SpringLayout.WEST, scroll, 5, SpringLayout.WEST, this);
         // layout
         setPreferredSize(new Dimension(scroll.getPreferredSize().width, frame.getHeight() * 2 / 3));
 
     }
 
-    private ActionListener createSelectNoneActionListener(
-            final Object[] checkBoxes) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < checkBoxes.length; i++) {
-                    JCheckBox checkBox = (JCheckBox) checkBoxes[i];
-                    checkBox.setSelected(false);
-                    repaint();
-                }
-            }
-        };
-    }
-
-    private Component createStatementList(final Data data,
-            LinkButton selectAll, LinkButton selectNone) {
+    private Component createStatementList(final Data data, LinkButton selectAll,
+            LinkButton selectNone) {
         Set<Integer> statementIds = data.getStatements().keySet();
         statementCheckBoxes = new Object[statementIds.size()];
         statementList = new JCheckBoxList();
         int i = 0;
         for (Integer statementId : statementIds) {
-            final JCheckBox checkBox = new JCheckBox(statementId + ". " + truncate(data.getStatements().get(statementId)));
+            final JCheckBox checkBox = new JCheckBox(
+                    statementId + ". " + truncate(data.getStatements().get(statementId)));
             checkBox.setSelected(data.getStatementFilter().contains(statementId));
             statementCheckBoxes[i] = checkBox;
-            checkBox.addChangeListener(createChangeListener(checkBox, data,
-                    statementId));
+            checkBox.addChangeListener(createChangeListener(checkBox, data, statementId));
             i++;
         }
         statementList.setListData(statementCheckBoxes);
         // event listeners
-        selectAll
-                .addActionListener(createSelectAllActionListener(statementCheckBoxes));
-        selectNone
-                .addActionListener(createSelectNoneActionListener(statementCheckBoxes));
+        selectAll.addActionListener(createSelectAllActionListener(statementCheckBoxes));
+        selectNone.addActionListener(createSelectNoneActionListener(statementCheckBoxes));
         return statementList;
     }
 
@@ -111,8 +86,8 @@ public class StatementsPanel extends JPanel {
         }
     }
 
-    private ChangeListener createChangeListener(final JCheckBox checkBox,
-            final Data data, final Integer statementId) {
+    private ChangeListener createChangeListener(final JCheckBox checkBox, final Data data,
+            final Integer statementId) {
         return new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -120,25 +95,41 @@ public class StatementsPanel extends JPanel {
                     data.getStatementFilter().add(statementId);
                 else
                     data.getStatementFilter().remove(statementId);
-                if (!updatingMultipleCheckBoxes)
-                    EventManager.getInstance().notify(
-                            new Event(data, Events.DATA_CHANGED));
-            }
-        };
-    }
-    
-    private ActionListener createSelectAllActionListener(
-            final Object[] checkBoxes) {
-
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < checkBoxes.length; i++) {
-                    JCheckBox checkBox = (JCheckBox) checkBoxes[i];
-                    checkBox.setSelected(true);
-                    repaint();
+                if (!updatingMultipleCheckBoxes) {
+                    EventManager.getInstance().notify(new Event(data, Events.DATA_CHANGED));
                 }
             }
         };
     }
+
+    private ActionListener createSelectNoneActionListener(final Object[] checkBoxes) {
+        return createSetAllListener(checkBoxes, false);
+    }
+
+    private ActionListener createSelectAllActionListener(final Object[] checkBoxes) {
+        return createSetAllListener(checkBoxes, true);
+    }
+
+    private ActionListener createSetAllListener(final Object[] checkBoxes, boolean value) {
+
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updatingMultipleCheckBoxes = true;
+                try {
+                    for (int i = 0; i < checkBoxes.length; i++) {
+                        JCheckBox checkBox = (JCheckBox) checkBoxes[i];
+                        if (i == checkBoxes.length - 1) {
+                            updatingMultipleCheckBoxes = false;
+                        }
+                        checkBox.setSelected(value);
+                    }
+                    repaint();
+                } finally {
+                    updatingMultipleCheckBoxes = false;
+                }
+            }
+        };
+    }
+
 }
