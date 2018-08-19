@@ -95,14 +95,18 @@ public class MainPanel extends JPanel {
 		// "/studies/Fremantle.txt")));
 		// addTab(tabs, new Data(getClass().getResourceAsStream(
 		// "/studies/Lipset.txt")));
-		addTab(tabs,
-				new Data(getClass().getResourceAsStream(
-						"/studies2/Bloomfield Track.txt")), options);
-		addTab(tabs,
-				new Data(getClass().getResourceAsStream(
-						"/studies2/Bloomfield Track - No Prefs.txt")), options);
-		addTab(tabs,
-				new Data(getClass().getResourceAsStream("/studies2/Lipset.txt")), options);
+	    
+	    String[] studies = new String[] {
+	            "/studies2/Bloomfield Track.txt",
+	            "/studies2/Bloomfield Track - No Prefs.txt",
+	            "/studies2/Lipset.txt"
+//	            ,"/studies2/UppsalaSt25CombinedLikertRank.txt"
+//	            ,"/studies2/UppsalaSt25CombinedForced.txt"
+	    };
+        for (String study : studies) {
+            addTab(tabs, new Data(getClass().getResourceAsStream("/studies2/Bloomfield Track.txt")),
+                    options);
+        }
 	}
 
 	private void addTab(JTabbedPane tabs, Data data, Options options) {

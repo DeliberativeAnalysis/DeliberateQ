@@ -1,0 +1,355 @@
+########################################################################################################																																																		
+#  Uppsala combined data for all treatments pre and post deliberation (stage 2 and 5) including Forced Q data and preference ranking of policy options																																																		
+# The control group does not deliberate. The Standard group delibrerates, with some instruction about deliberative procedures. The Activate group deliberates, after participating in group work designed to imrove deliberative norm behaviour."																																																		
+# 																																																		
+# A line starting with ':' is like a bookmark to enable the Forq loader to know where it is in the file																																																		
+# A line with only white space is ignored																																																		
+# All columns are delimited with a tab character																																																		
+########################################################################################################																																																		
+																																																		
+:Title	UppsalaTalar-2-4-5-combined-forced																																																	
+																																																		
+########################################################################################################																																																		
+# Participant information																																																		
+########################################################################################################																																																		
+:Participants	68																																																	
+:Variables	2																																																	
+																																																		
+# For each participant there should be n columns after the id column where n is the value of Variables above.																																																		
+# It is recommended to use short participant identifiers (2 characters is small enough) so that labelling isn't too 																																																		
+# crowded on graphs and matrices.																																																		
+ 																																																		
+#Id	Treatment	Table																																																
+180	Treatment - Activate	Table - 3																																																
+181	Treatment - Control	Table - 																																																
+183	Treatment - Activate	Table - 2																																																
+185	Treatment - Standard	Table - 8																																																
+186	Treatment - Activate	Table - 3																																																
+187	Treatment - Control	Table - 																																																
+188	Treatment - Activate	Table - 4																																																
+189	Treatment - Activate	Table - 1																																																
+190	Treatment - Activate	Table - 3																																																
+192	Treatment - Activate	Table - 1																																																
+195	Treatment - Activate	Table - 2																																																
+197	Treatment - Control	Table - 																																																
+198	Treatment - Activate	Table - 1																																																
+200	Treatment - Activate	Table - 1																																																
+203	Treatment - Activate	Table - 4																																																
+204	Treatment - Activate	Table - 2																																																
+206	Treatment - Activate	Table - 1																																																
+210	Treatment - Activate	Table - 1																																																
+211	Treatment - Activate	Table - 3																																																
+215	Treatment - Activate	Table - 2																																																
+217	Treatment - Activate	Table - 4																																																
+218	Treatment - Activate	Table - 3																																																
+221	Treatment - Activate	Table - 4																																																
+223	Treatment - Activate	Table - 1																																																
+226	Treatment - Activate	Table - 2																																																
+228	Treatment - Activate	Table - 3																																																
+230	Treatment - Activate	Table - 4																																																
+232	Treatment - Standard	Table - 7																																																
+235	Treatment - Control	Table - 																																																
+236	Treatment - Activate	Table - 2																																																
+237	Treatment - Activate	Table - 3																																																
+242	Treatment - Activate	Table - 4																																																
+243	Treatment - Control	Table - 																																																
+245	Treatment - Control	Table - 																																																
+246	Treatment - Control	Table - 																																																
+249	Treatment - Standard	Table - 5																																																
+250	Treatment - Standard	Table - 8																																																
+252	Treatment - Standard	Table - 5																																																
+254	Treatment - Standard	Table - 7																																																
+256	Treatment - Standard	Table - 7																																																
+261	Treatment - Standard	Table - 8																																																
+264	Treatment - Standard	Table - 6																																																
+265	Treatment - Standard	Table - 7																																																
+268	Treatment - Standard	Table - 8																																																
+272	Treatment - Standard	Table - 7																																																
+274	Treatment - Standard	Table - 6																																																
+275	Treatment - Standard	Table - 6																																																
+277	Treatment - Standard	Table - 5																																																
+283	Treatment - Standard	Table - 7																																																
+286	Treatment - Standard	Table - 6																																																
+289	Treatment - Control	Table - 																																																
+293	Treatment - Control	Table - 																																																
+294	Treatment - Control	Table - 																																																
+296	Treatment - Standard	Table - 6																																																
+297	Treatment - Standard	Table - 8																																																
+298	Treatment - Control	Table - 																																																
+299	Treatment - Control	Table - 																																																
+305	Treatment - Control	Table - 																																																
+306	Treatment - Standard	Table - 5																																																
+308	Treatment - Control	Table - 																																																
+309	Treatment - Control	Table - 																																																
+311	Treatment - Standard	Table - 6																																																
+312	Treatment - Standard	Table - 7																																																
+315	Treatment - Control	Table - 																																																
+327	Treatment - Control	Table - 																																																
+330	Treatment - Control	Table - 																																																
+333	Treatment - Control	Table - 																																																
+341	Treatment - Control	Table - 																																																
+																																																		
+########################################################################################################																																																		
+# Q sort data																																																		
+########################################################################################################																																																		
+																																																		
+:Q Statements	42																																																	
+:P Statements	7																																																	
+																																																		
+# Id is the participant id																																																		
+# The Stage column is a String value but that the ordering of stages (e.g for the IC animation) is performed on alphabetical order of the stage values																																																		
+# Q values are the responses (decimal values if desired) to the Q sort statements																																																		
+# P values are the responses (decimal values if desired) to the preference statements																																																		
+																																																		
+#Id	Stage	Q1	Q2	Q3	Q4	Q5	Q6	Q7	Q8	Q9	Q10	Q11	Q12	Q13	Q14	Q15	Q16	Q17	Q18	Q19	Q20	Q21	Q22	Q23	Q24	Q25	Q26	Q27	Q28	Q29	Q30	Q31	Q32	Q33	Q34	Q35	Q36	Q37	Q38	Q39	Q40	Q41	Q42	Q43	P1	P2	P3	P4	P5	P6
+180	2	11	9	7	5	8	5	3	10	3	4	6	4	6	9	10	4	6	6	8	4	3	9	6	1	8	2	5	7	7	7	5	10	9	11	2	6	3	7	5	8	1	2	1	3	7	2	6	4	5
+181	2	7	7	4	10	5	5	6	7	10	3	9	11	1	11	8	4	6	8	5	4	4	3	6	2	7	3	6	2	7	10	6	9	8	9	5	1	3	5	6	8	2	9	1	2	5	3	6	4	7
+183	2	11	10	5	5	3	4	8	7	8	3	10	9	4	11	7	6	3	9	7	4	6	4	8	1	6	3	7	6	8	9	5	10	5	9	2	2	2	5	7	6	1	6	2	3	6	1	5	4	7
+185	2	7	7	8	11	5	9	4	6	11	10	3	2	9	4	5	10	8	9	4	3	3	5	3	6	7	7	8	9	1	2	5	8	6	10	6	6	6	2	4	7	5	1	4	2	3	1	7	6	5
+186	2	8	7	7	8	6	4	5	11	1	5	4	3	7	6	10	9	8	8	5	6	2	7	2	4	9	10	5	6	3	4	3	9	11	10	5	7	9	1	6	3	6	2	3	4	7	1	5	6	2
+187	2	9	6	8	9	5	5	7	8	7	11	6	4	6	7	11	5	9	6	8	5	2	4	2	6	9	4	7	7	5	4	3	10	10	10	3	1	3	3	6	8	2	1	3	2	5	4	7	6	1
+188	2	9	9	7	5	1	5	3	4	8	5	7	8	3	10	11	7	6	11	6	3	2	2	6	1	5	2	10	6	9	8	4	8	7	9	5	4	3	6	4	10	7	6	4	1	5	2	7	3	6
+189	2	7	7	3	4	6	5	2	7	6	2	10	11	5	10	7	1	5	7	8	5	5	4	6	3	9	2	6	1	10	11	6	8	9	8	4	3	4	11	6	8	3	9	3	4	5	1	6	2	7
+190	2	11	11	7	4	6	5	5	8	6	7	7	5	2	9	9	9	3	10	8	6	1	4	7	5	3	6	6	3	8	8	1	5	9	10	2	3	2	10	4	7	6	4	2	3	7	1	6	5	4
+192	2	10	10	5	6	6	3	7	8	7	4	9	7	4	11	6	9	11	10	6	4	5	2	4	2	8	4	5	3	5	7	3	8	9	9	3	2	1	4	5	8	1	6	5	4	3	1	2	6	7
+195	2	11	8	1	5	7	5	3	11	6	6	8	10	3	10	8	6	2	9	7	4	2	5	6	4	7	3	5	1	8	9	3	11	6	11	5	3	4	6	8	7	2	9	3	1	7	2	5	4	6
+197	2	9	8	10	7	1	7	4	5	4	2	2	1	7	7	9	4	10	11	6	6	3	6	5	9	10	5	11	4	8	9	5	7	8	8	6	2	3	5	6	3	3	6	3	4	6	1	5	2	7
+198	2	8	4	7	6	3	5	3	10	2	6	8	6	8	7	9	9	8	10	5	4	1	1	4	6	9	4	9	7	6	7	2	11	10	11	5	5	7	6	5	3	2	3	1	4	7	2	6	5	3
+200	2	6	6	9	7	2	9	3	11	1	5	4	3	2	9	11	4	8	10	6	7	5	7	1	7	6	7	6	8	4	4	5	8	10	10	4	5	8	4	5	3	1	1	2	4	6	7	3	5	1
+203	2	11	9	5	1	9	6	5	11	8	8	7	6	2	9	10	7	8	10	3	4	4	7	5	3	7	5	7	6	5	8	4	11	9	10	6	2	2	3	4	6	1	6	2	3	4	1	7	5	6
+204	2	11	11	4	4	6	7	3	10	7	3	8	9	2	10	8	9	6	8	6	3	5	6	5	4	5	1	4	5	7	8	7	10	6	9	2	2	3	9	6	5	1	7	3	2	7	1	5	4	6
+206	2	8	7	2	5	6	4	3	7	5	4	9	10	3	8	9	6	2	10	7	5	1	6	6	4	5	4	6	3	10	9	7	9	8	11	3	2	4	11	8	5	1	6	1	2	4	3	6	5	7
+210	2	8	3	5	7	6	5	3	9	3	4	5	7	8	9	9	11	6	8	8	7	10	1	4	3	6	6	7	6	1	5	10	11	4	10	4	9	6	7	5	2	2	2	3	1	6	2	4	7	5
+211	2	11	10	5	4	8	2	1	7	3	7	8	9	4	10	8	8	6	9	9	6	4	3	6	2	6	5	6	5	7	7	4	10	9	11	3	2	5	7	5	6	1	3	3	1	6	2	7	4	5
+215	2	8	7	3	10	6	5	2	8	4	6	6	7	1	10	10	9	6	8	7	5	3	3	5	5	11	7	7	1	6	9	2	8	9	11	5	4	4	4	6	9	2	3	2	3	4	1	7	6	5
+217	2	11	10	10	10	4	6	8	10	2	5	7	1	5	8	9	11	6	11	9	3	2	4	5	1	7	4	8	3	2	6	6	9	11	9	2	6	7	1	9	4	3	4	3	2	7	1	5	6	4
+218	2	11	11	7	5	3	5	6	8	6	6	8	3	7	4	9	10	9	8	6	5	2	4	4	2	9	3	3	6	8	5	7	10	9	10	2	4	1	7	4	7	1	2	5	4	6	1	7	3	2
+221	2	11	5	6	5	5	5	5	9	6	4	4	3	7	10	9	10	7	8	9	6	7	3	3	2	9	7	8	7	3	6	8	10	8	11	2	1	2	1	6	6	4	4	3	4	7	6	5	2	1
+223	2	11	9	6	5	7	4	3	8	7	6	7	7	6	8	10	9	5	10	9	4	7	1	6	2	5	4	5	4	3	8	3	10	8	11	3	1	2	6	6	9	2	5	2	1	5	3	6	4	7
+226	2	8	8	7	4	5	7	6	8	2	11	3	4	1	11	10	10	4	8	6	7	4	2	7	9	5	6	5	5	3	5	3	9	9	10	3	2	6	1	6	9	6	7	5	4	6	1	7	3	2
+228	2	11	10	8	7	7	7	4	2	11	1	9	8	8	9	7	9	3	10	5	4	5	2	6	4	6	1	6	3	6	8	2	7	9	10	5	4	3	5	6	5	3	6	2	3	7	1	4	6	5
+230	2	9	9	5	6	7	7	3	9	7	7	4	4	6	11	11	9	8	8	8	6	2	1	7	3	8	1	6	5	3	6	6	10	10	10	4	3	2	4	5	5	2	5	2	3	5	1	7	6	4
+232	2	11	8	7	4	4	7	5	7	6	6	5	3	7	8	10	6	8	10	8	1	9	5	1	1	9	5	9	7	2	5	3	11	9	10	1	2	2	6	7	9	2	3	1	3	7	2	6	5	4
+235	2	10	10	4	3	7	5	2	6	8	2	9	11	3	9	4	6	7	3	6	6	3	4	8	5	6	4	6	2	11	10	5	8	7	8	5	1	5	7	9	7	1	9	3	4	6	2	5	1	7
+236	2	10	11	3	2	7	6	1	9	5	6	8	9	4	10	9	9	2	7	7	1	7	4	3	2	6	5	6	5	3	8	7	10	8	11	5	5	6	8	6	4	3	4	3	1	7	2	5	4	6
+237	2	9	9	6	5	3	2	2	10	7	8	3	4	3	11	11	8	7	10	6	4	4	4	6	7	8	8	7	5	2	6	5	9	9	10	3	5	5	6	6	7	1	1	3	2	7	1	6	4	5
+242	2	5	5	2	6	4	9	4	7	3	5	7	2	6	8	10	9	8	11	6	10	3	11	1	7	9	5	7	9	3	6	4	6	7	8	8	10	6	1	5	3	4	2	5	2	6	4	7	1	3
+243	2	9	11	5	7	9	4	5	10	2	3	7	6	5	7	8	9	7	10	8	6	2	8	4	8	6	3	5	7	5	6	3	10	9	11	1	6	3	4	4	1	2	6	6	3	7	1	5	4	2
+245	2	8	8	7	3	5	4	3	6	2	9	7	8	5	10	10	6	3	11	8	6	1	5	7	6	5	7	9	7	9	9	3	11	2	10	6	6	2	5	4	4	1	4	4	3	6	2	7	1	5
+246	2	7	7	6	3	2	4	4	9	2	2	10	7	1	11	11	9	8	8	4	5	3	1	5	6	9	9	6	4	6	8	5	8	5	7	3	5	6	6	10	10	3	7	3	2	5	1	6	7	4
+249	2	11	11	6	7	7	3	3	7	10	6	9	6	3	10	9	8	9	7	8	2	5	4	6	2	7	3	6	3	5	6	2	10	4	9	1	4	4	8	5	8	5	1	3	1	7	4	6	2	5
+250	2	10	6	7	6	3	5	4	9	5	5	4	3	5	7	10	9	8	10	9	8	1	5	3	7	7	7	9	6	8	6	2	11	8	11	2	3	4	1	4	6	2	3	1	2	7	3	6	5	4
+252	2	6	6	8	9	7	5	2	7	2	3	7	2	6	6	11	10	4	9	7	8	8	9	1	7	4	9	6	10	6	4	3	11	8	10	5	5	5	1	4	3	5	3	4	2	3	5	7	6	1
+254	2	8	7	7	8	4	4	6	9	3	7	2	2	4	9	11	9	8	5	5	6	4	7	1	5	10	7	8	9	1	3	5	11	10	10	4	6	6	2	3	5	3	3	7	3	4	2	5	6	1
+256	2	11	8	4	3	4	6	6	2	7	4	7	9	4	9	10	8	8	7	10	3	3	2	4	1	8	5	9	3	9	7	1	10	6	11	2	6	5	5	6	6	5	7	3	2	7	1	6	4	5
+261	2	7	5	6	6	4	4	6	11	2	6	3	3	10	7	7	9	9	6	4	7	3	8	1	6	10	8	7	8	2	2	3	8	10	9	4	5	11	1	9	5	5	5	3	4	7	2	6	5	1
+264	2	11	10	7	3	7	5	5	3	6	1	9	8	1	11	9	7	7	10	6	2	2	2	3	3	8	4	6	4	9	9	5	8	8	10	6	5	4	7	6	6	5	4	2	3	6	1	7	4	5
+265	2	5	1	1	8	5	7	8	9	3	6	2	6	6	6	7	11	10	7	4	11	4	7	2	10	9	10	4	9	2	4	5	8	9	6	5	7	5	3	8	3	6	3	5	3	6	1	4	7	2
+268	2	11	11	5	4	2	3	6	1	8	3	10	9	4	10	6	5	7	10	4	1	6	5	7	2	5	3	5	2	10	9	10	11	9	11	6	4	1	8	8	7	3	6	1	2	6	4	5	3	7
+272	2	7	8	5	5	3	5	1	10	10	10	11	6	8	7	9	11	6	9	9	4	7	3	6	4	6	3	6	5	5	8	4	7	7	9	2	3	2	6	4	8	2	1	7	4	6	5	2	3	1
+274	2	10	9	9	3	5	6	6	11	1	7	3	4	7	8	9	9	7	7	4	3	4	7	1	6	8	8	11	10	3	4	6	5	8	10	6	2	2	2	5	6	5	5	3	2	5	6	7	4	1
+275	2	10	9	6	3	6	5	4	8	8	5	7	6	4	7	9	7	9	10	7	2	1	3	8	2	8	3	6	5	7	6	4	11	9	11	5	3	2	5	6	10	4	1	3	2	7	1	6	4	5
+277	2	8	10	5	5	6	4	3	9	3	7	9	11	5	10	7	9	4	9	8	3	2	4	6	2	6	3	6	3	7	11	3	7	8	10	1	1	2	7	5	8	4	6	1	2	5	3	6	4	7
+283	2	10	6	11	7	5	9	9	9	2	7	1	1	8	2	9	8	8	8	6	6	3	7	4	5	10	10	7	7	3	4	3	6	6	6	4	5	5	2	11	4	3	5	7	3	5	6	2	4	1
+286	2	5	7	10	7	6	8	6	11	1	2	2	5	7	5	5	9	10	9	6	8	4	6	3	10	7	8	3	6	8	5	3	9	11	9	3	6	4	1	4	2	7	4	2	4	7	3	6	1	5
+289	2	9	8	8	7	4	8	7	9	5	6	7	3	3	11	11	10	6	10	4	6	2	7	1	5	6	6	5	9	6	7	2	8	9	10	3	4	5	1	4	3	5	2	4	3	7	1	6	5	2
+293	2	8	7	9	8	5	6	5	11	4	10	3	1	6	8	10	10	7	7	5	6	1	3	2	7	6	5	2	3	1	3	8	9	11	10	4	2	11	1	4	4	2	9	4	2	7	3	5	6	1
+294	2	11	10	4	6	8	3	5	9	4	6	9	6	4	8	5	11	2	9	9	7	7	5	5	6	5	10	7	7	7	8	3	8	6	10	2	1	1	3	6	4	2	3	3	1	7	2	5	4	6
+296	2	9	8	7	5	2	7	5	10	1	9	6	4	9	7	8	11	8	6	6	6	5	1	2	3	10	7	8	7	3	3	2	9	10	11	4	5	6	3	6	4	4	5	4	3	7	1	6	5	2
+297	2	8	8	6	7	7	6	5	11	6	11	1	3	7	4	10	9	10	7	9	8	9	3	3	5	8	7	6	10	1	1	9	11	10	11	2	2	5	6	6	2	4	4	1	5	6	2	7	4	3
+298	2	11	10	10	9	5	4	6	11	5	6	3	3	6	1	9	9	8	6	4	9	7	7	1	5	7	10	4	6	2	2	7	7	8	8	3	3	8	5	5	6	4	2	6	4	5	1	7	3	2
+299	2	11	10	7	3	7	6	3	6	5	7	9	6	8	7	8	5	5	10	8	2	1	3	9	2	6	6	5	6	7	9	1	10	9	11	4	3	4	8	4	5	4	2	2	3	5	1	6	4	7
+305	2	11	9	7	3	5	2	6	10	1	8	4	5	3	8	10	7	3	7	7	10	6	4	5	5	6	6	8	7	4	4	3	9	3	11	2	5	5	1	3	1	2	6	4	2	7	3	6	5	1
+306	2	6	6	7	10	6	9	7	5	3	10	3	2	10	4	11	5	8	7	7	9	5	5	1	8	8	9	4	5	4	4	6	7	8	11	2	6	3	2	3	6	9	1	6	3	2	4	7	5	1
+308	2	2	3	9	5	3	7	5	6	2	8	4	5	5	6	7	10	6	7	4	11	4	7	3	8	6	11	6	9	3	5	2	9	9	10	7	8	8	1	6	4	10	1	4	3	6	1	7	5	2
+309	2	5	4	10	10	5	6	6	9	3	6	4	3	7	3	11	9	6	8	5	6	1	7	1	6	8	10	7	8	4	2	4	9	7	11	5	8	7	2	5	3	9	2	5	2	4	6	3	7	1
+311	2	4	4	11	10	5	7	8	10	6	9	1	2	9	3	5	11	7	5	3	6	5	10	3	6	7	8	7	9	1	2	6	4	8	7	6	5	9	3	2	6	8	4	7	4	6	2	3	5	1
+312	2	8	9	7	3	8	5	7	11	4	11	3	4	5	4	9	10	6	8	5	10	2	6	3	5	7	7	5	6	1	6	1	9	9	10	4	7	6	2	3	8	6	2	4	2	6	3	5	7	1
+315	2	11	10	5	3	8	6	1	7	6	3	9	11	4	7	7	6	2	9	6	5	4	4	6	6	5	4	3	1	8	9	7	9	5	10	5	3	2	8	10	8	2	7	3	2	6	1	7	5	4
+327	2	7	6	5	7	7	5	2	10	5	6	9	11	3	9	9	8	5	10	7	5	2	4	6	4	6	1	6	3	7	8	9	10	4	11	2	1	3	6	8	4	3	8	3	2	6	1	7	4	5
+330	2	8	7	5	6	10	7	7	5	11	3	9	11	2	9	6	6	6	4	6	4	5	3	7	1	4	3	2	3	9	10	8	7	10	8	5	4	1	6	5	9	2	8	1	3	7	2	5	4	6
+333	2	3	4	6	7	4	6	3	10	8	8	7	8	2	9	4	11	7	9	5	5	2	3	2	5	7	6	11	6	7	6	1	10	9	10	5	6	5	1	4	8	3	9	1	5	7	2	3	6	4
+341	2	10	8	4	6	5	5	3	9	2	1	7	9	6	10	6	7	7	11	8	5	1	3	7	3	8	5	6	2	8	11	4	10	9	11	4	2	4	6	5	6	1	7	2	1	7	3	5	4	6
+180	5	11	10	2	2	8	6	4	8	1	5	9	8	3	7	9	4	7	11	9	5	2	7	5	4	7	6	6	5	7	10	3	9	8	10	6	3	6	6	3	5	4	1	2	1	5	3	7	4	6
+181	5	7	11	4	7	9	5	4	8	11	4	9	10	1	10	8	5	6	8	5	5	3	5	6	2	6	3	7	3	8	10	3	6	7	7	6	2	2	4	6	9	1	9	4	1	7	2	5	3	6
+183	5	11	11	3	6	6	4	2	10	8	7	9	8	4	9	9	9	5	10	9	4	6	3	8	2	7	4	7	5	10	10	5	11	5	11	2	1	3	6	3	6	1	5	2	3	7	1	6	4	5
+185	5	10	5	7	11	4	9	6	8	9	10	6	4	8	9	9	10	6	7	3	2	3	4	1	5	7	5	11	8	5	3	6	7	4	8	3	7	5	2	6	6	2	1	1	2	6	5	7	4	3
+186	5	11	6	6	11	6	5	5	10	1	8	6	2	7	5	9	9	7	5	4	7	7	6	3	3	9	8	7	5	4	4	1	10	9	10	4	6	8	2	8	3	3	2	3	4	7	1	6	5	2
+187	5	11	9	7	6	4	6	6	9	6	9	6	3	5	8	10	8	8	7	7	4	2	2	5	6	9	4	8	4	7	7	3	10	10	11	1	3	3	5	5	5	1	2	1	2	7	3	4	6	5
+188	5	11	11	5	4	3	6	4	5	7	6	9	8	2	10	10	5	3	10	9	5	3	4	6	1	4	6	9	6	7	9	3	8	8	8	5	1	2	7	2	7	7	6	4	3	5	1	6	2	7
+189	5	10	10	1	6	8	2	2	6	7	1	11	10	2	7	9	4	4	9	9	4	6	3	7	3	3	3	6	4	8	9	5	7	7	8	5	5	5	8	11	6	5	6	3	1	5	4	7	2	6
+190	5	11	10	5	6	6	4	4	9	5	7	8	8	3	9	7	8	3	11	7	6	2	4	7	6	2	6	6	3	7	8	1	9	9	10	1	4	3	10	5	5	2	5	2	1	7	3	5	4	6
+192	5	11	10	4	3	5	7	5	9	7	5	10	8	3	9	9	8	8	8	6	4	3	3	6	4	6	2	6	7	7	7	1	10	9	11	4	2	2	5	5	6	1	6	2	3	6	1	7	5	4
+195	5	11	9	3	5	7	4	1	11	6	5	9	6	4	9	8	7	5	10	8	3	1	3	6	6	7	2	6	5	8	8	4	11	9	10	4	3	2	5	6	7	2	7	2	1	7	3	5	4	6
+197	5	6	6	6	9	3	9	8	11	1	5	8	6	6	9	9	7	10	5	3	2	2	8	1	10	11	4	8	5	7	7	3	5	7	10	5	7	3	4	6	2	4	4	4	1	7	2	6	3	5
+198	5	11	4	6	5	6	2	3	11	2	5	7	8	2	9	8	10	6	10	7	3	6	4	5	6	8	3	7	6	7	9	1	10	9	9	3	5	8	5	4	4	1	7	3	2	7	1	5	6	4
+200	5	6	5	9	7	7	8	5	10	4	10	2	3	6	6	11	10	7	7	5	8	5	6	1	8	6	7	8	9	2	3	3	6	11	9	4	5	9	1	3	4	4	2	7	2	6	3	5	4	1
+203	5	11	10	5	2	7	5	2	9	7	6	8	4	3	7	8	6	7	8	7	4	3	6	6	5	9	5	6	9	8	9	4	10	10	11	3	4	1	5	2	6	1	3	1	3	6	2	7	4	5
+204	5	11	11	4	5	8	4	5	10	6	6	8	10	3	9	7	5	6	8	9	1	4	3	4	6	6	1	3	6	7	8	9	9	7	10	2	2	3	7	5	5	2	7	3	2	7	1	4	6	5
+206	5	9	7	1	4	6	4	2	5	6	6	8	9	3	11	8	6	3	11	8	6	2	4	7	5	3	6	7	2	9	10	5	9	8	10	4	3	5	10	7	5	1	7	1	2	5	4	6	3	7
+210	5	8	9	3	4	7	6	6	11	4	9	7	5	4	8	8	10	5	7	8	5	9	6	6	1	4	5	7	5	2	7	3	11	10	10	2	9	3	6	6	2	1	3	1	3	6	2	5	7	4
+211	5	11	10	2	3	7	1	1	9	5	7	10	9	3	8	11	8	4	10	9	5	2	2	6	6	5	6	6	5	7	7	4	9	8	8	3	4	5	6	7	6	3	4	2	1	5	3	6	4	7
+215	5	8	9	6	5	7	5	3	9	4	7	6	6	2	9	9	11	6	10	7	4	3	7	5	5	10	6	8	2	6	8	2	11	8	10	2	4	3	5	4	7	1	1	2	1	7	3	6	5	4
+217	5	11	10	8	9	2	4	7	10	4	9	3	2	10	11	10	9	5	9	6	4	3	8	5	5	6	7	9	7	2	3	3	8	8	6	1	3	9	1	6	4	5	6	3	4	5	1	6	7	2
+218	5	11	10	7	8	4	5	6	9	2	8	8	6	5	7	9	10	7	6	8	2	4	4	5	3	6	3	7	5	6	6	9	11	9	10	1	3	4	7	3	5	2	1	4	1	6	2	7	5	3
+221	5	11	8	4	6	5	4	3	10	5	7	11	8	6	7	9	11	7	8	9	6	3	3	5	5	10	6	2	3	10	9	2	10	8	9	2	2	4	1	4	7	1	1	2	1	7	3	6	4	5
+223	5	11	9	5	6	6	4	3	8	7	7	9	7	7	9	10	8	3	10	8	3	4	2	6	4	5	3	5	5	4	9	5	10	8	11	2	1	2	6	6	7	1	6	2	1	5	3	6	4	7
+226	5	10	8	6	7	9	8	4	10	1	10	7	6	5	11	7	11	4	8	5	6	2	3	5	7	4	3	9	4	3	5	7	9	8	9	5	3	6	2	6	2	1	6	3	2	6	1	7	4	5
+228	5	11	9	5	3	5	5	4	6	10	6	9	7	6	7	7	10	2	8	8	4	1	2	7	5	6	4	3	3	8	11	4	9	9	10	1	6	5	8	6	7	2	3	2	3	4	1	6	5	7
+230	5	11	10	6	6	6	9	1	10	5	9	7	5	6	9	11	11	7	8	9	6	2	1	6	2	7	4	5	7	3	7	4	8	8	8	4	2	3	5	5	3	3	4	1	2	4	3	7	6	5
+232	5	11	11	8	6	5	7	4	10	7	6	6	3	6	8	11	5	7	10	10	2	4	6	2	2	7	5	8	8	3	7	4	9	9	10	2	5	1	6	3	7	1	2	1	2	6	3	7	5	4
+235	5	11	9	6	4	7	6	2	8	8	2	9	11	3	8	6	5	6	4	6	5	3	4	7	5	7	5	3	1	10	10	4	9	6	10	5	1	2	7	9	8	3	7	3	1	6	2	5	4	7
+236	5	11	11	5	3	5	5	2	9	6	8	7	9	7	8	8	7	2	9	8	2	3	3	6	4	5	1	6	1	7	9	4	10	10	10	4	4	6	6	5	7	3	6	2	1	5	3	6	4	7
+237	5	9	8	6	4	6	5	2	3	7	9	7	6	2	9	11	4	5	11	10	4	8	7	7	6	8	4	5	5	6	10	3	9	8	10	1	3	3	5	6	7	1	2	1	3	4	2	7	6	5
+242	5	5	7	10	9	4	7	2	3	2	6	4	5	3	8	11	11	7	9	6	8	5	9	1	8	7	5	6	10	6	5	4	10	3	9	6	8	7	1	6	2	4	3	3	5	6	4	7	1	2
+243	5	9	8	7	9	8	4	6	10	3	3	7	5	6	8	8	10	7	7	9	5	2	5	3	6	9	4	6	5	7	6	2	11	10	11	1	6	4	3	5	4	1	2	6	1	7	3	2	4	5
+245	5	6	6	8	9	6	6	3	7	4	11	6	5	5	5	7	8	7	10	7	7	6	4	5	9	9	9	10	8	2	2	3	11	8	10	4	5	1	4	3	3	1	2	6	4	2	1	7	5	3
+246	5	6	7	3	7	2	6	2	10	1	5	9	10	1	10	9	11	9	8	5	4	5	2	4	6	8	5	6	3	9	8	4	8	6	11	4	5	3	6	7	7	3	7	4	2	6	1	5	7	3
+249	5	11	10	4	6	5	3	5	9	9	9	6	4	4	8	8	11	7	8	9	1	5	2	6	4	6	1	7	7	6	7	5	10	6	10	2	3	3	8	5	7	3	2	3	1	7	2	5	4	6
+250	5	8	9	6	4	5	6	6	9	5	8	6	3	7	4	10	10	7	10	9	7	3	5	2	6	9	8	8	7	6	5	1	11	7	11	2	4	5	2	3	4	3	1	1	4	7	2	6	5	3
+252	5	7	8	6	8	8	5	5	11	1	4	6	2	4	6	11	10	3	9	6	9	10	9	2	8	3	9	6	4	6	3	5	10	7	7	5	7	7	1	5	4	3	2	2	6	5	3	7	4	1
+254	5	11	8	9	7	6	5	5	10	4	8	4	2	5	7	11	7	9	9	5	6	3	3	1	6	10	6	8	8	2	5	3	10	7	9	4	6	6	1	4	2	3	7	5	2	6	1	4	7	3
+256	5	11	10	4	2	5	4	6	9	6	7	8	7	5	9	10	6	9	9	7	3	1	3	4	7	8	3	6	1	7	8	2	10	8	11	3	5	4	5	5	6	2	6	2	3	6	1	7	4	5
+261	5	10	6	6	8	5	5	6	11	4	10	4	3	7	4	9	10	8	11	5	7	3	8	2	5	9	7	6	9	1	3	2	7	8	9	3	5	7	1	6	4	6	2	2	4	7	3	6	5	1
+264	5	11	10	4	5	7	4	4	8	6	4	7	5	3	11	9	6	8	10	6	3	1	3	3	5	9	5	7	5	9	8	2	8	9	10	6	7	2	6	6	7	2	1	1	3	6	2	7	4	5
+265	5	5	3	11	9	10	9	7	7	5	7	2	4	5	7	10	11	8	7	4	10	3	6	2	6	9	9	8	8	1	2	4	5	8	5	6	6	6	1	3	3	6	4	7	3	4	2	5	6	1
+268	5	11	11	1	3	8	2	3	4	6	6	10	8	4	9	7	7	7	10	9	5	5	2	7	4	8	5	3	6	10	8	3	11	5	11	1	4	6	6	6	7	3	5	1	2	6	3	5	4	7
+272	5	8	8	3	5	4	4	5	10	5	11	9	6	8	7	11	9	6	7	10	7	5	3	1	4	6	9	6	6	1	3	7	7	8	10	2	2	6	5	3	9	4	2	6	2	4	3	5	7	1
+274	5	9	7	6	6	5	6	6	8	3	9	2	3	9	7	11	9	7	8	5	4	1	7	1	5	7	8	10	10	2	5	3	8	10	11	6	4	3	5	4	4	6	2	2	3	6	5	7	4	1
+275	5	11	8	5	3	5	3	3	9	9	10	8	5	6	7	8	6	6	10	9	4	1	2	7	6	7	4	6	4	7	9	4	10	8	11	2	5	3	6	5	7	1	2	1	3	7	2	5	4	6
+277	5	11	10	3	7	6	5	3	8	7	8	9	6	4	8	9	8	5	11	7	1	1	4	7	6	6	2	6	6	10	9	1	10	5	11	5	4	5	7	4	2	3	3	2	3	5	1	7	4	6
+283	5	10	10	9	5	9	9	5	7	2	9	2	2	7	5	5	8	8	7	3	6	3	6	1	8	11	6	8	7	3	3	5	7	11	6	4	6	6	1	1	4	4	4	3	4	7	6	5	2	1
+286	5	9	8	8	8	6	7	6	11	1	7	5	2	9	3	7	11	9	10	3	5	3	6	2	7	7	6	4	8	5	5	3	10	10	9	6	4	4	1	5	2	6	4	4	2	6	1	5	7	3
+289	5	9	8	8	7	3	7	6	9	5	5	8	3	2	11	11	10	6	9	4	6	2	7	1	4	6	6	6	7	8	7	5	9	10	10	5	3	5	1	2	4	4	3	3	4	7	1	5	6	2
+293	5	6	6	7	9	3	4	5	11	4	10	2	2	7	7	9	8	5	8	4	8	3	6	1	6	5	6	9	7	2	4	8	10	10	11	3	5	7	1	6	3	5	9	3	2	7	4	6	5	1
+294	5	11	10	5	9	5	4	4	6	2	4	10	5	1	7	11	9	3	9	10	8	8	6	6	3	5	8	7	6	6	7	6	7	7	9	2	1	3	2	5	8	3	4	5	3	1	4	6	2	7
+296	5	10	8	8	7	5	5	2	11	3	10	5	6	4	7	9	11	6	8	6	6	5	3	3	4	7	7	8	7	1	3	4	9	9	10	5	6	9	4	6	2	2	1	2	1	7	3	5	6	4
+297	5	11	8	6	5	6	7	3	9	5	11	9	2	5	8	10	10	8	9	7	7	4	3	4	5	8	6	6	6	1	4	7	7	9	10	2	1	6	2	3	4	3	5	1	5	2	3	6	7	4
+298	5	11	10	11	6	4	6	10	9	5	6	3	3	6	1	6	9	8	10	5	9	7	5	1	5	9	8	4	8	2	4	2	8	7	6	4	5	7	3	3	7	7	2	2	3	7	6	5	4	1
+299	5	11	10	6	2	7	6	3	6	4	6	8	9	8	9	9	6	6	10	8	3	1	3	8	2	5	5	4	4	7	7	1	9	10	11	5	3	7	7	4	5	5	2	1	3	6	2	7	4	5
+305	5	8	9	2	3	5	5	5	11	4	8	6	3	2	5	7	8	7	8	10	11	7	6	4	5	7	9	10	7	3	4	2	10	9	9	3	6	6	1	4	1	6	6	1	3	7	4	6	5	2
+306	5	6	6	6	8	8	7	5	5	2	9	3	2	5	9	11	10	7	8	6	10	4	1	1	6	7	10	6	5	3	2	5	9	8	11	4	7	7	3	4	4	9	3	6	3	5	4	7	2	1
+308	5	3	2	10	8	3	8	7	7	4	8	3	3	6	5	8	10	6	6	4	11	4	7	1	5	9	11	6	10	2	5	4	9	9	9	6	6	7	2	5	5	7	1	3	4	7	2	6	5	1
+309	5	6	5	10	11	4	6	6	10	3	6	2	3	7	4	9	11	8	8	4	10	4	7	2	5	6	8	7	8	2	3	5	7	9	9	5	7	9	3	5	1	6	1	4	7	2	6	5	3	1
+311	5	3	4	11	10	6	8	5	10	6	7	2	1	6	4	7	11	7	5	5	9	4	8	3	6	7	9	9	8	1	2	5	4	9	8	6	5	10	2	3	7	6	3	6	3	5	2	4	7	1
+312	5	9	6	9	8	8	7	6	10	5	11	3	1	6	4	5	10	6	8	4	4	2	6	3	7	7	9	7	8	1	3	2	11	7	9	6	5	10	4	3	5	5	2	3	4	7	2	6	5	1
+315	5	11	8	5	3	7	6	1	7	6	4	8	9	3	8	9	6	3	9	4	5	4	5	7	6	5	2	2	1	10	11	3	10	7	10	6	2	5	7	9	8	4	6	1	2	5	3	6	4	7
+327	5	6	6	2	5	7	4	2	10	5	6	7	9	5	8	10	7	5	11	8	3	1	4	6	4	3	5	7	3	8	9	10	9	7	11	4	1	3	8	6	6	2	9	2	1	6	3	7	5	4
+330	5	9	7	4	4	10	5	4	6	10	2	10	11	2	11	7	6	6	8	6	5	5	3	7	1	3	5	4	1	9	8	5	6	9	8	5	2	3	7	6	9	3	8	1	2	7	3	5	4	6
+333	5	8	7	7	9	5	6	6	9	3	4	4	5	4	9	7	9	8	10	6	7	2	6	2	5	7	8	10	6	3	4	3	11	10	11	2	5	5	3	6	8	1	1	3	1	7	4	5	6	2
+341	5	9	7	2	8	5	5	4	10	2	1	6	9	9	7	6	7	8	11	8	4	1	5	7	5	6	4	6	4	10	10	3	9	8	11	3	3	3	7	6	5	2	6	2	3	7	1	4	6	5
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+																																																		
+########################################################################################################																																																		
+# Statements																																																		
+########################################################################################################																																																		
+																																																		
+:Statements																																																		
+																																																		
+1	Begging is caused by poverty and discrimination of minority groups in certain EU countries.																																																	
+2	Beggars are victims of poverty in their home countries.																																																	
+3	If we begin to help those who come here to beg for it will soon be even more.																																																	
+4	"Allowing street begging in some EU countries, including Sweden, does not facilitate Romania's efforts to achieve social inclusion and enhancing employability"																																																	
+5	Many beggars are victims.																																																	
+6	EU migrants coming to Uppsala due to rumors of more support and shelter for the homeless.																																																	
+7	Tourism in Sweden is damaged when the image of a clean and safe country no longer proves correct.																																																	
+8	It is not OK to break Swedish law just because the offenders are poor.																																																	
+9	I feel guilty that I have it good when I see a beggar.																																																	
+10	Beggars should not bring their children to Sweden but leave them at home so they can attend school.																																																	
+11	The municipality is responsible for helping the begging EU citizens in Sweden.																																																	
+12	"Beggars have the same values as us and therefore we have an obligation to help them with school, work, housing and food."																																																	
+13	I have no responsibility for helping the begging Roma in Sweden.																																																	
+14	We should try the beggars to find other ways to help themselves.																																																	
+15	We need to focus on giving them help in their homeland.																																																	
+16	Sweden can not take responsibility for all the poor people in the world.																																																	
+17	Street scene in Uppsala has changed for the worse since the beggars have come.																																																	
+18	The EU is responsible to handle the situation involving EU citizens crossing borders to beg.																																																	
+19	Begging EU Citizens really want to go back to their country and not live in Sweden.																																																	
+20	"Before we assist foreign beggars, we must take care of our own Swedish vagrant."																																																	
+21	The EU is powerless against Romania's shameless treatment of the Roma minority.																																																	
+22	It is our establishment which invites them to beg and take part of our social safety net.																																																	
+23	It's good to give money to the beggars																																																	
+24	Begging on the streets of Uppsala is organized with connections to the criminal mafia.																																																	
+25	There are too many beggars on the streets of Uppsala.																																																	
+26	Our tax money should go to the Swedes not to foreign beggars.																																																	
+27	They should look for jobs instead of begging.																																																	
+28	We can not help so much that we are sending the wrong signals.																																																	
+29	The Swedish state is responsible for helping the begging Roma in Sweden.																																																	
+30	We must improve the beggars conditions when they are in Sweden.																																																	
+31	There is no ultimate responsibility for begging EU citizens.																																																	
+32	 Romania is failing to take responsibility for the Roma population.																																																	
+33	"The emergence of ""parallel societies"" and ""slums"" in Uppsala, is not acceptable."																																																	
+34	Home countries Romania and Bulgaria have a responsibility to improve the situation of their minority population.																																																	
+35	The beggars have it good here in Sweden and would rather live here. 																																																	
+36	The beggars trying to cheat me out of money by playing sick and poor even though they are not.																																																	
+37	Beggars can get away with things that you and I would not get away with.																																																	
+38	We should take in more refugees in Sweden.																																																	
+39	Politicians in Uppsala take no responsibility for the beggars.																																																	
+40	I feel helpless when I see a beggar.																																																	
+41	The migrant beggars are eating way the Swedish welfare state																																																	
+42	Why don't we just treat the beggars the same as we do refugees? They are in the same situation.																																																	
