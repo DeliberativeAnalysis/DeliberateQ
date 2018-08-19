@@ -42,6 +42,7 @@ public class DataGraphPanel extends JPanel {
 
 	private GraphPanel gp;
     private final CorrelationCoefficient cc;
+    private final DataRenderer dataRenderer;
 
 	public GraphPanel getGraphPanel() {
 		return gp;
@@ -60,8 +61,8 @@ public class DataGraphPanel extends JPanel {
 	}
 
 	public DataGraphPanel(Data data, DataSelection combination, CorrelationCoefficient cc) {
-		super();
 		this.data = data;
+		this.dataRenderer = new DataRenderer(data);
 		this.combination = combination;
 		this.cc = cc;
 		if (combination != null) {
@@ -128,7 +129,7 @@ public class DataGraphPanel extends JPanel {
 		final LinkButton analyze = new LinkButton("Analyze");
 		panel.add(analyze);
 		boolean showRegressionLines = true;
-		gp = data.getGraph(list, labelPoints, 200, null, null,
+		gp = dataRenderer.getGraph(list, labelPoints, 200, null, null,
 				showRegressionLines, cc);
 		if (gp != null) {
 			gp.setOpaque(true);
@@ -208,7 +209,7 @@ public class DataGraphPanel extends JPanel {
 		SpringLayout layout = new SpringLayout();
 		panel.setLayout(layout);
 
-		gp = data.getGraphConnected(map.values().toArray(new ArrayList[1]),
+		gp = dataRenderer.getGraphConnected(map.values().toArray(new ArrayList[1]),
 				false, size, null, cc);
 		if (gp != null) {
 			panel.add(gp);
