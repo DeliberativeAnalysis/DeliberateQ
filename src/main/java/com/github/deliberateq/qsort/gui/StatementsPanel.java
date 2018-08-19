@@ -72,8 +72,8 @@ public class StatementsPanel extends JPanel {
         }
         statementList.setListData(statementCheckBoxes);
         // event listeners
-        selectAll.addActionListener(createSelectAllActionListener(statementCheckBoxes));
-        selectNone.addActionListener(createSelectNoneActionListener(statementCheckBoxes));
+        selectAll.addActionListener(createSelectAllActionListener(data, statementCheckBoxes));
+        selectNone.addActionListener(createSelectNoneActionListener(data, statementCheckBoxes));
         return statementList;
     }
 
@@ -102,15 +102,15 @@ public class StatementsPanel extends JPanel {
         };
     }
 
-    private ActionListener createSelectNoneActionListener(final Object[] checkBoxes) {
-        return createSetAllListener(checkBoxes, false);
+    private ActionListener createSelectNoneActionListener(Data data, final Object[] checkBoxes) {
+        return createSetAllListener(data, checkBoxes, false);
     }
 
-    private ActionListener createSelectAllActionListener(final Object[] checkBoxes) {
-        return createSetAllListener(checkBoxes, true);
+    private ActionListener createSelectAllActionListener(Data data, final Object[] checkBoxes) {
+        return createSetAllListener(data, checkBoxes, true);
     }
 
-    private ActionListener createSetAllListener(final Object[] checkBoxes, boolean value) {
+    private ActionListener createSetAllListener(Data data, final Object[] checkBoxes, boolean value) {
 
         return new ActionListener() {
             @Override
@@ -119,14 +119,12 @@ public class StatementsPanel extends JPanel {
                 try {
                     for (int i = 0; i < checkBoxes.length; i++) {
                         JCheckBox checkBox = (JCheckBox) checkBoxes[i];
-                        if (i == checkBoxes.length - 1) {
-                            updatingMultipleCheckBoxes = false;
-                        }
                         checkBox.setSelected(value);
                     }
                     repaint();
                 } finally {
                     updatingMultipleCheckBoxes = false;
+                    EventManager.getInstance().notify(new Event(data, Events.DATA_CHANGED));
                 }
             }
         };
