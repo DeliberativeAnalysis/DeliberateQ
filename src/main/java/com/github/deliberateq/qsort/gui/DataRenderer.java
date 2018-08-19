@@ -88,6 +88,8 @@ public class DataRenderer {
         final double meanStandardErrorFromXEqualsY = Math
                 .sqrt(sumDistanceSquaredFromXEqualsY / vals.length);
 
+        
+        final double ccc = v1.getCorrelation(v2, CorrelationCoefficient.CONCORDANCE);
         if (includeRegressionLines) {
             final Function interval = new RegressionIntervalFunction(v1,
                     PREDICTION_INTERVAL_95.equals(bands));
@@ -115,11 +117,12 @@ public class DataRenderer {
                 }
             }, Color.BLACK);
         }
-        DecimalFormat df = new DecimalFormat("0.00");
+        DecimalFormat df = new DecimalFormat("0.000");
         gp.addComment(new Vector(new double[] { -0.8, 0.8 }),
-                "r2=" + df.format(Math.pow(sr.getR(), 2)) + ", D1="
-                        + df.format(meanDistanceFromXEqualsY) + ", D2="
-                        + df.format(meanStandardErrorFromXEqualsY));
+                "r2=" + df.format(Math.pow(sr.getR(), 2)) //
+                        + ", D=" + df.format(meanDistanceFromXEqualsY) //
+        //                + ", D2=" + df.format(meanStandardErrorFromXEqualsY) //
+                        + ", Con=" + df.format(ccc));
         return gp;
     }
 

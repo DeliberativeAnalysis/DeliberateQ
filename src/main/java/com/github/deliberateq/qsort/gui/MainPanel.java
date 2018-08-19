@@ -27,7 +27,7 @@ public class MainPanel extends JPanel {
 
 	@Inject
 	public MainPanel(EventManager eventManager) {
-	    String ccOption = System.getProperty("cc", CorrelationCoefficient.CONCORDANCE.name());
+	    String ccOption = System.getProperty("cc", CorrelationCoefficient.PEARSONS.name());
 	    CorrelationCoefficient cc = CorrelationCoefficient.valueOf(ccOption);
 	    Options options = new Options(cc);
 		setLayout(new GridLayout(1, 1));
