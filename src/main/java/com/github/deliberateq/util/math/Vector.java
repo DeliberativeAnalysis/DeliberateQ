@@ -1,5 +1,6 @@
 package com.github.deliberateq.util.math;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -35,7 +36,7 @@ public final class Vector extends Matrix {
 			setValue(i + 1, values.get(i));
 		}
 	}
-
+	
 	public Vector(Vector vector) {
 		this(vector.rowCount(), vector.columnCount());
 		for (int i = 1; i <= rowCount(); i++) {
@@ -53,6 +54,14 @@ public final class Vector extends Matrix {
 		setValue(i, 1, d);
 	}
 
+	public List<Double> toList() {
+	    List<Double> list = new ArrayList<>();
+	    for (int i=1;i <= size();i ++) {
+	        list.add(this.getValue(i));
+	    }
+	    return list;
+	}
+	
 	public int size() {
 		return this.rowCount();
 	}
@@ -68,7 +77,18 @@ public final class Vector extends Matrix {
 		}
 		return total / count;
 	}
-
+	
+	public Vector getRanks() {
+        List<Double> list = toList();
+        Collections.sort(list, Comparator.reverseOrder());
+        Vector v = new Vector(size());
+        for (int i= 1;i <=v.size();i++) {
+            int j = list.indexOf(getValue(i));
+            v.setValue(i, j);
+        }
+        return v;
+	}
+	
 	public static boolean isNullEntry(double d) {
 		return d == nullEntry;
 	}

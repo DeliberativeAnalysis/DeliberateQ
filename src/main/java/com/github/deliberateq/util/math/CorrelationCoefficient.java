@@ -4,7 +4,8 @@ import java.util.function.BiFunction;
 
 public enum CorrelationCoefficient {
     PEARSONS("Pearsons", (a, b) -> getPearsonsCorrelationCoefficient(a, b)), //
-    CONCORDANCE("Concordance", (a, b) -> getConcordanceCorrelationCoefficient(a, b));
+    CONCORDANCE("Concordance", (a, b) -> getConcordanceCorrelationCoefficient(a, b)), //
+    SPEARMANS("Spearmans", (a, b) -> getSpearmansCorrelationCoefficient(a, b));
 
     private final String abbreviatedName;
     private final BiFunction<Vector, Vector, Double> function;
@@ -54,6 +55,12 @@ public enum CorrelationCoefficient {
         double varX = a.getVariance();
         double varY = b.getVariance();
         return 2 * p * Math.sqrt(varX * varY) / (sqr(meanX - meanY) + varX + varY);
+    }
+    
+    private static double getSpearmansCorrelationCoefficient(Vector a, Vector b) {
+        Vector a2 = a.getRanks();
+        Vector b2 = b.getRanks();
+        return getPearsonsCorrelationCoefficient(a2, b2);
     }
 
     private static double sqr(double x) {
