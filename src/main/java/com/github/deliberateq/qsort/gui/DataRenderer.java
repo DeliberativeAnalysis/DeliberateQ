@@ -89,7 +89,7 @@ public class DataRenderer {
                 .sqrt(sumDistanceSquaredFromXEqualsY / vals.length);
 
         
-        final double ccc = v1.getCorrelation(v2, CorrelationCoefficient.CONCORDANCE);
+        final double ccc = v1.getCorrelation(v2, cc);
         if (includeRegressionLines) {
             final Function interval = new RegressionIntervalFunction(v1,
                     PREDICTION_INTERVAL_95.equals(bands));
@@ -122,7 +122,7 @@ public class DataRenderer {
                 "r2=" + df.format(Math.pow(sr.getR(), 2)) //
                         + ", D=" + df.format(meanDistanceFromXEqualsY) //
         //                + ", D2=" + df.format(meanStandardErrorFromXEqualsY) //
-                        + ", Con=" + df.format(ccc));
+                        + ", " + cc.abbreviatedName() + "=" + df.format(ccc));
         return gp;
     }
 
