@@ -25,11 +25,9 @@ public class MainPanel extends JPanel {
 	private static final String PREF_OPEN_STUDY_CURRENT_DIRECTORY = "open.study.current.directory";
 	private static final long serialVersionUID = -4881720973156188291L;
 	
-	private static final CorrelationCoefficient DEFAULT_CORRELATION_COEFFICIENT = CorrelationCoefficient.SPEARMANS;
-
 	@Inject
 	public MainPanel(EventManager eventManager) {
-	    String ccOption = System.getProperty("cc", DEFAULT_CORRELATION_COEFFICIENT.name());
+	    String ccOption = System.getProperty("cc", Constants.DEFAULT_CORRELATION_COEFFICIENT.name());
 	    CorrelationCoefficient cc = CorrelationCoefficient.valueOf(ccOption);
 	    Options options = new Options(cc);
 		setLayout(new GridLayout(1, 1));
