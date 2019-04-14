@@ -5,7 +5,7 @@
     <groupId>com.github.deliberativeanalysis</groupId>
     <artifactId>deliberate-q</artifactId>
     <name>${project.artifactId}</name>
-    <version>2.2.3.alpha.1-SNAPSHOT</version>
+    <version>2.2.4.alpha</version>
     <description>Tool to apply Q-Methodology</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
