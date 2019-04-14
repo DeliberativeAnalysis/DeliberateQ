@@ -26,7 +26,7 @@ public class CorrelationCoefficientTest {
     public void testSpearmansCorrelation() {
         Vector a = new Vector(56, 75, 45, 71, 62, 64, 58, 80, 76, 61);
         Vector b = new Vector(66, 70, 40, 60, 65, 56, 59, 77, 67, 63);
-        assertEquals(1 - 324.0/990.0,CorrelationCoefficient.SPEARMANS.apply(a, b), 0.0000001);
+        assertEquals(1 - 324.0 / 990.0, CorrelationCoefficient.SPEARMANS.apply(a, b), 0.0000001);
     }
 
 }
