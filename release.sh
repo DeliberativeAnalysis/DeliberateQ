@@ -16,6 +16,7 @@ git commit -am "[release] prepare for next development iteration"
 git push
 git checkout $1
 mvn clean install
+git checkout master
 echo ==================================================
 echo Now deploy target/*-with-dependencies.jar to
 echo github release page
