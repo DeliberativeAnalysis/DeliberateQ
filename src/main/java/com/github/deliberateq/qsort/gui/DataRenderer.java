@@ -89,7 +89,7 @@ public class DataRenderer {
                 .sqrt(sumDistanceSquaredFromXEqualsY / vals.length);
 
         
-        final double ccc = v1.getCorrelation(v2, cc);
+        final double concordance = v1.getCorrelation(v2, CorrelationCoefficient.CONCORDANCE);
         if (includeRegressionLines) {
             final Function interval = new RegressionIntervalFunction(v1,
                     PREDICTION_INTERVAL_95.equals(bands));
@@ -118,11 +118,13 @@ public class DataRenderer {
             }, Color.BLACK);
         }
         DecimalFormat df = new DecimalFormat("0.000");
+        // Simon Niemeyer likes to see Concordance here (separate from the 
+        // the correlation coefficient type used on the input data)
         gp.addComment(new Vector(new double[] { -0.8, 0.8 }),
                 "r2=" + df.format(Math.pow(sr.getR(), 2)) //
                         + ", D=" + df.format(meanDistanceFromXEqualsY) //
         //                + ", D2=" + df.format(meanStandardErrorFromXEqualsY) //
-                        + ", " + cc.abbreviatedName() + "=" + df.format(ccc));
+                        + ", " + "Con=" + df.format(concordance));
         return gp;
     }
 
