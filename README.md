@@ -1,6 +1,6 @@
 # Deliberate Q
 
-<a href="https://travis-ci.org/DeliberativeAnalysis/DeliberateQ"><img src="https://travis-ci.org/DeliberativeAnalysis/DeliberateQ.svg"/></a><br/>
+<a href="https://travis-ci.com/DeliberativeAnalysis/DeliberateQ"><img src="https://travis-ci.com/DeliberativeAnalysis/DeliberateQ.svg"/></a><br/>
 [![codecov](https://codecov.io/gh/DeliberativeAnalysis/DeliberateQ/branch/master/graph/badge.svg)](https://codecov.io/gh/DeliberativeAnalysis/DeliberateQ)
 
 Deliberate Q is a visualisation tool for Q Methodology analysis. It is a java swing application with these features:
