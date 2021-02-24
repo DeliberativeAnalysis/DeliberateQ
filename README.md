@@ -55,3 +55,7 @@ For project administrators, to build a release (tagged in git source control) on
 T distribution routines from apache [commons-math](http://commons.apache.org/proper/commons-math/) are used in the calculation of factor scores.
 
 [Jama](http://math.nist.gov/javanumerics/jama/) is used for eigenvalue decomposition in Principal Components Analysis.
+
+## View and run the project in GitPod
+
+https://gitpod.io/#/github.com/DeliberativeAnalysis/DeliberateQ
