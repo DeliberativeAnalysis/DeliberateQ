@@ -3,13 +3,18 @@
 <a href="https://travis-ci.com/DeliberativeAnalysis/DeliberateQ"><img src="https://travis-ci.com/DeliberativeAnalysis/DeliberateQ.svg"/></a><br/>
 [![codecov](https://codecov.io/gh/DeliberativeAnalysis/DeliberateQ/branch/master/graph/badge.svg)](https://codecov.io/gh/DeliberativeAnalysis/DeliberateQ)
 
-Deliberate Q is a visualisation tool for Q Methodology analysis. It is a java swing application with these features:
+Deliberate Q is a visualisation tool for Q Methodology analysis. It is also being developed for use in deliberative reasoning analysis (deliberative reasoning index; DRI), which involves combining Q data with additional data in the form of ranked policy or action options, where the Q items embody the relevant concourse informing decisions regarding choices to be made about "what should be done". (see e.g. https://www.youtube.com/watch?v=o1O0u6E9W28)
+
+But it can easily be used as a dedicated tool for Q analysis as well.
+
+
+It is a java swing application with these features:
 
 * Principal Components Analysis
 * Centroid Method
 * Factor rotations manually or using standard algorithms (Varimax, Orthomax etc)
 * Rotation graphs
-* Animated intersubjective correlation graphs for visualisation of multi stage data
+* Animated "intersubjective consistency" graphs for visualisation of multi stage data
 * Venn Diagram views for factor interpretation
 
 <img src="docs/images/dq.png?raw"/>
